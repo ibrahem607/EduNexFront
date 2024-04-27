@@ -246,6 +246,61 @@
       "grade": "الصف الثالث الثانوي",
       "price": 250,
       "lesson": []
+    },
+    {
+      "id": "16",
+      "imageUrl": "https://via.placeholder.com/325x225",
+      "subject": "الحاسب الآلي",
+      "profilePictureUrl": "https://via.placeholder.com/75",
+      "teacher": "أحمد علي",
+      "description": "كورس مادة الحاسب الآلي",
+      "grade": "الصف الثالث الثانوي",
+      "price": 250,
+      "lesson": []
+    },
+    {
+      "id": "17",
+      "imageUrl": "https://via.placeholder.com/325x225",
+      "subject": "الرياضيات",
+      "profilePictureUrl": "https://via.placeholder.com/75",
+      "teacher": "أحمد علي",
+      "description": "كورس مادة الرياضيات",
+      "grade": "الصف الثالث الثانوي",
+      "price": 200,
+      "lesson": []
+    },
+    {
+      "id": "18",
+      "imageUrl": "https://via.placeholder.com/325x225",
+      "subject": "الفيزياء",
+      "profilePictureUrl": "https://via.placeholder.com/75",
+      "teacher": "أحمد علي",
+      "description": "كورس مادة الفيزياء",
+      "grade": "الصف الثالث الثانوي",
+      "price": 220,
+      "lesson": []
+    },
+    {
+      "id": "19",
+      "imageUrl": "https://via.placeholder.com/325x225",
+      "subject": "الكيمياء",
+      "profilePictureUrl": "https://via.placeholder.com/75",
+      "teacher": "أحمد علي",
+      "description": "كورس مادة الكيمياء",
+      "grade": "الصف الثالث الثانوي",
+      "price": 230,
+      "lesson": []
+    },
+    {
+      "id": "20",
+      "imageUrl": "https://via.placeholder.com/325x225",
+      "subject": "اللغة العربية",
+      "profilePictureUrl": "https://via.placeholder.com/75",
+      "teacher": "أحمد علي",
+      "description": "كورس مادة اللغة العربية",
+      "grade": "الصف الثالث الثانوي",
+      "price": 180,
+      "lesson": []
     }
   ],
   "teachers": [

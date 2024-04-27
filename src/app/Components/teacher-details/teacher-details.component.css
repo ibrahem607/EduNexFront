@@ -1,5 +1,72 @@
+div.container {
+  min-height: 90dvh;
+}
 
+.example-card {
+  width: 216px;
+  height: 268px;
+  /* margin: 15px; */
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
 
-.teacher-card{
-  width: 200px;
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.44), transparent);
+  opacity: 1;
+}
+
+.top-bottom-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.category,
+.name {
+  position: absolute;
+  left: 50%;
+  text-align: center;
+  transition: 0.3s;
+  transform: translateX(-50%);
+}
+
+.category {
+  bottom: 30px;
+  color: yellow;
+}
+
+.name {
+  font-size: 20px;
+  bottom: 70px;
+  font-weight: 700;
+  color: white;
+}
+
+a {
+  all: unset;
+}
+
+h4,
+h5 {
+  font-weight: 700;
+}
+
+.material-icons {
+  font-size: 22px;
+}
+
+.social-icons {
+  color: var(--wave4);
 }

@@ -1,5 +1,5 @@
-<div class="flex align-items-start parent container">
-  <div class="flex filter-container my-3 gap-3 flex-wrap">
+<div class="d-flex align-items-start parent container gap-4">
+  <div class="flex filter-container mb-3 gap-3 flex-wrap">
     <mat-accordion class="flex">
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         class="custom-expansion-panel" expanded="true">
@@ -34,7 +34,7 @@
     </mat-accordion>
   </div>
 
-  <div class="flex flex-wrap">
+  <div class="flex flex-wrap gap-3">
     <ng-container *ngFor="let teacher of teachers">
       <app-teacher-card [teacher]="teacher"></app-teacher-card>
     </ng-container>

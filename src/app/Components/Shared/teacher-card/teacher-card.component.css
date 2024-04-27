@@ -1,7 +1,7 @@
 .example-card {
   width: 325px;
   height: 405px;
-  margin: 15px;
+  /* margin: 15px; */
   border-radius: 10px;
   position: relative;
   overflow: hidden;
@@ -64,7 +64,7 @@
 
 .example-card:hover .category {
   bottom: 80px;
-  color: red;
+  color: orange;
 }
 
 .example-card:hover .name {

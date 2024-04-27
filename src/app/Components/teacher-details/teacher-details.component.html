@@ -1,5 +1,39 @@
-<div class="container">
-  <section class="teacher-info-section">
-    <app-teacher-card [teacher]="teacher" class="teacher-card"></app-teacher-card>
+<div class="container d-flex align-items-start gap-4">
+  <section class="teacher-info-section flex flex-column">
+    <div class="mat-card-wrapper" #cardWrapper>
+      <mat-card class="example-card">
+        <div class="image-container">
+          <img mat-card-image [src]="teacher.imageUrl" alt="Sample Image">
+        </div>
+        <div class="overlay"></div>
+        <div class="top-bottom-container">
+          <p class="name">{{ teacher.name }}</p>
+          <p class="category mt-0">{{ teacher.subject }}</p>
+        </div>
+      </mat-card>
+    </div>
+
+    <!-- <h4>اعرف عني أكتر</h4> -->
+    <h5>تواصل معايا</h5>
+
+    <div class="social-icons">
+      <button mat-icon-button>
+        <mat-icon aria-label="Facebook"><i class="fab fa-facebook"></i></mat-icon>
+      </button>
+
+      <button mat-icon-button>
+        <mat-icon aria-label="Youtube"><i class="fab fa-youtube"></i></mat-icon>
+      </button>
+
+      <button mat-icon-button>
+        <mat-icon aria-label="LinkedIn"><i class="fab fa-linkedin"></i></mat-icon>
+      </button>
+    </div>
+  </section>
+
+  <section class="flex flex-wrap gap-3">
+    <ng-container *ngFor="let course of courses">
+      <app-course-card [course]="course"></app-course-card>
+    </ng-container>
   </section>
 </div>
