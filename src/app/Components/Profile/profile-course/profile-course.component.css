@@ -1,0 +1,93 @@
+table,
+.overflow-x {
+  box-shadow: var(--border) 0px 0px 0px 1px;
+  border-radius: 10px;
+  background-color: var(--bg);
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.overflow-x {
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.table-container {
+  width: 100%;
+}
+
+tr th:first-child {
+  text-align: start;
+}
+
+tr td:first-of-type,
+tr th:first-of-type {
+  padding-right: 1rem;
+}
+
+th,
+td {
+  padding: 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+th {
+  font-weight: 700;
+}
+
+.passed span,
+.failed span {
+  padding-inline: 15px;
+  border-radius: 10rem;
+}
+
+.passed span {
+  color: var(--wave4);
+  background-color: rgba(144, 238, 144, 0.3);
+}
+
+.failed span {
+  color: var(--wave6);
+  background-color: rgba(240, 128, 128, 0.3);
+}
+
+.buttons button {
+  text-align: start;
+  margin-left: auto;
+}
+
+.buttons button:first-child {
+  color: var(--wave4);
+}
+
+.buttons button:last-child {
+  color: var(--wave6);
+}
+
+@media (min-width: 992px) {
+  .overflow-x {
+    margin-top: calc(100px + 1rem);
+    width: calc(80vw - 230px - 3rem);
+  }
+}
+
+@media (max-width: 776px) {
+  .overflow-x {
+    width: calc(85vw - 24px);
+  }
+}
+
+@media (max-width: 576px) {
+  .overflow-x {
+    width: calc(98vw - 24px);
+  }
+}

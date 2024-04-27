@@ -1,0 +1,18 @@
+<div class="form-container">
+  <form class="flex flex-wrap justify-content-center p-4" dir="rtl" [formGroup]="shippingForm">
+
+    <h3 class="text-second mb-4 text-center">
+      أدخل كود الشحن الجديد
+    </h3>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>أدخل كود الشحن الجديد</mat-label>
+      <input matInput type="text" formControlName="code">
+      <mat-icon matSuffix>attach_money</mat-icon>
+      <mat-error *ngIf="shippingForm.get('code')?.invalid && shippingForm.get('code')?.touched">الكود
+        مطلوب</mat-error>
+    </mat-form-field>
+
+    <button mat-button class="mx-3 custom-button"> اشحن الان </button>
+  </form>
+</div>
