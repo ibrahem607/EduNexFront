@@ -15,18 +15,18 @@ export class TeacherProfileComponent {
   edittext2: boolean = true;
   @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
   teacher: any;
-  teacherHint:any='';
-  constructor(private route: ActivatedRoute,private authService:AuthService,private teacherService:TeacherService) { }
+  teacherHint: any = '';
+  constructor(private route: ActivatedRoute, private authService: AuthService, private teacherService: TeacherService) { }
 
   ngOnInit(): void {
     console.log('Teacher id:', this.authService.teacherId);
-    this.teacherHint=this.teacherService.getTeacherAbout()
-   
+    this.teacherHint = this.teacherService.getTeacherAbout()
+
   }
 
   saveupdate(updateData: string | null) {
     if (updateData !== null) {
-      const id = this.authService.teacherId; 
+      const id = this.authService.teacherId;
       const aboutTeacher = updateData.toString(); // Ensure aboutTeacher is a string
       this.teacherService.saveTeacherAbout(id, aboutTeacher).subscribe(
         (response) => {
@@ -40,11 +40,6 @@ export class TeacherProfileComponent {
       console.error('Update data is null.');
     }
   }
-  
-  
-
-  
-  
 
   toggleEdit() {
     this.edittext = !this.edittext;
@@ -73,7 +68,7 @@ export class TeacherProfileComponent {
   openFileInput() {
     this.uploadInput.nativeElement.click();
   }
-  
+
 }
 
 

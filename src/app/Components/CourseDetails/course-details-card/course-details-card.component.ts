@@ -1,9 +1,5 @@
 import { Component, Input } from '@angular/core';
-<<<<<<< HEAD
 import { ICourse } from 'src/app/Model/icourse';
-=======
-import { ICourse } from 'src/app/Model/iCourse';
->>>>>>> origin/Mahmoud-Salah
 import { MatDialog } from '@angular/material/dialog';
 import { SubscriptionDialogComponent } from '../Dialog/subscription-dialog/subscription-dialog.component';
 

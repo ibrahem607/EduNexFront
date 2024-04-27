@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { passwordMatched } from 'src/app/CustomFormValidation/CrossfiledValidation';
 import { IuserUdateFormData } from 'src/app/Models/IuserUdateFormData';
 
 import { AuthService } from 'src/app/Service/auth.service';
+import { passwordMatched } from 'src/app/Validator/CrossfiledValidation';
 
 
 @Component({
@@ -17,7 +17,6 @@ export class SignUpComponent implements OnInit {
   isInputFocused: boolean = false;
   signupForm!: FormGroup;
 
-  
   constructor(private fb: FormBuilder,private authService:AuthService,private router:Router,private _snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -37,10 +36,10 @@ export class SignUpComponent implements OnInit {
       studentEmail: ['',[Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
       rebot: [false, Validators.required],
       rebot2: [false, Validators.required]
-    },{validators: passwordMatched()}); // Apply custom validator here
+    },{validators: passwordMatched}); // Apply custom validator here
   }
   passwordStrengthValidator(control: any) {
-    // Password strength 
+    // Password strength
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (control.value && !regex.test(control.value)) {
       return { 'weakPassword': true };
@@ -68,7 +67,6 @@ export class SignUpComponent implements OnInit {
   {
     return this.signupForm.get('lastName')
   }
-  
   get studentPhoneNumber()
   {
     return this.signupForm.get('studentPhoneNumber')
@@ -101,7 +99,6 @@ export class SignUpComponent implements OnInit {
   {
     return this.signupForm.get('address')
   }
- 
   get confirmPassword()
   {
     return this.signupForm.get('confirmPassword')
@@ -114,17 +111,17 @@ export class SignUpComponent implements OnInit {
   {
     return this.signupForm.get('rebot2')
   }
-  
+
 
   errorMeg:string='';
   onSubmit() {
-   
+
     if (this.signupForm.valid) {
-      
+
       const defaultFormData: IuserUdateFormData = {
         City: this.signupForm.value.governorate,
         address: this.signupForm.value.address,
-        confirmPassword: this.signupForm.value.confirmPassword, 
+        confirmPassword: this.signupForm.value.confirmPassword,
         dateOfBirth: this.signupForm.value.birthday,
         Email: this.signupForm.value.studentEmail,
         FirstName: this.signupForm.value.fullName,
@@ -136,7 +133,6 @@ export class SignUpComponent implements OnInit {
         religion: this.signupForm.value.religion,
         levelId: this.signupForm.value.education,
       };
-      
       // Save data in DB
      this.authService.signUp(defaultFormData).subscribe(
       {
@@ -147,7 +143,7 @@ export class SignUpComponent implements OnInit {
               //go to login
               this.router.navigate(['/login'])
               this._snackBar.open('تم انشاء الحساب بنجاح', 'Close', {
-                duration: 5000, 
+                duration: 5000,
                 verticalPosition: 'top',
               });
             }
@@ -165,8 +161,8 @@ export class SignUpComponent implements OnInit {
 
     }
 
-      
+
     }
   }
-    
+
 

@@ -14,17 +14,17 @@ import { StudentProfileComponent } from './Components/Profile/student-profile/st
 import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
 
 
-import { CreateExamComponent } from './Components/Exam/create-exam/create-exam.component';
 import { TeacherDashboardComponent } from './Components/teacher-dashboard/teacher-dashboard.component';
 import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
 import { AdminDashBoardComponent } from './Components/admin-dash-board/admin-dash-board.component';
 import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
+import { CreateExamComponent } from './Components/Exam/Teacher/create-exam/create-exam.component';
 
 const routes: Routes = [
-   { path: "course/:courseId/lesson/:lessonId/create", component: CreateExamComponent },
-{ path: "course/:courseId/lesson/:lessonId/view", component: StudentExamComponent },
-{ path: "course/:courseId/lesson/:lessonId/result", component: ExamResultComponent },
-{ path: "student/:studentId", component: StudentProfileComponent },
+  { path: "course/:courseId/lesson/:lessonId/create", component: CreateExamComponent },
+  { path: "course/:courseId/lesson/:lessonId/view", component: StudentExamComponent },
+  { path: "course/:courseId/lesson/:lessonId/result", component: ExamResultComponent },
+  { path: "student/:studentId", component: StudentProfileComponent },
   { path: "course/:id/lesson/:id/exam/:id", component: CreateExamComponent },
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignUpComponent },
@@ -38,9 +38,9 @@ const routes: Routes = [
   { path: "home", component: MainComponent },
   { path: "tdash", component: TeacherDashboardComponent },
   { path: "home", component: MainComponent },
-  { path: "teacherSignup", component:SignupTeacherComponent },
-  { path: "teacherprofile", component:TeacherProfileComponent },
-  { path: "admindash", component:AdminDashBoardComponent },
+  { path: "teacherSignup", component: SignupTeacherComponent },
+  { path: "teacherprofile", component: TeacherProfileComponent },
+  { path: "admindash", component: AdminDashBoardComponent },
   { path: "", component: LoginComponent },
   { path: "**", component: LoginComponent }
 ];
