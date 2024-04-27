@@ -44,7 +44,6 @@
                 <div class="col">
                     <label class="d-block font-18-medium mb-3" for="password">كلمة السر</label>
                     <input type="password" name="password" formControlName="password" class="form-control  mt-3" style="width: 100%;" id="password" placeholder="كلمة السر" aria-label="كلمة السر" required >
-
                     <div *ngIf="password?.touched ">
                         <p *ngIf="password?.errors?.['required']" class="text-danger"> كلمة المرور مطلوبة</p>
                         <p *ngIf="password?.errors?.['minlength']" class="text-danger"> كلمةالمرور يجب ان تكون أكثر من 8 أحرف</p>

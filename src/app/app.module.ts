@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -45,7 +45,7 @@ import { RecentCoursesComponent } from './Components/Home/recent-courses/recent-
 import { AboutAcademyComponent } from './Components/Home/about-academy/about-academy.component';
 import { AboutTeachersComponent } from './Components/Home/about-teachers/about-teachers.component';
 import { SideScrollButtonsComponent } from './Components/Shared/side-scroll-buttons/side-scroll-buttons.component';
-import { AboutUsComponent } from './Components/Home/about-us/about-us.component';
+
 import { ClassRankComponent } from './Components/Home/class-rank/class-rank.component';
 import { QuestionsComponent } from './Components/Home/questions/questions.component';
 import { TargetCounterComponent } from './Components/Home/target-counter/target-counter.component';
@@ -79,102 +79,131 @@ import { ChangePasswordComponent } from './Components/Profile/change-password/ch
 import { StudentSettingsComponent } from './Components/Profile/student-settings/student-settings.component';
 import { SignOutComponent } from './Components/Profile/sign-out/sign-out.component';
 import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
+import { TeacherDashboardComponent } from './Components/teacher-dashboard/teacher-dashboard.component';
+import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
+import { AdminDashBoardComponent } from './Components/admin-dash-board/admin-dash-board.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
+import { CustomCloudNavbarComponent } from './Components/SharedComponents/custom-cloud-navbar/custom-cloud-navbar.component';
 
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { AboutUsComponent } from './Components/Home/about-us/about-us.component';
+
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignUpComponent,
-    LoginComponent,
-    HeaderComponent,
-    CoursesComponent,
-    CustomPaginationComponent,
-    TeachersComponent,
-    MainComponent,
-    CourseCardComponent,
-    TeacherCardComponent,
-    RecentCoursesComponent,
-    AboutAcademyComponent,
-    AboutTeachersComponent,
-    SideScrollButtonsComponent,
-    AboutUsComponent,
-    ClassRankComponent,
-    QuestionsComponent,
-    TargetCounterComponent,
-    AppearFromLeftDirective,
-    AppearFromRightDirective,
-    FooterComponent,
-    ScrollToTopButtonComponent,
-    CourseDetailsComponent,
-    CourseDetailsHeaderComponent,
-    CourseDetailsCardComponent,
-    SubscriptionDialogComponent,
-    LessonDialogComponent,
-    ContentDialogComponent,
-    ConfirmationDialogComponent,
-    HeroComponent,
-    CreateExamComponent,
-    ExamDialogComponent,
-    QuestionControllerComponent,
-    ExamControllerComponent,
-    LessonContentComponent,
-    StudentExamComponent,
-    TimerComponent,
-    ExamResultComponent,
-    ExamTimeOutComponent,
-    StudentProfileComponent,
-    ProfileHomeComponent,
-    ProfileCourseComponent,
-    ProfileBudgetComponent,
-    StudentShippingCodesComponent,
-    ChangePasswordComponent,
-    StudentSettingsComponent,
-    SignOutComponent,
-    TeacherDetailsComponent,
+
+    declarations: [
+      AppComponent,
+      SignUpComponent,
+      LoginComponent,
+      HeaderComponent,
+      CoursesComponent,
+      CustomPaginationComponent,
+      TeachersComponent,
+      MainComponent,
+      CourseCardComponent,
+      TeacherCardComponent,
+      RecentCoursesComponent,
+      AboutAcademyComponent,
+      AboutTeachersComponent,
+      SideScrollButtonsComponent,
+      AboutUsComponent,
+      ClassRankComponent,
+      QuestionsComponent,
+      TargetCounterComponent,
+      AppearFromLeftDirective,
+      AppearFromRightDirective,
+      FooterComponent,
+      ScrollToTopButtonComponent,
+      CourseDetailsComponent,
+      CourseDetailsHeaderComponent,
+      CourseDetailsCardComponent,
+      SubscriptionDialogComponent,
+      LessonDialogComponent,
+      ContentDialogComponent,
+      ConfirmationDialogComponent,
+      HeroComponent,
+      CreateExamComponent,
+      ExamDialogComponent,
+      QuestionControllerComponent,
+      ExamControllerComponent,
+      LessonContentComponent,
+      StudentExamComponent,
+      TimerComponent,
+      ExamResultComponent,
+      ExamTimeOutComponent,
+      StudentProfileComponent,
+      ProfileHomeComponent,
+      ProfileCourseComponent,
+      ProfileBudgetComponent,
+      StudentShippingCodesComponent,
+      ChangePasswordComponent,
+      StudentSettingsComponent,
+      SignOutComponent,
+      TeacherDetailsComponent,
+      TeacherDashboardComponent,
+      SignupTeacherComponent,
+      AdminDashBoardComponent,
+      TeacherProfileComponent,
+      CustomCloudNavbarComponent,
+
   ],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    RouterModule,
-    HttpClientModule,
-    MatSnackBarModule,
-    MatToolbarModule,
-    MatSlideToggleModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatButtonModule,
-    MatExpansionModule,
-    MatRadioModule,
-    MatSliderModule,
-    MatPaginatorModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressBarModule,
-    MatChipsModule,
-    MatButtonToggleModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
-    MatCheckboxModule,
-    MatTableModule,
-    AppRoutingModule,
-    LoadingBarModule,
-    LoadingBarHttpClientModule,
-    LoadingBarRouterModule,
-  ],
-  providers: [
-    OverlayContainer,
-  ],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
+    imports: [
+      MatIconModule,
+      BrowserModule,
+      MatTabsModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
+      AppRoutingModule,
+      RouterModule,
+      FormsModule,
+      ReactiveFormsModule,
+      BrowserAnimationsModule,
+      MatToolbarModule,
+      MatSlideToggleModule,
+      MatSidenavModule,
+      MatIconModule,
+      MatButtonModule,
+      MatExpansionModule,
+      MatRadioModule,
+      MatSliderModule,
+      MatPaginatorModule,
+      MatCardModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatProgressBarModule,
+      MatChipsModule,
+      MatButtonToggleModule,
+      HttpClientModule,
+      MatButtonToggleModule,
+      LoadingBarModule,
+      LoadingBarHttpClientModule,
+      LoadingBarRouterModule,
+      MatDialogModule,
+      MatSelectModule,
+      MatMenuModule,
+      MatNativeDateModule,
+      MatDatepickerModule,
+      MatCheckboxModule,
+      MatTableModule,
+      AppRoutingModule,
+      LoadingBarModule,
+      LoadingBarHttpClientModule,
+      LoadingBarRouterModule,
+    ],
+ 
+    providers: [
+      OverlayContainer,
+      importProvidersFrom(LoadingBarHttpClientModule),
+      MatNativeDateModule,
+      HttpClientModule,
+      MatSnackBarModule
+
+    ],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ICourse } from 'src/app/Model/icourse';
-import { ITeacher } from 'src/app/Model/iteacher';
+
 import { trigger, style, transition, animate } from '@angular/animations';
 import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
+import { ITeacher } from 'src/app/Model/iteacher';
 
 @Component({
   selector: 'app-about-academy',

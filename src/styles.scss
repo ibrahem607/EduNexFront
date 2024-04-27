@@ -334,3 +334,6 @@ mat-form-field mat-label {
 //   border-radius: 10px;
 //   background: linear-gradient(0deg, var(--wave1, #f6d365), var(--wave2, #fda085) 51%, var(--wave1, #f6d365)) var(--x, 0)/ 200% !important;
 // }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
