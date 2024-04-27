@@ -52,6 +52,10 @@
   color: var(--wave1);
 }
 
+.signOut {
+  color: red;
+}
+
 @media (min-width: 992px) {
   .header-section,
   .navigation-section {
@@ -65,7 +69,7 @@
   .navigation-container {
     width: 100%;
   }
-  .header-section{
+  .header-section {
     align-items: center;
   }
 }

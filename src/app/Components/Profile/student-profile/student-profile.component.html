@@ -6,7 +6,7 @@
     </div>
     <div class="navigation-section">
       <button mat-button *ngFor="let option of options; let i = index" class="form-button-1"
-        (click)="setActiveSection(i)" [ngClass]="{ 'active': option.selected }">
+        [ngClass]="{'signOut': i == options.length - 1}" (click)="setActiveSection(i)">
         <i class="fa fa-{{ option.icon }} px-2"></i>
         {{ option.label }}
       </button>

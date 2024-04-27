@@ -34,25 +34,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { LoginComponent } from './Components/login/login.component';
-import { HeaderComponent } from './Components/SharedComponents/header/header.component';
+import { HeaderComponent } from './Components/Shared/header/header.component';
 import { CoursesComponent } from './Components/courses/courses.component';
-import { CustomPaginationComponent } from './Components/SharedComponents/custom-pagination/custom-pagination.component';
+import { CustomPaginationComponent } from './Components/Shared/custom-pagination/custom-pagination.component';
 import { TeachersComponent } from './Components/teachers/teachers.component';
 import { MainComponent } from './Components/Home/main/main.component';
-import { CourseCardComponent } from './Components/SharedComponents/course-card/course-card.component';
-import { TeacherCardComponent } from './Components/SharedComponents/teacher-card/teacher-card.component';
+import { CourseCardComponent } from './Components/Shared/course-card/course-card.component';
+import { TeacherCardComponent } from './Components/Shared/teacher-card/teacher-card.component';
 import { RecentCoursesComponent } from './Components/Home/recent-courses/recent-courses.component';
 import { AboutAcademyComponent } from './Components/Home/about-academy/about-academy.component';
 import { AboutTeachersComponent } from './Components/Home/about-teachers/about-teachers.component';
-import { SideScrollButtonsComponent } from './Components/SharedComponents/side-scroll-buttons/side-scroll-buttons.component';
+import { SideScrollButtonsComponent } from './Components/Shared/side-scroll-buttons/side-scroll-buttons.component';
 import { AboutUsComponent } from './Components/Home/about-us/about-us.component';
 import { ClassRankComponent } from './Components/Home/class-rank/class-rank.component';
 import { QuestionsComponent } from './Components/Home/questions/questions.component';
 import { TargetCounterComponent } from './Components/Home/target-counter/target-counter.component';
 import { AppearFromLeftDirective } from './Directive/appear-from-left.directive';
 import { AppearFromRightDirective } from './Directive/appear-from-right.directive';
-import { FooterComponent } from './Components/SharedComponents/footer/footer.component';
-import { ScrollToTopButtonComponent } from './Components/SharedComponents/scroll-to-top-button/scroll-to-top-button.component';
+import { FooterComponent } from './Components/Shared/footer/footer.component';
+import { ScrollToTopButtonComponent } from './Components/Shared/scroll-to-top-button/scroll-to-top-button.component';
 import { CourseDetailsComponent } from './Components/CourseDetails/course-details/course-details.component';
 import { CourseDetailsHeaderComponent } from './Components/CourseDetails/course-details-header/course-details-header.component';
 import { CourseDetailsCardComponent } from './Components/CourseDetails/course-details-card/course-details-card.component';
@@ -75,17 +75,16 @@ import { ProfileHomeComponent } from './Components/Profile/profile-home/profile-
 import { ProfileCourseComponent } from './Components/Profile/profile-course/profile-course.component';
 import { ProfileBudgetComponent } from './Components/Profile/profile-budget/profile-budget.component';
 import { StudentShippingCodesComponent } from './Components/Profile/student-shipping-codes/student-shipping-codes.component';
+import { ChangePasswordComponent } from './Components/Profile/change-password/change-password.component';
+import { StudentSettingsComponent } from './Components/Profile/student-settings/student-settings.component';
+import { SignOutComponent } from './Components/Profile/sign-out/sign-out.component';
+import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
 
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ChangePasswordComponent } from './Components/Profile/change-password/change-password.component';
-import { StudentSettingsComponent } from './Components/Profile/student-settings/student-settings.component';
-import { SignOutComponent } from './Components/Profile/sign-out/sign-out.component';
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -135,6 +134,7 @@ import { SignOutComponent } from './Components/Profile/sign-out/sign-out.compone
     ChangePasswordComponent,
     StudentSettingsComponent,
     SignOutComponent,
+    TeacherDetailsComponent,
   ],
   imports: [
     BrowserModule,

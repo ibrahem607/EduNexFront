@@ -11,6 +11,7 @@ import { LessonContentComponent } from './Components/lesson-content/lesson-conte
 import { StudentExamComponent } from './Components/Exam/Student/student-exam/student-exam.component';
 import { ExamResultComponent } from './Components/Exam/Student/exam-result/exam-result.component';
 import { StudentProfileComponent } from './Components/Profile/student-profile/student-profile.component';
+import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
 
 const routes: Routes = [
   { path: "course/:courseId/lesson/:lessonId/create", component: CreateExamComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: "courses", component: CoursesComponent },
   { path: "course/:id", component: CourseDetailsComponent },
   { path: "teachers", component: TeachersComponent },
+  { path: "teacher/:id", component: TeacherDetailsComponent },
   { path: "lesson/:id", component: LessonContentComponent },
   { path: "home", component: MainComponent },
   { path: "error", component: MainComponent },

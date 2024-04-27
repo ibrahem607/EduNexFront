@@ -15,11 +15,12 @@ export class CoursesComponent implements OnInit {
 
   constructor(private dynamicData: DynamicDataService) { }
 
-  getAll() {
+  getAllCourses() {
     this.dynamicData.getAllCourses().subscribe(courses => this.courses = courses);
   }
+
   ngOnInit(): void {
-    this.getAll()
+    this.getAllCourses()
   }
 
 }

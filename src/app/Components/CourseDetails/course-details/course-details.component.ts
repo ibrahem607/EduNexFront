@@ -15,9 +15,6 @@ import { ExamDialogComponent } from '../Dialog/exam-dialog/exam-dialog.component
   styleUrls: ['./course-details.component.css'],
 })
 export class CourseDetailsComponent implements OnInit {
-  someMethod() {
-    throw new Error('Method not implemented.');
-  }
   panelOpenState = false;
   course: ICourse | null = null;
   courseID: number = 0;
