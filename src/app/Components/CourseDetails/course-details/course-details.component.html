@@ -12,13 +12,13 @@
       </div>
     </div>
 
-    <div class="course" *ngIf="options[0].selected">
-      <div class="flex gap-1">
+    <div class="course d-flex flex-column gap-2" *ngIf="options[0].selected">
+      <div class="flex gap-1 mb-2">
         <h3 class="m-0" style="font-weight: 700;">محتوي الكورس</h3>
         <button mat-icon-button *ngIf="isTeacher()" (click)="openLessonDialog()"><mat-icon>note_add</mat-icon></button>
       </div>
 
-      <mat-accordion class="flex crud-buttons my-2" *ngFor="let lesson of course?.lesson; let i = index">
+      <mat-accordion class="flex crud-buttons w-100" *ngFor="let lesson of course?.lesson; let i = index">
         <mat-expansion-panel class="custom-expansion-panel" #panel>
           <mat-expansion-panel-header>
             <mat-panel-title style="font-weight: 700;" class="flex container" [class.expanded]="panel.expanded">
