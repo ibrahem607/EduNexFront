@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { passwordMatched } from 'src/app/CustomFormValidation/CrossfiledValidation';
-import { IuserUdateFormData } from 'src/app/Models/IuserUdateFormData';
+import { passwordMatched } from 'src/app/Validator/CrossfiledValidation';
+import { IuserUdateFormData } from 'src/app/Model/IuserUdateFormData';
 import { AuthService } from 'src/app/Service/auth.service';
 
 

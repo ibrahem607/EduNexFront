@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable,BehaviorSubject, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { IuserUdateFormData } from '../Models/IuserUdateFormData';
+import { IuserUdateFormData } from '../Model/IuserUdateFormData';
 import { Router } from '@angular/router';
 import { jwtDecode } from "jwt-decode";
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CustomJwtPayload } from '../Models/CustomJwtPayload ';
-import { Iteacherdata } from '../Models/Iteacherdata';
+import { CustomJwtPayload } from '../Model/CustomJwtPayload ';
+import { Iteacherdata } from '../Model/Iteacherdata';
 
 @Injectable({
   providedIn: 'root'

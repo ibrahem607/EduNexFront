@@ -7,7 +7,7 @@ import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { LoginComponent } from './Components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './Components/SharedComponents/header/header.component';
+import { HeaderComponent } from './Components/Shared/header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -20,18 +20,18 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
-import { CustomPaginationComponent } from './Components/SharedComponents/custom-pagination/custom-pagination.component';
+import { CustomPaginationComponent } from './Components/Shared/custom-pagination/custom-pagination.component';
 import { TeachersComponent } from './Components/teachers/teachers.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MainComponent } from './Components/Home/main/main.component';
 import { MatChipsModule } from '@angular/material/chips';
-import { CourseCardComponent } from './Components/SharedComponents/course-card/course-card.component';
-import { TeacherCardComponent } from './Components/SharedComponents/teacher-card/teacher-card.component';
+import { CourseCardComponent } from './Components/Shared/course-card/course-card.component';
+import { TeacherCardComponent } from './Components/Shared/teacher-card/teacher-card.component';
 import { RecentCoursesComponent } from './Components/Home/recent-courses/recent-courses.component';
 import { AboutAcademyComponent } from './Components/Home/about-academy/about-academy.component';
 import { AboutTeachersComponent } from './Components/Home/about-teachers/about-teachers.component';
-import { SideScrollButtonsComponent } from './Components/SharedComponents/side-scroll-buttons/side-scroll-buttons.component';
+import { SideScrollButtonsComponent } from './Components/Shared/side-scroll-buttons/side-scroll-buttons.component';
 import { AboutUsComponent } from './Components/Home/about-us/about-us.component';
 import { ClassRankComponent } from './Components/Home/class-rank/class-rank.component';
 import { QuestionsComponent } from './Components/Home/questions/questions.component';
@@ -39,7 +39,7 @@ import { TargetCounterComponent } from './Components/Home/target-counter/target-
 import { ScrollAnimationDirective } from './Directive/scroll-animation.directive';
 import { AppearFromLeftDirective } from './Directive/appear-from-left.directive';
 import { AppearFromRightDirective } from './Directive/appear-from-right.directive';
-import { ScrollToTopButtonComponent } from './Components/SharedComponents/scroll-to-top-button/scroll-to-top-button.component';
+import { ScrollToTopButtonComponent } from './Components/Shared/scroll-to-top-button/scroll-to-top-button.component';
 import { CourseDetailsComponent } from './Components/CourseDetails/course-details/course-details.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
@@ -58,7 +58,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import { HttpClientModule } from '@angular/common/http';
-import { FooterComponent } from './Components/footer/footer.component';
 import { DataTimePickerComponent } from './Components/Exam/data-time-picker/data-time-picker.component';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
@@ -68,13 +67,15 @@ import { SignupTeacherComponent } from './Components/signup-teacher/signup-teach
 import { AdminDashBoardComponent } from './Components/admin-dash-board/admin-dash-board.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
-import { CustomCloudNavbarComponent } from './Components/SharedComponents/custom-cloud-navbar/custom-cloud-navbar.component';
+import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
+import { FooterComponent } from './Components/Shared/footer/footer.component';
 
 
 @NgModule({
 
   declarations: [
     AppComponent,
+    FooterComponent,
     SignUpComponent,
     LoginComponent,
     HeaderComponent,
@@ -95,7 +96,6 @@ import { CustomCloudNavbarComponent } from './Components/SharedComponents/custom
     ScrollAnimationDirective,
     AppearFromLeftDirective,
     AppearFromRightDirective,
-    FooterComponent,
     ScrollToTopButtonComponent,
     CourseDetailsComponent,
     CourseDetailsHeaderComponent,
@@ -107,7 +107,6 @@ import { CustomCloudNavbarComponent } from './Components/SharedComponents/custom
     HeroComponent,
     CreateExamComponent,
     DataTimePickerComponent,
-    FooterComponent,
     TeacherDashboardComponent,
     SignupTeacherComponent,
     AdminDashBoardComponent,
