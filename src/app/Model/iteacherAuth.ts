@@ -1,4 +1,4 @@
-export interface Iteacherdata {
+export interface ITeacherAuth {
   firstName: string;
   lastName: string;
   email: string;

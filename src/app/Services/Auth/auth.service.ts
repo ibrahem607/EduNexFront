@@ -6,9 +6,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { jwtDecode } from "jwt-decode";
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { IuserUdateFormData } from 'src/app/Model/IuserUdateFormData';
-import { Iteacherdata } from 'src/app/Model/Iteacherdata';
+
 import { CustomJwtPayload } from 'src/app/Model/CustomJwtPayload ';
+import { ITeacherAuth } from 'src/app/Model/iteacherAuth';
+import { IUserUpdateFormData } from 'src/app/Model/iuserUpdateForm';
 
 
 @Injectable({
@@ -28,7 +29,7 @@ export class AuthService {
   }
 
 
-  signUp(data: IuserUdateFormData): Observable<any> {
+  signUp(data: IUserUpdateFormData): Observable<any> {
     return this.httpClient.post(`${this.baseUrl}/api/Student/register/student`, data).pipe(
       map(response => {
         // If the response indicates success, return the response data
@@ -84,7 +85,7 @@ export class AuthService {
     );
   }
 
-  signUpTeacher(data: Iteacherdata): Observable<any> {
+  signUpTeacher(data: ITeacherAuth): Observable<any> {
     return this.httpClient.post(`${this.baseUrl}/api/Teacher/register/teacher`, data).pipe(
       map((response: any) => {
         console.log(response);

@@ -1,5 +1,5 @@
 
-export interface IuserUdateFormData {
+export interface IUserUpdateFormData {
   address:string;
   City: string;
   confirmPassword: string;

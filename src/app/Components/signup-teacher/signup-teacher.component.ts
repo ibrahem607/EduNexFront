@@ -4,7 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { passwordMatched } from 'src/app/Validator/CrossfiledValidation';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
-import { Iteacherdata } from 'src/app/Model/Iteacherdata';
+import { ITeacherAuth } from 'src/app/Model/iteacherAuth';
+
 
 
 @Component({
@@ -103,7 +104,7 @@ export class SignupTeacherComponent {
     this.authService.removeToken();
     if (this.signupForm.valid) {
 
-      const teacherData: Iteacherdata = {
+      const teacherData: ITeacherAuth = {
         firstName: this.signupForm.value.fullName,
         lastName: this.signupForm.value.lastName,
         email:this.signupForm.value.teacherEmail,

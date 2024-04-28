@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { IuserUdateFormData } from 'src/app/Model/IuserUdateFormData';
+import { IUserUpdateFormData } from 'src/app/Model/iuserUpdateForm';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { passwordMatched } from 'src/app/Validator/CrossfiledValidation';
 
@@ -103,7 +103,7 @@ export class SignUpComponent implements OnInit {
 
     if (this.signupForm.valid) {
 
-      const defaultFormData: IuserUdateFormData = {
+      const defaultFormData: IUserUpdateFormData = {
         City: this.signupForm.value.governorate,
         address: this.signupForm.value.address,
         confirmPassword: this.signupForm.value.confirmPassword,
