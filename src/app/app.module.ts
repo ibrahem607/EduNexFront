@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,15 +30,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SignUpComponent } from './Components/sign-up/sign-up.component';
-import { LoginComponent } from './Components/login/login.component';
-import { HeaderComponent } from './Components/Shared/header/header.component';
-import { CoursesComponent } from './Components/courses/courses.component';
-import { CustomPaginationComponent } from './Components/Shared/custom-pagination/custom-pagination.component';
-import { TeachersComponent } from './Components/teachers/teachers.component';
-import { MainComponent } from './Components/Home/main/main.component';
 import { CourseCardComponent } from './Components/Shared/course-card/course-card.component';
 import { TeacherCardComponent } from './Components/Shared/teacher-card/teacher-card.component';
 import { RecentCoursesComponent } from './Components/Home/recent-courses/recent-courses.component';
@@ -83,11 +74,30 @@ import { TeacherDetailsComponent } from './Components/teacher-details/teacher-de
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { DataTimePickerComponent } from './Components/Exam/data-time-picker/data-time-picker.component';
+import { TeacherDashboardComponent } from './Components/teacher-dashboard/teacher-dashboard.component';
+import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
+import { AdminDashBoardComponent } from './Components/admin-dash-board/admin-dash-board.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
+import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
+import { AppComponent } from './app.component';
+import { SignUpComponent } from './Components/sign-up/sign-up.component';
+import { LoginComponent } from './Components/login/login.component';
+import { HeaderComponent } from './Components/Shared/header/header.component';
+import { CoursesComponent } from './Components/courses/courses.component';
+import { CustomPaginationComponent } from './Components/Shared/custom-pagination/custom-pagination.component';
+import { TeachersComponent } from './Components/teachers/teachers.component';
+import { MainComponent } from './Components/Home/main/main.component';
+import { AppRoutingModule } from './app-routing.module';
+
+
 @NgModule({
+
   declarations: [
     AppComponent,
+    FooterComponent,
     SignUpComponent,
     LoginComponent,
     HeaderComponent,
@@ -135,6 +145,11 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     StudentSettingsComponent,
     SignOutComponent,
     TeacherDetailsComponent,
+    TeacherDashboardComponent,
+    SignupTeacherComponent,
+    AdminDashBoardComponent,
+    TeacherProfileComponent,
+    CustomCloudNavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -159,21 +174,36 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     MatInputModule,
     MatProgressBarModule,
     MatChipsModule,
+    HttpClientModule,
     MatButtonToggleModule,
+    LoadingBarModule,
+    LoadingBarHttpClientModule,
+    LoadingBarRouterModule,
     MatDialogModule,
     MatSelectModule,
     MatMenuModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatSnackBarModule,
     MatCheckboxModule,
     MatTableModule,
     AppRoutingModule,
     LoadingBarModule,
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
+    DataTimePickerComponent,
+    TeacherDashboardComponent,
+    SignupTeacherComponent,
+    AdminDashBoardComponent,
+    TeacherProfileComponent,
+    CustomCloudNavbarComponent,
+    MatTabsModule,
   ],
   providers: [
     OverlayContainer,
+    importProvidersFrom(LoadingBarHttpClientModule),
+    MatNativeDateModule,
+    HttpClientModule
   ],
   bootstrap: [AppComponent]
 })

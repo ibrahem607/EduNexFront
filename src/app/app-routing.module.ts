@@ -12,6 +12,10 @@ import { StudentExamComponent } from './Components/Exam/Student/student-exam/stu
 import { ExamResultComponent } from './Components/Exam/Student/exam-result/exam-result.component';
 import { StudentProfileComponent } from './Components/Profile/student-profile/student-profile.component';
 import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
+import { TeacherDashboardComponent } from './Components/teacher-dashboard/teacher-dashboard.component';
+import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
+import { AdminDashBoardComponent } from './Components/admin-dash-board/admin-dash-board.component';
+import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
 
 const routes: Routes = [
   { path: "course/:courseId/lesson/:lessonId/create", component: CreateExamComponent },
@@ -27,6 +31,12 @@ const routes: Routes = [
   { path: "lesson/:id", component: LessonContentComponent },
   { path: "home", component: MainComponent },
   { path: "error", component: MainComponent },
+  { path: "home", component: MainComponent },
+  { path: "tdash", component: TeacherDashboardComponent },
+  { path: "home", component: MainComponent },
+  { path: "teacherSignup", component: SignupTeacherComponent },
+  { path: "teacherprofile", component: TeacherProfileComponent },
+  { path: "admindash", component: AdminDashBoardComponent },
   { path: "", component: LoginComponent },
   { path: "**", component: LoginComponent }
 ];
