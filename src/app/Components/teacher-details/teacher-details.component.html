@@ -1,4 +1,4 @@
-<div class="container d-flex align-items-start gap-4">
+<div class="container d-flex flex-md-row flex-column gap-4">
   <section class="teacher-info-section flex flex-column">
     <div class="mat-card-wrapper" #cardWrapper>
       <mat-card class="example-card">
@@ -31,9 +31,12 @@
     </div>
   </section>
 
-  <section class="flex flex-wrap gap-3">
-    <ng-container *ngFor="let course of courses">
-      <app-course-card [course]="course"></app-course-card>
-    </ng-container>
-  </section>
+  <!-- <div class="flex flex-column justify-content-center w-100"> -->
+    <!-- <h4 class="mb-4" style="color: orange;">كورساتي</h4> -->
+    <section class="d-flex flex-wrap gap-3 cards-container">
+      <ng-container *ngFor="let course of courses">
+        <app-course-card [course]="course"></app-course-card>
+      </ng-container>
+    </section>
+  <!-- </div> -->
 </div>

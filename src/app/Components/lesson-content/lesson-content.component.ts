@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ILesson, ILessonContent } from 'src/app/Model/ilesson';
+import { ILesson, ILessonContent } from 'src/app/Model/icourse';
 
 @Component({
   selector: 'app-lesson-content',

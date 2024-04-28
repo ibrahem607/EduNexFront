@@ -79,11 +79,14 @@ ul {
 }
 
 .item:nth-child(1) {
-  --bg-color: linear-gradient(to bottom right, #f9ce34, #ee2a7b, #6228d7);
+  --bg-color:  #0077b5;
 }
 .item:nth-child(2) {
-  --bg-color: #0077b5;
+  --bg-color: linear-gradient(to bottom right, #f9ce34, #ee2a7b, #6228d7);
 }
 .item:nth-child(3) {
+  --bg-color: #0077b5;
+}
+.item:nth-child(4) {
   --bg-color: #ff0000;
 }

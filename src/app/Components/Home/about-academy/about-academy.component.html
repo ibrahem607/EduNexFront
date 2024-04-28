@@ -24,7 +24,7 @@
       <!-- <section class="col-7"> -->
       <app-side-scroll-buttons [sectionName]="'scroll-about-section'"></app-side-scroll-buttons>
 
-      <div class="flex scroll-about-section hidden" AppearFromRight>
+      <div class="flex scroll-about-section hidden gap-3 p-1" AppearFromRight>
         <ng-container *ngFor="let card of chosenCards.slice(currentIndex, currentIndex + cardsToShow); let i = index">
           <div class="card-container" [@fadeInOut]>
             <ng-container *ngIf="isCourse(card)">

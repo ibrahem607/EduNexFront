@@ -14,7 +14,7 @@
  <section>
   <app-side-scroll-buttons [sectionName]="'scroll-section-r-courses'"></app-side-scroll-buttons>
 
-   <div class="flex scroll-section-r-courses hidden" AppearFromRight>
+   <div class="flex scroll-section-r-courses hidden gap-3 p-1" AppearFromRight>
      <ng-container *ngFor="let course of filteredCourses.slice(currentIndex, currentIndex + cardsToShow); let i = index">
        <div class="card-container" [@fadeInOut]>
          <app-course-card [course]="course"></app-course-card>

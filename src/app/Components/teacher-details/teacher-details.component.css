@@ -44,7 +44,7 @@ div.container {
 
 .category {
   bottom: 30px;
-  color: yellow;
+  color: orange;
 }
 
 .name {
@@ -58,6 +58,7 @@ a {
   all: unset;
 }
 
+h3,
 h4,
 h5 {
   font-weight: 700;
@@ -68,5 +69,26 @@ h5 {
 }
 
 .social-icons {
-  color: var(--wave4);
+  color: var(--wave2);
+  box-shadow: var(--border) 0px 0px 4px 0px;
+  border-radius: 5px;
+}
+
+@media (min-width: 760px) {
+  .container {
+    align-items: start;
+  }
+  /* .teacher-info-section{
+    margin-top: calc(3rem + 28.38px) ;
+  } */
+}
+
+@media (max-width: 760px) {
+  .container {
+    justify-content: center;
+    align-items: center;
+  }
+  .cards-container {
+    justify-content: center;
+  }
 }

@@ -1,5 +1,5 @@
-body {
-  overflow-x: hidden;
+form {
+  padding: 1px;
 }
 
 .section-container {
@@ -10,6 +10,7 @@ body {
   width: 100%;
   position: relative;
   min-height: calc(700px + 2rem);
+  overflow: hidden;
 }
 
 .section {

@@ -7,7 +7,7 @@
   <section>
     <app-side-scroll-buttons [sectionName]="'scroll-section-a-teachers'"></app-side-scroll-buttons>
 
-    <div class="flex scroll-section-a-teachers hidden" AppearFromRight>
+    <div class="flex scroll-section-a-teachers hidden gap-3 p-1" AppearFromRight>
       <ng-container *ngFor="let teacher of teachers let i = index">
         <div class="card-container">
           <app-teacher-card [teacher]="teacher"></app-teacher-card>
