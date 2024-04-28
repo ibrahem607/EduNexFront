@@ -85,6 +85,9 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
+import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
+import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -135,6 +138,9 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     StudentSettingsComponent,
     SignOutComponent,
     TeacherDetailsComponent,
+    SignupTeacherComponent,
+    TeacherProfileComponent,
+    CustomCloudNavbarComponent
   ],
   imports: [
     BrowserModule,

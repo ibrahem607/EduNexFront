@@ -12,8 +12,12 @@ import { StudentExamComponent } from './Components/Exam/Student/student-exam/stu
 import { ExamResultComponent } from './Components/Exam/Student/exam-result/exam-result.component';
 import { StudentProfileComponent } from './Components/Profile/student-profile/student-profile.component';
 import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
+import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
+import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
 
 const routes: Routes = [
+  { path: "teacherSignup", component: SignupTeacherComponent },
+  { path: "teacherprofile", component: TeacherProfileComponent },
   { path: "course/:courseId/lesson/:lessonId/create", component: CreateExamComponent },
   { path: "course/:courseId/lesson/:lessonId/view", component: StudentExamComponent },
   { path: "course/:courseId/lesson/:lessonId/result", component: ExamResultComponent },
@@ -28,7 +32,7 @@ const routes: Routes = [
   { path: "home", component: MainComponent },
   { path: "error", component: MainComponent },
   { path: "", component: LoginComponent },
-  { path: "**", component: LoginComponent }
+  { path: "**", component: LoginComponent },
 ];
 
 @NgModule({

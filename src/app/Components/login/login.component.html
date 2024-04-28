@@ -10,19 +10,17 @@
       <div class="row mt-5">
         <div class="col">
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label>رقم تليفون الطالب</mat-label>
-            <input matInput type="text" name="studentPhoneNumber" formControlName="studentPhoneNumber"
-              id="studentPhoneNumber" placeholder="رقم الموبايل" aria-label="رقم تليفون الطالب" required>
-            <mat-icon matSuffix>phone</mat-icon>
-            <mat-error *ngIf="studentPhoneNumber?.touched && studentPhoneNumber?.invalid">
-              <span *ngIf="studentPhoneNumber?.errors?.['pattern']" class="text-danger">رقم الهاتف يجب أن يكون من 11
-                رقم ويبدأ بـ 010 أو 011 أو 012 أو 015</span>
-              <span *ngIf="studentPhoneNumber?.errors?.['required']" class="text-danger">رقم الهاتف مطلوب</span>
+            <mat-label>عنوان البريد الإلكتروني</mat-label>
+            <input matInput type="email" name="studentEmail" formControlName="studentEmail" id="studentEmail"
+              placeholder="البريد الإلكتروني" aria-label="عنوان البريد الإلكتروني" required>
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="studentEmail?.touched && studentEmail?.invalid">
+              <span *ngIf="studentEmail?.errors?.['pattern']" class="text-danger">البريد الإلكتروني غير صالح</span>
+              <span *ngIf="studentEmail?.errors?.['required']" class="text-danger">البريد الإلكتروني مطلوب</span>
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-
 
       <div class="row mt-3">
         <div class="col">
@@ -39,27 +37,18 @@
           </mat-form-field>
         </div>
       </div>
-      <!--
-            <div class="row mt-3">
-                <div class="col">
-                    <label class="d-block font-18-medium mb-3" for="password">كلمة السر</label>
-                    <input type="password" name="password" formControlName="password" class="form-control  mt-3" style="width: 100%;" id="password" placeholder="كلمة السر" aria-label="كلمة السر" required >
-
-                    <div *ngIf="password?.touched ">
-                        <p *ngIf="password?.errors?.['required']" class="text-danger"> كلمة المرور مطلوبة</p>
-                        <p *ngIf="password?.errors?.['minlength']" class="text-danger"> كلمةالمرور يجب ان تكون أكثر من 8 أحرف</p>
-                      </div>
-                </div>
-            </div> -->
 
       <div class="d-grid gap-3 text-center my-4">
         <button mat-button class="rounded-5 custom-button" type="submit"> تسجيل الدخول</button>
-        <p>لا يوجد لديك حساب؟<a [routerLink]="['/signup']" class="text-second text-decoration-none"
-            style="color: orange;"> انشئ حسابك الآن</a></p>
-        <p>هل نسيت كلمة المرور؟<a [routerLink]="['/signup']" class="text-second text-decoration-none"
-            style="color: orange;">استعادة كلمة المرور</a></p>
+        <p>لا يوجد لديك حساب؟
+          <a [routerLink]="['/signup']" class="text-second text-decoration-none" style="color: orange;"> انشئ حسابك
+            الآن</a>
+        </p>
+        <p>هل نسيت كلمة المرور؟
+          <a [routerLink]="['/reset-password']" class="text-second text-decoration-none" style="color: orange;">استعادة
+            كلمة المرور</a>
+        </p>
       </div>
     </form>
   </div>
-
 </section>
