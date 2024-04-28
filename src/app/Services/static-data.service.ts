@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICourse } from 'src/app/Model/iCourse';
+import { ICourse } from 'src/app/Model/icourse';
 import { courseData } from './courses.data';
 import { ITeacher } from 'src/app/Model/iTeacher';
 import { teacherData } from './teachers.data';

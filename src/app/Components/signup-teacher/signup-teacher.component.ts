@@ -32,7 +32,7 @@ export class SignupTeacherComponent {
       password: ['', [Validators.required, Validators.minLength(8),this.passwordStrengthValidator]],
       confirmPassword: ['',],
       teacherEmail: ['',[Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
-    },{validators: passwordMatched()}); // Apply custom validator here
+    },{validators: passwordMatched}); // Apply custom validator here
    
   }
   passwordStrengthValidator(control: any) {
