@@ -2,25 +2,18 @@
   /* box-shadow: var(--border) 0px 0px 3px 3px; */
   box-shadow: var(--border) 0px 2px 8px 0px;
 }
+
 .card-input-section {
   background-image: var(--btn);
   height: 25rem;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
+
 .card-input-section img {
   margin-left: 2rem;
   margin-right: 2rem;
   width: 35%;
-}
-::ng-deep .mdc-notched-outline__leading {
-  border-color: white !important;
-}
-::ng-deep .mdc-notched-outline__notch {
-  border-color: white !important;
-}
-::ng-deep .mdc-notched-outline__trailing {
-  border-color: white !important;
 }
 
 .card-input-section input::placeholder {
@@ -47,18 +40,26 @@
   opacity: 1;
   transition: 0.3s;
   border: 2px solid var(--wave2);
-  /* position: relative; */
 }
-/* .custom-button-2::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 20rem;
-  padding: 3px;
-  background: var(--btn);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-} */
+
+/* Change the border color */
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__notch,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__trailing {
+  border-color: white !important;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+
 @media (max-width: 460px) {
   .custom-checkbox-container {
     justify-content: center;
