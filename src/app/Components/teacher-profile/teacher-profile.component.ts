@@ -13,6 +13,8 @@ export class TeacherProfileComponent {
   edittext: boolean = true;
   edittext1: boolean = true;
   edittext2: boolean = true;
+  selectedImage: string | ArrayBuffer | null = 'https://bootdey.com/img/Content/avatar/avatar7.png';
+
   @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
   teacher: any;
   teacherHint: any = '';
@@ -52,7 +54,6 @@ export class TeacherProfileComponent {
   toggleEditp() {
     this.edittext1 = !this.edittext1;
   }
-  selectedImage: string | ArrayBuffer | null = 'https://bootdey.com/img/Content/avatar/avatar7.png';
 
   previewImage(event: any) {
     const file = event.target.files[0];
