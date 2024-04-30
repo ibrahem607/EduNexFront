@@ -6,12 +6,13 @@ import { IUserUpdateFormData } from 'src/app/Model/iuserUpdateForm';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { passwordMatched } from 'src/app/Validator/CrossfiledValidation';
 
+
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  selector: 'app-student-sign-up',
+  templateUrl: './student-sign-up.component.html',
+  styleUrls: ['./student-sign-up.component.css']
 })
-export class SignUpComponent implements OnInit {
+export class StudentSignUpComponent {
   isInputFocused: boolean = false;
   signupForm!: FormGroup;
 

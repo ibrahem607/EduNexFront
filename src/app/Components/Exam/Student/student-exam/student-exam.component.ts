@@ -87,7 +87,6 @@ export class StudentExamComponent implements OnInit {
     this.form = this.fb.group(formControls);
   }
 
-
   selectQuestion(index: number) {
     if (index === 0 || this.visitedQuestions[index]) {
       this.selectedQuestionIndex = index;

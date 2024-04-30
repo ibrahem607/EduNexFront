@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ExamTimeOutComponent } from '../exam-time-out/exam-time-out.component';
-import { ActivatedRoute } from '@angular/router';
-
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.css']
 })
-export class TimerComponent implements OnInit {
+export class TimerComponent implements OnInit, OnDestroy {
   @Input() duration!: number;
   @Input() type!: string;
   timerStarted: boolean = false;
@@ -18,11 +19,27 @@ export class TimerComponent implements OnInit {
   timeLeftString!: string;
   circleOffset: number = 283;
   timeElapsedPercentage: number = 0;
+  private destroyed$: Subject<void> = new Subject();
 
-  constructor(private dialog: MatDialog, private route: ActivatedRoute) { }
+  constructor(
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.startTimer();
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      takeUntil(this.destroyed$)
+    ).subscribe(() => {
+      // Perform cleanup here or any other actions needed on route change
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   startTimer() {

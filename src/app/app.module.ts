@@ -29,10 +29,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SignUpComponent } from './Components/sign-up/sign-up.component';
+
+import { AppComponent } from './app.component';;
 import { LoginComponent } from './Components/login/login.component';
 import { HeaderComponent } from './Components/Shared/header/header.component';
 import { CoursesComponent } from './Components/courses/courses.component';
@@ -70,28 +69,30 @@ import { StudentExamComponent } from './Components/Exam/Student/student-exam/stu
 import { TimerComponent } from './Components/Exam/Student/timer/timer.component';
 import { ExamResultComponent } from './Components/Exam/Student/exam-result/exam-result.component';
 import { ExamTimeOutComponent } from './Components/Exam/Student/exam-time-out/exam-time-out.component';
-import { StudentProfileComponent } from './Components/Profile/student-profile/student-profile.component';
-import { ProfileHomeComponent } from './Components/Profile/profile-home/profile-home.component';
-import { ProfileCourseComponent } from './Components/Profile/profile-course/profile-course.component';
-import { ProfileBudgetComponent } from './Components/Profile/profile-budget/profile-budget.component';
-import { StudentShippingCodesComponent } from './Components/Profile/student-shipping-codes/student-shipping-codes.component';
-import { ChangePasswordComponent } from './Components/Profile/change-password/change-password.component';
-import { StudentSettingsComponent } from './Components/Profile/student-settings/student-settings.component';
-import { SignOutComponent } from './Components/Profile/sign-out/sign-out.component';
+import { StudentProfileComponent } from './Components/Profile/Student/student-profile/student-profile.component';
+import { ProfileHomeComponent } from './Components/Profile/Student/profile-home/profile-home.component';
+import { ProfileCourseComponent } from './Components/Profile/Student/profile-course/profile-course.component';
+import { ProfileBudgetComponent } from './Components/Profile/Student/profile-budget/profile-budget.component';
+import { StudentShippingCodesComponent } from './Components/Profile/Student/student-shipping-codes/student-shipping-codes.component';
+import { ChangePasswordComponent } from './Components/Profile/Student/change-password/change-password.component';
+import { StudentSettingsComponent } from './Components/Profile/Student/student-settings/student-settings.component';
+import { SignOutComponent } from './Components/Profile/Student/sign-out/sign-out.component';
 import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
+import { TeacherProfileComponent } from './Components/Profile/Teacher/teacher-profile/teacher-profile.component';
+import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
+import { NotFoundComponent } from './Components/not-found/not-found.component';
+import { StudentSignUpComponent } from './Components/SignUp/student-sign-up/student-sign-up.component';
+import { TeacherSignUpComponent } from './Components/SignUp/teacher-sign-up/teacher-sign-up.component';
 
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
-import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
-import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    SignUpComponent,
     LoginComponent,
     HeaderComponent,
     CoursesComponent,
@@ -138,9 +139,12 @@ import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-nav
     StudentSettingsComponent,
     SignOutComponent,
     TeacherDetailsComponent,
-    SignupTeacherComponent,
+    TeacherSignUpComponent,
     TeacherProfileComponent,
-    CustomCloudNavbarComponent
+    CustomCloudNavbarComponent,
+    NotFoundComponent,
+    StudentSignUpComponent,
+    TeacherSignUpComponent
   ],
   imports: [
     BrowserModule,

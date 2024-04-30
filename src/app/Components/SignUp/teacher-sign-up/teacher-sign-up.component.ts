@@ -6,34 +6,32 @@ import { passwordMatched } from 'src/app/Validator/CrossfiledValidation';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ITeacherAuth } from 'src/app/Model/iteacherAuth';
 
-
-
 @Component({
-  selector: 'app-signup-teacher',
-  templateUrl: './signup-teacher.component.html',
-  styleUrls: ['./signup-teacher.component.css']
+  selector: 'app-teacher-sign-up',
+  templateUrl: './teacher-sign-up.component.html',
+  styleUrls: ['./teacher-sign-up.component.css']
 })
-export class SignupTeacherComponent {
+export class TeacherSignUpComponent {
 
   isInputFocused: boolean = false;
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder,private authService:AuthService,private router:Router,private _snackBar: MatSnackBar) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.signupForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.pattern('^(?!\d).{8,}$')]],
       lastName: ['', Validators.required],
-      teacherPhoneNumber: ['',[Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
+      teacherPhoneNumber: ['', [Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
       birthday: ['', Validators.required],
       sex: ['', Validators.required],
       governorate: ['', Validators.required],
       address: ['', Validators.required],
       FacebookAccount: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8),this.passwordStrengthValidator]],
+      password: ['', [Validators.required, Validators.minLength(8), this.passwordStrengthValidator]],
       confirmPassword: ['',],
-      teacherEmail: ['',[Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
-    },{validators: passwordMatched}); // Apply custom validator here
+      teacherEmail: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
+    }, { validators: passwordMatched }); // Apply custom validator here
 
   }
   passwordStrengthValidator(control: any) {
@@ -45,61 +43,50 @@ export class SignupTeacherComponent {
 
     return null;
   }
-  get password()
-  {
+  get password() {
     return this.signupForm.get('password')
   }
-    //check password is invalid
-   isPasswordInvalid() {
+  //check password is invalid
+  isPasswordInvalid() {
     return this.password?.invalid && (this.password?.dirty || this.password?.touched);
   }
-  get teacherEmail()
-  {
+  get teacherEmail() {
     return this.signupForm.get('teacherEmail')
   }
-  get fullName()
-  {
+  get fullName() {
     return this.signupForm.get('fullName')
   }
-  get teacherPhoneNumber()
-  {
+  get teacherPhoneNumber() {
     return this.signupForm.get('teacherPhoneNumber')
   }
 
-  get FacebookAccount()
-  {
+  get FacebookAccount() {
     return this.signupForm.get('FacebookAccount')
   }
-  get birthday()
-  {
+  get birthday() {
     return this.signupForm.get('birthday')
   }
-  get sex()
-  {
+  get sex() {
     return this.signupForm.get('sex')
   }
 
-  get governorate()
-  {
+  get governorate() {
     return this.signupForm.get('governorate')
   }
-  get address()
-  {
+  get address() {
     return this.signupForm.get('address')
   }
 
-  get confirmPassword()
-  {
+  get confirmPassword() {
     return this.signupForm.get('confirmPassword')
   }
 
-  get lastName()
-  {
+  get lastName() {
     return this.signupForm.get('lastName')
   }
 
 
-  errorMeg:string='';
+  errorMeg: string = '';
   onSubmit() {
     this.authService.removeToken();
     if (this.signupForm.valid) {
@@ -107,7 +94,7 @@ export class SignupTeacherComponent {
       const teacherData: ITeacherAuth = {
         firstName: this.signupForm.value.fullName,
         lastName: this.signupForm.value.lastName,
-        email:this.signupForm.value.teacherEmail,
+        email: this.signupForm.value.teacherEmail,
         phoneNumber: this.signupForm.value.teacherPhoneNumber,
         facebookAccount: this.signupForm.value.FacebookAccount,
         dateOfBirth: this.signupForm.value.birthday,
@@ -142,10 +129,6 @@ export class SignupTeacherComponent {
           }
         }
       );
-
-
-
-    }
-
     }
   }
+}
