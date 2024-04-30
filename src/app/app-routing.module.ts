@@ -17,23 +17,23 @@ import { StudentSignUpComponent } from './Components/SignUp/student-sign-up/stud
 import { TeacherSignUpComponent } from './Components/SignUp/teacher-sign-up/teacher-sign-up.component';
 
 const routes: Routes = [
+  { path: "home", component: MainComponent },
   { path: "teacherSignup", component: TeacherSignUpComponent },
   { path: "course/:courseId/lesson/:lessonId/create", component: CreateExamComponent },
   { path: "course/:courseId/lesson/:lessonId/view", component: StudentExamComponent },
   { path: "course/:courseId/lesson/:lessonId/result", component: ExamResultComponent },
   { path: "student/:studentId", component: StudentProfileComponent },
   { path: "teacherP/:id",  component: TeacherProfileComponent },
-  { path: "login", component: LoginComponent },
   { path: "signup", component: StudentSignUpComponent },
   { path: "courses", component: CoursesComponent },
   { path: "course/:id", component: CourseDetailsComponent },
   { path: "teachers", component: TeachersComponent },
   { path: "teacher/:id", component: TeacherDetailsComponent },
   { path: "lesson/:id", component: LessonContentComponent },
-  { path: "home", component: MainComponent },
-  { path: "error", component: MainComponent },
+  { path: "login", component: LoginComponent },
   { path: "", component: LoginComponent },
-  { path: "**", component: NotFoundComponent },
+  { path: "notfound", component: NotFoundComponent },
+  { path: "**", redirectTo:"notfound" },
 ];
 
 @NgModule({

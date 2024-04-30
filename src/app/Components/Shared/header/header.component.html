@@ -1,4 +1,4 @@
-<mat-sidenav-container class="example-container">
+<mat-sidenav-container class="example-container" *ngIf="!hideHeader">
   <!-- Side nav goes here -->
   <mat-sidenav #sidenav [opened]="isShowing" fixedTopGap="56" position="end"
     [@openClose]="isShowing ? 'open' : 'closed'">

@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDrawer } from '@angular/material/sidenav';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { LoadingBarService } from '@ngx-loading-bar/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -32,8 +33,9 @@ export class HeaderComponent implements OnInit {
   darkClass = 'theme-dark';
   lightClass = 'theme-light';
   isShowing: boolean = false;
+  hideHeader: boolean = false;
 
-  constructor(private renderer: Renderer2, public loader: LoadingBarService) { }
+  constructor(private renderer: Renderer2, public loader: LoadingBarService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   toggleRightSidenav() {
     this.isShowing = !this.isShowing;
@@ -64,8 +66,13 @@ export class HeaderComponent implements OnInit {
         this.moveMarker(activeButton);
       }
     });
-  }
 
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.hideHeader = this.activatedRoute.firstChild?.snapshot.routeConfig?.path === 'notfound';
+    //   }
+    // });
+  }
 
   ngAfterViewInit(): void {
     if (localStorage.getItem('themePreference') === 'dark') {
@@ -102,5 +109,4 @@ export class HeaderComponent implements OnInit {
       marker.style.left = offsetX + 'px';
     }
   }
-
 }
