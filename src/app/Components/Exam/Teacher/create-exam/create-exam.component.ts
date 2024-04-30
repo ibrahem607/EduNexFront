@@ -253,6 +253,7 @@ export class CreateExamComponent implements OnInit {
     if (index != this.activeQuestionIndex) {
       this.activeQuestions[index] = !this.activeQuestions[index];
       this.activeQuestionIndex = this.activeQuestionIndex === index ? -1 : index;
+      this.activeSection = 'questionSettings';
     }
   }
 
@@ -260,6 +261,21 @@ export class CreateExamComponent implements OnInit {
   handleAnswerSelection(questionIndex: number, selectedAnswerIndex: number, isTrueAnswer: boolean): void {
     const questionFormGroup = this.getQuestionFormGroup(questionIndex);
     if (questionFormGroup) {
+      const questionType = questionFormGroup.get('type')?.value;
+      if ((questionType === 'oneChoice' || questionType === 'trueFalse') && isTrueAnswer) {
+        const answersFormArray = questionFormGroup.get('answers') as FormArray;
+        if (answersFormArray) {
+          for (let i = 0; i < answersFormArray.length; i++) {
+            if (i !== selectedAnswerIndex) {
+              const answerFormGroup = answersFormArray.at(i) as FormGroup;
+              const isCorrectControl = answerFormGroup.get('isCorrect');
+              if (isCorrectControl) {
+                isCorrectControl.setValue(false);
+              }
+            }
+          }
+        }
+      }
       const answerFormGroup = this.getAnswerFormGroup(questionIndex, selectedAnswerIndex);
       if (answerFormGroup) {
         const isCorrectControl = answerFormGroup.get('isCorrect');

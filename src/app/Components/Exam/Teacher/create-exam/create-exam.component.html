@@ -5,7 +5,8 @@
       <h6>{{lessonTitle}}</h6>
     </section>
     <div class="flex column flex-wrap gap-3 justify-content-center column-mobile mb-auto">
-      <app-exam-controller (sectionChange)="activeSection = $event"></app-exam-controller>
+      <app-exam-controller (sectionChange)="activeSection = $event"
+        [activeSection]="activeSection"></app-exam-controller>
       <app-question-controller [examForm]="examForm" [formSubmitted]="formSubmitted"
         (questionIndexClicked)="handleQuestionIndexClicked($event)"
         (addQuestionClicked)="onAddQuestionClicked()"></app-question-controller>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-exam-controller',
@@ -8,8 +8,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class ExamControllerComponent implements OnInit {
 
   @Output() sectionChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() activeSection!: string;
 
-  activeSection: string = '';
 
   setActiveSection(section: string): void {
     this.activeSection = section;
