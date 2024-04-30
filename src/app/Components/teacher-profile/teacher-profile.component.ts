@@ -18,18 +18,40 @@ export class TeacherProfileComponent {
   @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
   teacher: any;
   teacherHint: any = '';
+  teacherData: any = '';
   constructor(private route: ActivatedRoute, private authService: AuthService, private teacherService: TeacherService) { }
 
   ngOnInit(): void {
-    console.log('Teacher id:', this.authService.teacherId);
-    this.teacherHint = this.teacherService.getTeacherAbout()
+    // console.log('Teacher id:', this.authService.teacherId);
+    // this.teacherHint = this.teacherService.getTeacherAbout()
 
+    this.getTeacherById()
+
+
+  }
+
+  getTeacherById():any
+  {
+    this.teacherData=this.teacherService.getTeacherById(this.authService.getUserId()).subscribe({
+      next:(data:any)=>{
+        this.teacherData=data;
+        // console.log(`teacher data ${this.teacherData.firstName}`);
+      },
+      error:(err)=>{
+        // console.log(`error yaman${err.error}`)
+      }
+    })
   }
 
   saveupdate(updateData: string | null) {
     if (updateData !== null) {
-      const id = this.authService.teacherId;
-      const aboutTeacher = updateData.toString(); // Ensure aboutTeacher is a string
+      const id = this.authService.getUserId();
+     
+      const aboutTeacher ={
+         aboutMe: updateData.toString(),
+        //  accountNote: " "
+      } 
+
       this.teacherService.saveTeacherAbout(id, aboutTeacher).subscribe(
         (response) => {
           console.log('Update successful:', response);
@@ -43,8 +65,12 @@ export class TeacherProfileComponent {
     }
   }
 
+
+
   toggleEdit() {
     this.edittext = !this.edittext;
+    console.log(this.teacherData.aboutMe)
+    
   }
 
   toggleEdit2() {

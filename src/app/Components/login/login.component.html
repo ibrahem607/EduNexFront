@@ -31,8 +31,8 @@
             <mat-icon matSuffix>lock</mat-icon>
             <mat-error *ngIf="password?.touched && password?.invalid">
               <span *ngIf="password?.errors?.['required']" class="text-danger"> كلمة المرور مطلوبة</span>
-              <span *ngIf="password?.errors?.['minlength']" class="text-danger"> كلمة المرور يجب أن تكون أكثر من 8
-                أحرف</span>
+              <!-- <span *ngIf="password?.errors?.['minlength']" class="text-danger"> كلمة المرور يجب أن تكون أكثر من 8
+                أحرف</span> -->
             </mat-error>
           </mat-form-field>
         </div>

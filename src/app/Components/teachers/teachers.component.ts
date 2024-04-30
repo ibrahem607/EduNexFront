@@ -15,24 +15,24 @@ export class TeachersComponent implements OnInit {
 
   constructor(private dynamicData: DynamicDataService, private authService: AuthService) { }
 
-  getAll() {
-    this.dynamicData.getAllTeachers().subscribe(teachers => this.teachers = teachers);
-  }
+  // getAll() {
+  //   this.dynamicData.getAllTeachers().subscribe(teachers => this.teachers = teachers);
+  // }
 
   ngOnInit(): void {
-    this.getAll()
+    // this.getAll()
 
-    console.log(this.authService.getToken());
+    // console.log(this.authService.getToken());
 
-    console.log(this.authService.saveCurrentUserId())
+    // console.log(this.authService.saveCurrentUserId())
 
-    this.authService.getUserData(this.authService.saveCurrentUserId()).subscribe({
-      next: (data) => {
-        console.log(data)
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+    // this.authService.getUserData(this.authService.saveCurrentUserId()).subscribe({
+    //   next: (data) => {
+    //     console.log(data)
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   }
+    // })
   }
 }

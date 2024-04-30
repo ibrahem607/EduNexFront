@@ -21,6 +21,9 @@ export class AuthService {
    baseUrl: string = 'http://localhost:5293';
    tokenKey: string = 'auth_token';
    teacherId:any='';
+   currentUserId:string='UserId';
+   currentUserRole:string='UserRole';
+
   constructor(private httpClient: HttpClient,private router: Router,private snackBar: MatSnackBar) {
     if(localStorage.getItem("tokenKey") !==null)
       {
@@ -52,24 +55,29 @@ export class AuthService {
 
   login(data: any): Observable<any> {
 
-    console.log(data);
-
     return this.httpClient.post(`${this.baseUrl}/api/Auth/login`, data).pipe(
       tap((response: any) => {
         if (response && response.token) {
           // Save token
-          localStorage.setItem(this.tokenKey, response.token.result);
+          console.log(response)
+
+          localStorage.setItem(this.tokenKey, response.token);
 
            this.saveCurrentUserId()
-
+                 
           this.snackBar.open('  تم تسجيل الدخول بنجاح ', 'Close', {
             duration: 2000,
             verticalPosition: 'top',
             panelClass: ['green-snackbar']
           });
-
-          // go to about
-          this.router.navigate(['/teachers']);
+          if(localStorage.getItem(this.currentUserRole)=="Teacher")
+            {
+              this.router.navigate(['/teachers']);
+            }
+            else if(localStorage.getItem(this.currentUserRole)=="Student")
+              {
+                this.router.navigate(['/home']);
+              }
         }
       }),
       catchError(error => {
@@ -103,10 +111,11 @@ export class AuthService {
   }
 
 
-  getUserData(id:any):Observable<any>
-  {
-    return this.httpClient.get(`${this.baseUrl}/api/Student/Get-Student/${id}`)
-  }
+  // getUserData(id:any):Observable<any>
+  // {
+  //   return this.httpClient.get(`${this.baseUrl}/api/Student/Get-Student/${id}`)
+  // }
+
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
@@ -115,6 +124,12 @@ export class AuthService {
   removeToken(): void {
     localStorage.removeItem(this.tokenKey);
   }
+  getUserId(): any {
+   return  localStorage.getItem(this.currentUserId);
+  }
+  getUserRole(): any {
+    return  localStorage.getItem(this.currentUserRole);
+   }
 
   //have id of user
   currentUser:any=new BehaviorSubject(null) ;
@@ -122,10 +137,15 @@ export class AuthService {
   saveCurrentUserId(): any {
     const token = localStorage.getItem(this.tokenKey);
     if (token) {
-      console.log('Token retrieved:', token);
 
       const decodedUser: CustomJwtPayload = jwtDecode(token);
-      console.log('Decoded User:', decodedUser);
+      // this.currentUserId=decodedUser.nameid
+      // this.currentUserRole = decodedUser.role;
+
+      localStorage.setItem(this.currentUserId, decodedUser.nameid);
+      localStorage.setItem(this.currentUserRole, decodedUser.role);
+
+      console.log(`${localStorage.getItem(this.currentUserRole)} and ${localStorage.getItem(this.currentUserId)}`);
       return decodedUser.nameid;
     } else {
       console.log('No token found.');

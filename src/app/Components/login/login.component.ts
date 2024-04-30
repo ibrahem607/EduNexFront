@@ -23,7 +23,7 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       studentEmail: ['',[Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
 
-      password: ['', [Validators.required,Validators.minLength(8)]],
+      password: ['', Validators.required],
 
     });
   }
@@ -52,25 +52,25 @@ export class LoginComponent {
       this.authService.login(defaultFormData).subscribe({
         next: (data) => {
           // Handle success
-          console.log(data)
+          console.log(`succes ${data.token}`)
         },
         error: (err) => {
           // Handle error
+ 
+          // if(err.error.errorMessage=="Your account is pending approval. Please wait for admin approval.")
+          //   {
+          //     // console.log(err.error)
+          //     this.authService.teacherId=err.error.teacher;//send id
+          //     this.router.navigate(['/teacherprofile']);
 
-          if(err.error.errorMessage=="Your account is pending approval. Please wait for admin approval.")
-            {
-              // console.log(err.error)
-              this.authService.teacherId=err.error.teacher;//send id
-              this.router.navigate(['/teacherprofile']);
-
-            }
-            else if(err.error['']){
-           this.snackBar.open(err.error[''], 'Close', {
-            duration: 3000,
-            verticalPosition: 'bottom',
-            panelClass: ['red-snackbar']
-          });
-         }
+          //   }
+        //     else if(err.error['']){
+        //    this.snackBar.open(err.error[''], 'Close', {
+        //     duration: 3000,
+        //     verticalPosition: 'bottom',
+        //     panelClass: ['red-snackbar']
+        //   });
+        //  }
         }
       });
     } else {
