@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms';
 import { MatDrawer } from '@angular/material/sidenav';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { LoadingBarService } from '@ngx-loading-bar/core';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { TeacherService } from 'src/app/Services/Auth/teacher.service';
 
 @Component({
   selector: 'app-header',
@@ -32,14 +34,49 @@ export class HeaderComponent implements OnInit {
   darkClass = 'theme-dark';
   lightClass = 'theme-light';
   isShowing: boolean = false;
-
-  constructor(private renderer: Renderer2, public loader: LoadingBarService) { }
+  isLogin:boolean=true;
+  userData:any="";
+  constructor(private renderer: Renderer2, public loader: LoadingBarService, private authService: AuthService,private techServices:TeacherService) { }
 
   toggleRightSidenav() {
     this.isShowing = !this.isShowing;
   }
 
   ngOnInit(): void {
+
+    this.authService.IsLogin.subscribe({
+      next:()=>
+        {
+          if (this.authService.IsLogin.getValue() !==null)
+            {
+              this.isLogin=false;
+              if(this.authService.getUserRole()=="Student")
+                {
+                   this.authService.getStudentData(this.authService.getUserId()).subscribe({
+                    next:(data=>{
+                      console.log(data)
+                      this.userData=data;
+
+                    })
+                  })
+                }else if(this.authService.getUserRole()=="Teacher")
+                  {
+                    this.techServices.getTeacherById(this.authService.getUserId()).subscribe({
+                      next:(data=>{
+                        console.log(data)
+                        this.userData=data;
+  
+                      })
+                    })
+                  }
+            } else{
+              this.isLogin=true; 
+            }
+        }
+    })
+
+   
+   
     const savedTheme = localStorage.getItem('themePreference');
     const currentTheme = savedTheme === 'dark';
 
@@ -103,4 +140,12 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  Logout():any
+  {
+    this.authService.removeToken();
+    this.authService.removeUserId();
+    this.authService.removeUserRole();
+    this.isLogin=true;
+    this.userData=" ";
+  }
 }

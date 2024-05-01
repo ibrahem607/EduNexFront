@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +19,14 @@ export class TeacherService {
     return this.httpClient.put(`${this.baseUrl}/api/Teacher/teacherInfo/${teacherId}`, aboutTeacher, { headers });
   }
   
-  saveTeacherAccountNote(teacherId: string, TeacherAccountNote: any): Observable<any> {
+  // saveTeacherAccountNote(teacherId: string, accountNote: any): Observable<any> {
+  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  //   return this.httpClient.put(`${this.baseUrl}/api/Teacher/TeacherAccountNote/${teacherId}`, accountNote, { headers });
+  // }
+
+  saveTeacherAccountNote(teacherId: string, accountNote: any): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.httpClient.put(`${this.baseUrl}/api/Teacher/teacherAccountNote/${teacherId}`, TeacherAccountNote, { headers });
+    return this.httpClient.put(`${this.baseUrl}/api/Teacher/TeacherAccountNote/${teacherId}`, accountNote, { headers });
   }
   
   getAllTeacherPending():Observable<any>

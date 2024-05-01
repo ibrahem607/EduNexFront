@@ -14,6 +14,7 @@ import { StudentProfileComponent } from './Components/Profile/student-profile/st
 import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
 import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
 import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
+import { AdminDashComponent } from './Components/admin-dash/admin-dash.component';
 
 const routes: Routes = [
   { path: "teacherSignup", component: SignupTeacherComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: "teachers", component: TeachersComponent },
   { path: "teacher/:id", component: TeacherDetailsComponent },
   { path: "lesson/:id", component: LessonContentComponent },
+  { path: "admindash", component: AdminDashComponent },
   { path: "home", component: MainComponent },
   { path: "error", component: MainComponent },
   { path: "", component: LoginComponent },

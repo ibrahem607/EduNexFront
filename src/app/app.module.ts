@@ -88,6 +88,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
 import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
 import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
+import { AdminDashComponent } from './Components/admin-dash/admin-dash.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,7 +141,8 @@ import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-nav
     TeacherDetailsComponent,
     SignupTeacherComponent,
     TeacherProfileComponent,
-    CustomCloudNavbarComponent
+    CustomCloudNavbarComponent,
+    AdminDashComponent
   ],
   imports: [
     BrowserModule,

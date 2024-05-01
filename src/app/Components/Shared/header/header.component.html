@@ -71,15 +71,22 @@
             </div>
           </label>
 
-          <button mat-button routerLink="/login" class="disk" style="border-radius: 20rem;">
+          <button *ngIf="isLogin" mat-button routerLink="/login" class="disk" style="border-radius: 20rem;">
             <div class="flex">
               <i class="fa-regular fa-circle-user"></i>
               &#160;
               تسجيل الدخول
             </div>
           </button>
-
-          <button mat-button routerLink="/Parent" class="custom-button disk btn-gradient">طالب جديد</button>
+          <button *ngIf="!isLogin" mat-button  class="disk" style="border-radius: 20rem;">
+            <div class="flex">
+              <i class="fa-regular fa-circle-user"></i>
+              &#160;
+               مرحبا بك<p>{{userData.firstName}}</p>
+            </div>
+          </button>
+          <button *ngIf="isLogin" mat-button [routerLink]="['/signup']" class="custom-button disk btn-gradient">طالب جديد</button>
+          <button *ngIf="!isLogin" (click)="Logout()" mat-button [routerLink]="['/login']" class="custom-button disk btn-gradient">تسجيل الخروج</button>
 
           <button mat-icon-button aria-label="Toggle Right Sidebar" class="menu-btn toggle-btn"
             (click)="toggleRightSidenav()">

@@ -1,7 +1,7 @@
 <section class="container d-flex justify-content-center" dir="rtl">
   <div class="px-4 col-md-7">
     <div class="text-center mt-5 mb-4">
-      <h3 class="text-second mb-4" style="color: orange; font-weight: 700;">انشئ حسابك الآن</h3>
+      <h3 class="text-second mb-4" style="color: orange; font-weight: 700;">انشئ حساب طالب الآن</h3>
       <h6 class="mb-6 text-main font-24-bold">ادخل بياناتك بشكل صحيح للحصول علي افضل تجربة داخل الموقع</h6>
     </div>
 
@@ -124,7 +124,30 @@
           [ngClass]="{'is-invalid': isInputFocused}" id="Governorate" name="Governorate">
           <mat-option value="" disabled selected hidden>اختر المحافظة</mat-option>
           <mat-option value="cairo">القاهرة</mat-option>
-          <!-- Add more governorate options here -->
+          <mat-option value="qalyubia">القليوبية</mat-option>
+          <mat-option value="alexandria">الإسكندرية</mat-option>
+          <mat-option value="asyut">أسيوط</mat-option>
+          <mat-option value="aswan">أسوان</mat-option>
+          <mat-option value="beni_suef">بني سويف</mat-option>
+          <mat-option value="beheira">البحيرة</mat-option>
+          <mat-option value="damietta">دمياط</mat-option>
+          <mat-option value="gharbia">الغربية</mat-option>
+          <mat-option value="faiyum">الفيوم</mat-option>
+          <mat-option value="ismailia">الإسماعيلية</mat-option>
+          <mat-option value="giza">الجيزة</mat-option>
+          <mat-option value="luxor">الأقصر</mat-option>
+          <mat-option value="kafr_el_sheikh">كفر الشيخ</mat-option>
+          <mat-option value="minya">المنيا</mat-option>
+          <mat-option value="matruh">مطروح</mat-option>
+          <mat-option value="new_valley">الوادي الجديد</mat-option>
+          <mat-option value="monufia">المنوفية</mat-option>
+          <mat-option value="port_said">بورسعيد</mat-option>
+          <mat-option value="north_sinai">شمال سيناء</mat-option>
+          <mat-option value="qena">قنا</mat-option>
+          <mat-option value="sohag">سوهاج</mat-option>
+          <mat-option value="red_sea">البحر الأحمر</mat-option>
+          <mat-option value="suez">السويس</mat-option>
+          <mat-option value="south_sinai">جنوب سيناء</mat-option>
         </mat-select>
         <mat-icon matSuffix class="fa-solid fa-location-dot"></mat-icon>
         <mat-error *ngIf="governorate?.touched && governorate?.invalid">يجب تحديد المحافظة</mat-error>
@@ -199,6 +222,8 @@
 
       <div class="d-grid gap-3 text-center my-5">
         <button mat-button class="rounded-5 custom-button" type="submit">إنشاء حساب</button>
+        <p>   هل أنت معلم؟ <a [routerLink]="['/teacherSignup']" class="ms-1 text-second text-decoration-none"
+          style="color: orange;">   انشئ حساب معلم الأن</a></p>
         <p>يوجد لديك حساب بالفعل؟ <a [routerLink]="['/login']" class="ms-1 text-second text-decoration-none"
             style="color: orange;">ادخل إلى حسابك الآن</a></p>
       </div>

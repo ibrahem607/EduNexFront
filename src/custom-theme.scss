@@ -25,6 +25,7 @@ $indigo-palette: (
   ),
 );
 
+
 $light-primary: mat.define-palette($indigo-palette, 50);
 $light-accent: mat.define-palette($indigo-palette, 100);
 $light-warn: mat.define-palette($indigo-palette, 500);

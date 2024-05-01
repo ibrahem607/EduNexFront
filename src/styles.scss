@@ -23,6 +23,17 @@ html {
   // font-family: "Tajawal", sans-serif;
 }
 
+.green-snackbar {
+  background-color: green !important;
+  color: white !important;
+}
+
+/* Custom style for red snackbar */
+.red-snackbar {
+  background-color: red !important;
+  color: white !important;
+  background: red !important;
+}
 .flex {
   display: flex;
   align-items: center;

@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomJwtPayload } from 'src/app/Model/CustomJwtPayload ';
 import { ITeacherAuth } from 'src/app/Model/iteacherAuth';
 import { IUserUpdateFormData } from 'src/app/Model/iuserUpdateForm';
+import { Token } from '@angular/compiler';
 
 
 @Injectable({
@@ -23,11 +24,12 @@ export class AuthService {
    teacherId:any='';
    currentUserId:string='UserId';
    currentUserRole:string='UserRole';
+   IsLogin:any= new BehaviorSubject(null);
 
   constructor(private httpClient: HttpClient,private router: Router,private snackBar: MatSnackBar) {
-    if(localStorage.getItem("tokenKey") !==null)
+    if(localStorage.getItem(this.tokenKey) !==null)
       {
-        this.saveCurrentUserId() // to handle refresh
+         this.saveCurrentUserId() 
       }
   }
 
@@ -58,34 +60,43 @@ export class AuthService {
     return this.httpClient.post(`${this.baseUrl}/api/Auth/login`, data).pipe(
       tap((response: any) => {
         if (response && response.token) {
-          // Save token
-          console.log(response)
+         // Save token
 
+          
           localStorage.setItem(this.tokenKey, response.token);
-
            this.saveCurrentUserId()
-                 
+
           this.snackBar.open('  تم تسجيل الدخول بنجاح ', 'Close', {
             duration: 2000,
             verticalPosition: 'top',
             panelClass: ['green-snackbar']
           });
           if(localStorage.getItem(this.currentUserRole)=="Teacher")
-            {
+            { 
+              if(response.message=="pending"||response.message==("Rejected"))
+              {
+                this.router.navigate(['/teacherprofile']);
+              }else{
               this.router.navigate(['/teachers']);
             }
+          }
             else if(localStorage.getItem(this.currentUserRole)=="Student")
               {
                 this.router.navigate(['/home']);
               }
+              else if(localStorage.getItem(this.currentUserRole)=="Admin")
+                {
+                  this.router.navigate(['/admindash']);
+                }
         }
       }),
       catchError(error => {
 
-        // this.snackBar.open(`${error.error.Email[0]}`, 'Close', {
-        //   duration: 5000,
-        //   verticalPosition: 'bottom',
-        // });
+        this.snackBar.open(`خطأ في عنوان البريد او كلمة السر`, 'Close', {
+          duration: 5000,
+          verticalPosition: 'bottom',
+          panelClass: ['custom-snackbar'],
+        });
 
         // Return an observable that emits the error
         return throwError(error);
@@ -111,10 +122,10 @@ export class AuthService {
   }
 
 
-  // getUserData(id:any):Observable<any>
-  // {
-  //   return this.httpClient.get(`${this.baseUrl}/api/Student/Get-Student/${id}`)
-  // }
+  getStudentData(id:any):Observable<any>
+  {
+    return this.httpClient.get(`${this.baseUrl}/api/Student/GetStudentById/${id}`)
+  }
 
 
   getToken(): string | null {
@@ -123,6 +134,12 @@ export class AuthService {
 
   removeToken(): void {
     localStorage.removeItem(this.tokenKey);
+  }
+  removeUserRole(): void {
+    localStorage.removeItem(this.currentUserRole);
+  }
+  removeUserId(): void {
+    localStorage.removeItem(this.currentUserId);
   }
   getUserId(): any {
    return  localStorage.getItem(this.currentUserId);
@@ -139,13 +156,11 @@ export class AuthService {
     if (token) {
 
       const decodedUser: CustomJwtPayload = jwtDecode(token);
-      // this.currentUserId=decodedUser.nameid
-      // this.currentUserRole = decodedUser.role;
-
       localStorage.setItem(this.currentUserId, decodedUser.nameid);
       localStorage.setItem(this.currentUserRole, decodedUser.role);
-
+      
       console.log(`${localStorage.getItem(this.currentUserRole)} and ${localStorage.getItem(this.currentUserId)}`);
+      this.IsLogin.next(decodedUser);
       return decodedUser.nameid;
     } else {
       console.log('No token found.');
