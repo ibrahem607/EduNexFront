@@ -137,7 +137,7 @@
             <div class="mat-card-wrapper " #cardWrapper>
               <mat-card class="example-card">
                 <div class="image-container">
-                  <img mat-card-image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScEec3jrgqt9saVD4WrCLKqXhijnWJQXdJb3Gxr2OmotvQ6YJgxsl2DBGDOrxqid5f5-Y&usqp=CAU" alt="Sample Image">
+                  <img mat-card-image style="height: 405px;" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="Sample Image">
                 </div>
                 <div class="overlay"></div>
                 <div class="top-bottom-container">
@@ -149,7 +149,7 @@
             <div class="mat-card-wrapper" #cardWrapper>
               <mat-card class="example-card">
                 <div class="image-container">
-                  <img mat-card-image src="https://i.ytimg.com/vi/5YEi5wAS_0c/maxresdefault.jpg" alt="Sample Image">
+                  <img mat-card-image style="height: 405px;" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="Sample Image">
                 </div>
                 <div class="overlay"></div>
                 <div class="top-bottom-container">
@@ -161,7 +161,7 @@
             <div class="mat-card-wrapper" #cardWrapper>
               <mat-card class="example-card">
                 <div class="image-container">
-                  <img mat-card-image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRqNV-hmx1uVa0Lf2nOkLtmGp4FD_Wfc5v-dmQ44wpHVvjBrFlcGch2jfsMk1EQ6ApJWk&usqp=CAU" alt="Sample Image">
+                  <img mat-card-image style="height: 405px;" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="Sample Image">
                 </div>
                 <div class="overlay"></div>
                 <div class="top-bottom-container">
@@ -175,8 +175,8 @@
                 <!-- cardADDEDTeaher---------------------------------------------------------------------------------- -->
     
               <div *ngFor="let pTeach of teacherPendingData" class="" style="height: 550px;"> 
-                <div  *ngIf="toUpdate" class="mat-card mt-3 custom-button disk btn-gradient" style="width: 20rem;color: white; box-shadow:0px 0px 10px gray; border-radius: 10px;height:480px;text-align: center;padding: 0px 5px;">
-                  <img style="width: 100%; max-height: 200px;border-radius: 12px;padding-top: 5px;" mat-card-image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRqNV-hmx1uVa0Lf2nOkLtmGp4FD_Wfc5v-dmQ44wpHVvjBrFlcGch2jfsMk1EQ6ApJWk&usqp=CAU" alt="...">
+                <div  *ngIf="toUpdate" class="mat-card mt-3 " style="background-color: var(--bgHeader);width: 20rem;color: var(--title); box-shadow:0px 0px 10px gray; border-radius: 10px;height:480px;text-align: center;padding: 0px 5px;">
+                  <img style="width: 100%; max-height: 200px;border-radius: 12px;padding-top: 5px;" mat-card-image src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="...">
                   <div class="mat-card-content">
                     <h5 class="mat-card-title mt-2">{{pTeach.firstName}}</h5>
                     <p style="min-height: 68px;" class="mat-card-subtitle">{{pTeach.aboutMe}}</p>
@@ -188,8 +188,8 @@
                   </ul>
                   <div>
                   <div class="mat-card-actions d-flex" style="justify-content: space-between;">
-                    <button type="button" (click)="Approve(pTeach.id)" class="btn btn-primary"><i class="fa-solid fa-person-walking-arrow-right"></i>قبول المدرس</button>
-                    <button type="button" (click)="Reject(pTeach.id)" class="btn btn-success"><i class="fa-regular fa-comment"></i> اضافة تعليق</button>
+                    <button type="button" (click)="Approve(pTeach.id)" class="btn btn-custom custom-button disk btn-gradient ms-3"><i class="fa-solid fa-person-walking-arrow-right"></i>قبول المدرس</button>
+                    <button type="button" (click)="Reject(pTeach.id)" class="btn btn-custom custom-button disk btn-gradient"><i class="fa-regular fa-comment"></i> اضافة تعليق</button>
                   </div>
                   <div class="mt-2 d-flex" style="justify-content: space-between;" *ngIf="addcomment">
                     <input #InfoInp type="text" style="width: 250px;" >

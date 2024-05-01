@@ -94,7 +94,7 @@ export class AuthService {
 
         this.snackBar.open(`خطأ في عنوان البريد او كلمة السر`, 'Close', {
           duration: 5000,
-          verticalPosition: 'bottom',
+          verticalPosition: 'top',
           panelClass: ['custom-snackbar'],
         });
 
