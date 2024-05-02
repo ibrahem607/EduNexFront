@@ -23,8 +23,8 @@ export class AttachmentsService {
     return this.httpClient.delete<void>(`${this.URL}/api/courses/${courseId}/Lectures/${lectureId}/attachments/${attachmentId}`);
   }
 
-  addAttachment(courseId: number, lectureId: number, LectureData: any): Observable<IAttachment> {
-    return this.httpClient.post<IAttachment>(`${this.URL}/api/courses/${courseId}/lectures/${lectureId}/attachments`, LectureData);
+  addAttachment(courseId: number, lectureId: number, FileData: any): Observable<IAttachment> {
+    return this.httpClient.post<IAttachment>(`${this.URL}/api/courses/${courseId}/lectures/${lectureId}/attachments`, FileData);
   }
 
   editAttachment(courseId: number, lectureId: number, updatedLecture: any, attachmentId: number): Observable<void> {

@@ -53,6 +53,7 @@ button span svg {
 
 .image {
   position: relative;
+  /* width: 90%; */
   width: 100%;
   transform: scaleX(-1);
 }

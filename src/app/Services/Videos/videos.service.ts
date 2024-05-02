@@ -23,8 +23,8 @@ export class VideosService {
     return this.httpClient.delete<void>(`${this.URL}/api/courses/${courseId}/Lectures/${lectureId}/videos/${videoId}`);
   }
 
-  addVideo(courseId: number, lectureId: number, LectureData: any): Observable<IVideo> {
-    return this.httpClient.post<IVideo>(`${this.URL}/api/courses/${courseId}/lectures/${lectureId}/videos`, LectureData);
+  addVideo(courseId: number, lectureId: number, VideoData: any): Observable<IVideo> {
+    return this.httpClient.post<IVideo>(`${this.URL}/api/courses/${courseId}/lectures/${lectureId}/videos`, VideoData);
   }
 
   editVideo(courseId: number, lectureId: number, updatedLecture: any, videoId: number): Observable<void> {

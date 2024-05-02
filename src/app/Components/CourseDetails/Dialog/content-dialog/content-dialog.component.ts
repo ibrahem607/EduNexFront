@@ -78,17 +78,18 @@ export class ContentDialogComponent {
     }
 
     const formData = new FormData();
-    formData.append('AttachmentTitle', this.contentType);
+
     formData.append('LectureId', lectureId.toString());
+    formData.append('File', this.file[0]);
 
     if (this.data.contentTitle === 'file') {
-      formData.append('File', this.file[0]);
+      formData.append('AttachmentTitle', this.contentType);
 
       // Add the attachment using FormData
       this.attachmentData.addAttachment(this.data.courseId, lectureId, formData).subscribe(
         () => {
           console.log('New attachment added successfully');
-          // window.location.reload();
+          window.location.reload();
         },
         (error) => {
           console.error('Failed to add new attachment:', error);
@@ -96,13 +97,13 @@ export class ContentDialogComponent {
         }
       );
     } else if (this.data.contentTitle === 'video') {
-      formData.append('videoPath', this.file[0]);
+      formData.append('VideoTitle', this.contentType);
 
       // Add the video using FormData
       this.videoData.addVideo(this.data.courseId, lectureId, formData).subscribe(
         () => {
           console.log('New video added successfully');
-          // window.location.reload();
+          window.location.reload();
         },
         (error) => {
           console.error('Failed to add new video:', error);

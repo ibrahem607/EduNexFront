@@ -46,10 +46,11 @@
                 <button mat-menu-item (click)="addContentDialog('video', lecture.id)" style="direction: rtl;">
                   فيديو
                 </button>
-                <button mat-menu-item (click)="openExamDialog('exam', course!, lecture, i)" style="direction: rtl;">
+                <button mat-menu-item (click)="openExamDialog('PreExam', course!, lecture, i)" style="direction: rtl;">
                   امتحان
                 </button>
-                <button mat-menu-item (click)="openExamDialog('homeWork', course!, lecture, i)" style="direction: rtl;">
+                <button mat-menu-item (click)="openExamDialog('Assignment', course!, lecture, i)"
+                  style="direction: rtl;">
                   واجب
                 </button>
 
@@ -58,27 +59,28 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <ng-container *ngFor="let content of lectureContact">
-            <div class="flex crud-buttons gap-2">
-              <button mat-button class="d-flex justify-content-start gap-2" (click)="passLesson(lecture)">
-                <mat-icon style="color: var(--wave2);">airplay</mat-icon>
-                <span>{{ getContentTitle(content) }}</span>
-              </button>
-
-              <div *ngIf="content" class="flex">
-                <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button" style="color: red;"
-                  (click)="openDeleteContentConfirmationDialog(lecture.id, content)">
-                  <mat-icon>delete</mat-icon>
+          <ng-container *ngIf="lectureContact[lecture.id]">
+            <ng-container *ngFor="let content of lectureContact[lecture.id]">
+              <div class="flex crud-buttons gap-2">
+                <button mat-button class="d-flex justify-content-start gap-2" (click)="passLesson(lecture)">
+                  <mat-icon style="color: var(--wave2);">airplay</mat-icon>
+                  <span>{{ getContentTitle(content) }}</span>
                 </button>
 
-                <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button"
-                  style="color: green;" (click)="editContentDialog(lecture.id, content)">
-                  <mat-icon>edit</mat-icon>
-                </button>
+                <div class="flex">
+                  <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button"
+                    style="color: red;" (click)="openDeleteContentConfirmationDialog(lecture.id, content)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+
+                  <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button"
+                    style="color: green;" (click)="editContentDialog(lecture.id, content)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </div>
               </div>
-            </div>
+            </ng-container>
           </ng-container>
-
 
         </mat-expansion-panel>
         <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button" style="color: red;"

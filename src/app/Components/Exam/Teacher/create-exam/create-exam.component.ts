@@ -359,8 +359,8 @@ export class CreateExamComponent implements OnInit {
     const answersLength = (questionFormGroup.get('answers') as FormArray)?.length ?? 0;
 
     return (
-      (questionType === 'multipleChoice' || questionType === 'oneChoice') && answersLength >= 4 ||
-      (questionType === 'trueFalse' && answersLength >= 2)
+      (questionType === 'MultipleChoice' || questionType === 'OneChoice') && answersLength >= 4 ||
+      (questionType === 'TrueFalse' && answersLength >= 2)
     );
   }
 
@@ -448,7 +448,8 @@ export class CreateExamComponent implements OnInit {
         type: type, // Add type to examData
         startDateTime: startDateTime,
         endDateTime: endDateTime,
-        duration: duration // Convert duration to number
+        duration: duration, // Convert duration to number
+        lectureId: Number(this.activatedRoute.snapshot.paramMap.get('lessonId'))
       };
 
       // Remove startDate, endDate, startTime, and endTime from examData

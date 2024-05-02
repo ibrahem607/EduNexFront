@@ -25,7 +25,7 @@ export class ExamService {
     return this.httpClient.delete<void>(`${this.URL}/api/Exams/${examId}`);
   }
 
-  addExam(examData: IExam): Observable<IExam> {
+  addExam(examData: any): Observable<IExam> {
     return this.httpClient.post<IExam>(`${this.URL}/api/Exams`, examData);
   }
 

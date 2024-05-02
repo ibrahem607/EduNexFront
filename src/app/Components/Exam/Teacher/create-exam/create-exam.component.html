@@ -69,9 +69,9 @@
             <mat-form-field appearance="outline">
               <mat-label>نوع السؤال</mat-label>
               <mat-select formControlName="type" #type required>
-                <mat-option value="multipleChoice" selected>اختيار من متعدد</mat-option>
-                <mat-option value="oneChoice">اختيار من متعدد (اختيار واحد)</mat-option>
-                <mat-option value="trueFalse">صح أم خطأ</mat-option>
+                <mat-option value="MultipleChoice" selected>اختيار من متعدد</mat-option>
+                <mat-option value="OneChoice">اختيار من متعدد (اختيار واحد)</mat-option>
+                <mat-option value="TrueFalse">صح أم خطأ</mat-option>
               </mat-select>
               <mat-error
                 *ngIf="getQuestionFormGroup(i).get('type')?.invalid && (getQuestionFormGroup(i).get('type')?.dirty || getQuestionFormGroup(i).get('type')?.touched)">

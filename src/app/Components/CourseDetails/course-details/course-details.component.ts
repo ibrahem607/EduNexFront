@@ -19,7 +19,7 @@ export class CourseDetailsComponent implements OnInit {
   courseID: number = 0;
   showDetails: boolean = false;
   lectures: ILecture[] = [];
-  lectureContact: (IVideo | IAttachment)[] = [];
+  lectureContact: { [key: number]: (IVideo | IAttachment)[] } = {};
   video!: IVideo;
   attachment!: IAttachment;
   role: string = '';
@@ -44,12 +44,14 @@ export class CourseDetailsComponent implements OnInit {
       this.course = course;
       if (this.course?.lectureList) {
         this.course.lectureList.forEach((lecture: ILecture) => {
+          let lectureContents: (IVideo | IAttachment)[] = [];
           if (lecture.videos) {
-            this.lectureContact.push(...lecture.videos);
+            lectureContents.push(...lecture.videos);
           }
           if (lecture.attachments) {
-            this.lectureContact.push(...lecture.attachments);
+            lectureContents.push(...lecture.attachments);
           }
+          this.lectureContact[lecture.id] = lectureContents;
         });
       }
     });
