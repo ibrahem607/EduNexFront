@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AnswerChoices, IExamResult } from 'src/app/Model/iexam-result';
-import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
+import { ExamService } from 'src/app/Services/Exam/exam.service';
 @Component({
   selector: 'app-exam-result',
   templateUrl: './exam-result.component.html',
@@ -9,10 +9,10 @@ import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
 export class ExamResultComponent {
   result!: IExamResult;
 
-  constructor(private dynamicData: DynamicDataService) { }
+  constructor(private examData: ExamService) { }
 
   getAll() {
-    this.dynamicData.getExamResult().subscribe(result => {
+    this.examData.getExamResult(1).subscribe(result => {
       this.result = result
     });
   }

@@ -78,42 +78,34 @@ export class ContentDialogComponent {
     }
 
     const formData = new FormData();
-
     formData.append('LectureId', lectureId.toString());
     formData.append('File', this.file[0]);
 
+    let contentTypeKey: string;
+    let addMethod: any;
+
     if (this.data.contentTitle === 'file') {
-      formData.append('AttachmentTitle', this.contentType);
-
-      // Add the attachment using FormData
-      this.attachmentData.addAttachment(this.data.courseId, lectureId, formData).subscribe(
-        () => {
-          console.log('New attachment added successfully');
-          window.location.reload();
-        },
-        (error) => {
-          console.error('Failed to add new attachment:', error);
-          // window.location.reload();
-        }
-      );
+      contentTypeKey = 'AttachmentTitle';
+      addMethod = this.attachmentData.addAttachment.bind(this.attachmentData);
     } else if (this.data.contentTitle === 'video') {
-      formData.append('VideoTitle', this.contentType);
-
-      // Add the video using FormData
-      this.videoData.addVideo(this.data.courseId, lectureId, formData).subscribe(
-        () => {
-          console.log('New video added successfully');
-          window.location.reload();
-        },
-        (error) => {
-          console.error('Failed to add new video:', error);
-          // window.location.reload();
-        }
-      );
+      contentTypeKey = 'VideoTitle';
+      addMethod = this.videoData.addVideo.bind(this.videoData);
     } else {
       console.error(`Unsupported content type: ${this.data.contentTitle}`);
+      return;
     }
+
+    formData.append(contentTypeKey, this.contentType);
+
+    // Add the content using FormData
+    addMethod(this.data.courseId, lectureId, formData).subscribe(
+      () => {
+        console.log(`New ${this.data.contentTitle} added successfully`);
+        window.location.reload();
+      },
+      (error: any) => {
+        console.error(`Failed to add new ${this.data.contentTitle}:`, error);
+      }
+    );
   }
-
-
 }

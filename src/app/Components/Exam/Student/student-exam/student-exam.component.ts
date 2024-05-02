@@ -4,8 +4,8 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ICourse } from 'src/app/Model/icourse';
 import { IExam, IQuestion } from 'src/app/Model/iexam';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
+import { ExamService } from 'src/app/Services/Exam/exam.service';
 
-import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
 import { atLeastOneCheckboxChecked, atLeastOneRadioButtonChecked } from 'src/app/Validator/exam-validators';
 
 @Component({
@@ -26,7 +26,7 @@ export class StudentExamComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private dynamicData: DynamicDataService,
+    private examData: ExamService,
     private courseData: CoursesService,
     private fb: FormBuilder,
     private router: Router
@@ -45,7 +45,7 @@ export class StudentExamComponent implements OnInit {
   }
 
   getExamById(id: number) {
-    this.dynamicData.getExamById(id).subscribe(exam => {
+    this.examData.getExamById(id).subscribe(exam => {
       this.exam = exam;
       this.questions = exam.questions;
       this.buildFormControls();

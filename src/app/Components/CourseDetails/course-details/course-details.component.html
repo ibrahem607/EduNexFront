@@ -1,6 +1,6 @@
 <app-course-details-header [course]="course"></app-course-details-header>
 
-<section class="container flex gap-3 justify-content-between">
+<section class="container d-flex gap-3 justify-content-between">
   <div class="content-container flex-container">
     <!-- Custom checkbox container -->
     <div class="custom-checkbox-container flex-grow">
@@ -31,7 +31,7 @@
                   </button>
                 </div>
 
-                <button mat-menu-item [routerLink]="['/course', course?.id,'lesson' ,lecture.id ,'view']"
+                <button mat-menu-item [routerLink]="['/course', course?.id,'lesson' ,lecture.id ,'view']" *ngIf="lecture.preExam"
                   class="flex px-2 mx-2 my-0 exam-button">
                   <i class="fas fa-clipboard-list"></i>
                   امتحان

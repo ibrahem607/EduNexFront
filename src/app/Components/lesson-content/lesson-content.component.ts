@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ILecture } from 'src/app/Model/icourse';
+import { ILecture, IVideo, IAttachment } from 'src/app/Model/icourse';
 import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 
 @Component({
@@ -26,19 +26,18 @@ export class LessonContentComponent implements OnInit {
       this.courseId = params['courseId'];
       const lectureId = params['lectureId'];
 
-      // Call getLectureById method to fetch the lecture
       this.lectureService.getLectureById(this.courseId, lectureId).subscribe(lecture => {
         this.lecture = lecture;
+        console.log(this.lecture)
         this.initOptions();
       });
     });
-
   }
 
   initOptions() {
     if (this.lecture) {
       if (this.lecture.videos) {
-        this.lecture.videos.forEach((video: any, index: number) => {
+        this.lecture.videos.forEach((video: IVideo, index: number) => {
           const isSelected = index === 0;
           this.videoOptions.push({ label: video.videoTitle, selected: isSelected, videoUrl: video.videoPath });
           if (isSelected) {
@@ -48,9 +47,8 @@ export class LessonContentComponent implements OnInit {
       }
 
       if (this.lecture.attachments) {
-        console.log(this.lecture)
-        this.lecture.attachments.forEach((attachments: any) => {
-          this.fileOptions.push({ label: attachments.attachmentTitle, pdfUrl: attachments.attachmentPath });
+        this.lecture.attachments.forEach((attachment: IAttachment) => {
+          this.fileOptions.push({ label: attachment.attachmentTitle, pdfUrl: attachment.attachmentPath });
         });
       }
     }

@@ -1,10 +1,10 @@
 section {
   background-color: #2d2d2d;
   position: relative;
-  margin-top: -1vw;
+  margin-top: -2rem;
 }
 svg:first-of-type {
-  margin-top: -12vw;
+  margin-top: -13vw;
 }
 
 section img:first-of-type {

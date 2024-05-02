@@ -1,7 +1,7 @@
 <section class="d-flex align-items-start gap-3 container" *ngIf="lecture">
 
   <div class="accordion-section flex gap-2">
-    <button mat-menu-item class="flex px-2 mx-2 my-0 home-work-button"
+    <button mat-menu-item class="flex px-2 mx-2 my-0 home-work-button" *ngIf="lecture.assignment"
       [routerLink]="['/course', courseId,'lesson' ,lecture.id ,'view']">
       <i class="fas fa-clipboard-list"></i>
       الواجب
