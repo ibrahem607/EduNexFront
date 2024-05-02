@@ -1,8 +1,8 @@
-<section class="d-flex align-items-start gap-3 container">
+<section class="d-flex align-items-start gap-3 container" *ngIf="lecture">
 
   <div class="accordion-section flex gap-2">
     <button mat-menu-item class="flex px-2 mx-2 my-0 home-work-button"
-      [routerLink]="['/course', courseId,'lesson' ,lesson.id ,'view']">
+      [routerLink]="['/course', courseId,'lesson' ,lecture.id ,'view']">
       <i class="fas fa-clipboard-list"></i>
       الواجب
     </button>
@@ -30,7 +30,7 @@
   </div>
 
   <div class="w-100">
-    <h5>{{ lesson.title }}</h5>
+    <h5>{{ lecture.lectureTitle }}</h5>
 
     <div class="custom-checkbox-container flex flex-wrap gap-2 my-3">
       <button mat-button *ngFor="let opt of videoOptions; let i = index" class="custom-checkbox flex-grow-1"

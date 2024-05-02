@@ -7,11 +7,17 @@
     <h3>مرحباً <span>أ.</span> {{ data.name }}</h3>
     <mat-form-field appearance="outline">
       <mat-label>أسم الحصة</mat-label>
-      <input matInput [(ngModel)]="lessonTitle" [ngModelOptions]="{ standalone: true }"
-        [ngModel]="data.initialLessonTitle">
+      <input matInput [(ngModel)]="lectureTitle" [ngModel]="data.initialLectureTitle"
+        [ngModelOptions]="{ standalone: true }">
       <mat-icon matSuffix>library_add</mat-icon>
     </mat-form-field>
-    <button mat-button class="custom-button" (click)="onSubmit()" [disabled]="!lessonTitle">{{ data.confirmButtonText
+    <mat-form-field appearance="outline">
+      <mat-label>السعر</mat-label>
+      <input matInput type="number" [(ngModel)]="price" [ngModel]="data.initialPrice"
+        [ngModelOptions]="{ standalone: true }">
+      <mat-icon matSuffix>attach_money</mat-icon>
+    </mat-form-field>
+    <button mat-button class="custom-button" (click)="onSubmit()" [disabled]="!lectureTitle">{{ data.confirmButtonText
       }}</button>
   </div>
 </div>

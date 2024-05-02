@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ILesson, ILessonContent } from 'src/app/Model/icourse';
+import { ILecture } from 'src/app/Model/icourse';
+import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 
 @Component({
   selector: 'app-lesson-content',
@@ -8,7 +9,7 @@ import { ILesson, ILessonContent } from 'src/app/Model/icourse';
   styleUrls: ['./lesson-content.component.css']
 })
 export class LessonContentComponent implements OnInit {
-  lesson!: ILesson;
+  lecture!: ILecture;
   courseId!: number;
   contentIndex: number = 0;
   panelOpenState = false;
@@ -18,31 +19,40 @@ export class LessonContentComponent implements OnInit {
   fileOptions: { label: string; pdfUrl: string; }[] = [];
   selectedVideoUrl: string = '';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private lectureService: LecturesService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.courseId = params['courseId'];
-      this.lesson = history.state.lesson;
-      this.initOptions();
+      const lectureId = params['lectureId'];
+
+      // Call getLectureById method to fetch the lecture
+      this.lectureService.getLectureById(this.courseId, lectureId).subscribe(lecture => {
+        this.lecture = lecture;
+        this.initOptions();
+      });
     });
+
   }
 
   initOptions() {
-    if (this.lesson && this.lesson.content) {
-
-      this.lesson.content.forEach((content: ILessonContent, index: number) => {
-        if (content.videoUrl) {
+    if (this.lecture) {
+      if (this.lecture.videos) {
+        this.lecture.videos.forEach((video: any, index: number) => {
           const isSelected = index === 0;
-          this.videoOptions.push({ label: content.title, selected: isSelected, videoUrl: content.videoUrl });
+          this.videoOptions.push({ label: video.videoTitle, selected: isSelected, videoUrl: video.videoPath });
           if (isSelected) {
-            this.selectedVideoUrl = content.videoUrl;
+            this.selectedVideoUrl = video.videoPath;
           }
-        }
-        if (content.pdfUrl) {
-          this.fileOptions.push({ label: content.title, pdfUrl: content.pdfUrl });
-        }
-      });
+        });
+      }
+
+      if (this.lecture.attachments) {
+        console.log(this.lecture)
+        this.lecture.attachments.forEach((attachments: any) => {
+          this.fileOptions.push({ label: attachments.attachmentTitle, pdfUrl: attachments.attachmentPath });
+        });
+      }
     }
   }
 

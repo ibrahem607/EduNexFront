@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
+import { IExam } from 'src/app/Model/iexam';
+import { ExamService } from 'src/app/Services/Exam/exam.service';
 import { isAnyValueMissing, isDurationValid, isStartDateAfterEndDate, isStartDatePast } from 'src/app/Validator/exam-validators';
 
 @Component({
@@ -19,12 +20,12 @@ export class CreateExamComponent implements OnInit {
   questions: any[] = [];
   selectedValue: number = 10;
   courseTitle!: string;
-  lessonTitle!: string;
+  lectureTitle!: string;
   questionsControls!: FormArray;
 
   formSubmitted: boolean = false;
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private dynamicData: DynamicDataService, private snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private examData: ExamService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.examForm = this.fb.group({
@@ -69,7 +70,7 @@ export class CreateExamComponent implements OnInit {
       });
 
       this.courseTitle = params['courseTitle'] || '';
-      this.lessonTitle = params['lessonTitle'] || '';
+      this.lectureTitle = params['lectureTitle'] || '';
     });
   }
 
@@ -128,7 +129,6 @@ export class CreateExamComponent implements OnInit {
     }
 
     return this.fb.group({
-      answerId: [answer?.answerId || 0],
       header: [headerValue, Validators.required],
       isCorrect: [answer?.isCorrect || null, Validators.required]
     }) as FormGroup;
@@ -364,20 +364,6 @@ export class CreateExamComponent implements OnInit {
     );
   }
 
-  onSaveClicked(): void {
-    console.log(this.examForm.value);
-
-    this.examForm.markAllAsTouched();
-    this.formSubmitted = true;
-
-    if (this.examForm.valid) {
-      console.log('Form submitted successfully!');
-    } else {
-      console.log('Form validation failed.');
-      this.displayErrorMessages();
-    }
-  }
-
   //SnackBar
   displayErrorMessages(): void {
     const formErrors = this.examForm.errors;
@@ -413,6 +399,80 @@ export class CreateExamComponent implements OnInit {
       verticalPosition: 'top',
       horizontalPosition: 'center'
     });
+  }
+
+  // Function to combine date and time into a single variable
+  combineDateTime(dateControl: AbstractControl | null, timeControl: AbstractControl | null): string {
+    if (!dateControl || !timeControl) {
+      console.error('Date or time control is missing.');
+      return '';
+    }
+
+    const date = dateControl.value;
+    const time = timeControl.value;
+
+    if (!date || !time) {
+      console.error('Date or time value is missing.');
+      return '';
+    }
+
+    const dateTime = new Date(date);
+    dateTime.setHours(Number(time.split(':')[0])); // Convert hours to number
+    dateTime.setMinutes(Number(time.split(':')[1])); // Convert minutes to number
+    dateTime.setSeconds(0);
+    return dateTime.toISOString();
+  }
+
+  onSaveClicked(): void {
+    this.examForm.markAllAsTouched();
+    this.formSubmitted = true;
+
+    if (this.examForm.valid) {
+      console.log('Form submitted successfully!');
+
+      // Combine date and time for startDateTime
+      const startDateTime = this.combineDateTime(this.examForm.get('startDate'), this.examForm.get('startTime'));
+
+      // Combine date and time for endDateTime
+      const endDateTime = this.combineDateTime(this.examForm.get('endDate'), this.examForm.get('endTime'));
+
+      // Retrieve type from params
+      const params = this.activatedRoute.snapshot.queryParams;
+      const type = params['type'];
+
+      // Convert duration to number
+      const duration = Number(this.examForm.get('duration')!.value);
+
+      const examData = {
+        ...this.examForm.value,
+        type: type, // Add type to examData
+        startDateTime: startDateTime,
+        endDateTime: endDateTime,
+        duration: duration // Convert duration to number
+      };
+
+      // Remove startDate, endDate, startTime, and endTime from examData
+      delete examData.startDate;
+      delete examData.endDate;
+      delete examData.startTime;
+      delete examData.endTime;
+
+      console.log(examData);
+
+      this.examData.addExam(examData).subscribe(
+        (addedExam: IExam) => {
+          console.log('Exam added successfully:', addedExam);
+          // Additional actions after exam addition, if needed
+        },
+        (error) => {
+          console.error('Error occurred while adding exam:', error);
+          // Handle error, if needed
+        }
+      );
+    } else {
+      console.log('Form validation failed.');
+      this.displayErrorMessages();
+    }
   }
 }
 

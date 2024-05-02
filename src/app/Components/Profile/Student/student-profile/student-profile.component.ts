@@ -27,14 +27,14 @@ export class StudentProfileComponent {
     { label: 'تفاصيل الميزانية', icon: 'wallet', selected: false },
     { label: 'اكواد الشحن الخاصة بك', icon: 'code', selected: false },
     { label: 'تغيير كلمة السر', icon: 'key', selected: false },
-    { label: 'الأعدادات', icon: 'cog', selected: false },
+    // { label: 'الأعدادات', icon: 'cog', selected: false },
     { label: 'تسجيل الخروج', icon: 'sign-out-alt', selected: false }
   ];
 
   constructor(private dialog: MatDialog, private renderer: Renderer2) { }
 
   setActiveSection(index: number): void {
-    if (index === 6) {
+    if (index === 5) {
       this.openSignOutDialog();
       this.selectedOptionIndex = -1;
     } else {

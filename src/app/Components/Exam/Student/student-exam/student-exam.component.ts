@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators, AbstractC
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ICourse } from 'src/app/Model/icourse';
 import { IExam, IQuestion } from 'src/app/Model/iexam';
+import { CoursesService } from 'src/app/Services/Courses/courses.service';
 
 import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
 import { atLeastOneCheckboxChecked, atLeastOneRadioButtonChecked } from 'src/app/Validator/exam-validators';
@@ -26,6 +27,7 @@ export class StudentExamComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private dynamicData: DynamicDataService,
+    private courseData: CoursesService,
     private fb: FormBuilder,
     private router: Router
   ) {
@@ -51,16 +53,16 @@ export class StudentExamComponent implements OnInit {
   }
 
   getCourseById(id: number) {
-    this.dynamicData.getCourseById(id).subscribe(course => {
+    this.courseData.getCourseById(id).subscribe(course => {
       this.course = course;
     });
   }
 
-  getLessonTitle(lessonId: number): string {
-    if (this.course && this.course.lesson) {
-      const lesson = this.course.lesson.find(lesson => lesson.id === lessonId);
-      if (lesson) {
-        return lesson.title;
+  getLessonTitle(lectureId: number): string {
+    if (this.course && this.course.lectureList) {
+      const lecture = this.course.lectureList.find(lectureList => lectureList.id === lectureId);
+      if (lecture) {
+        return lecture.lectureTitle;
       }
     }
     return '';

@@ -4,7 +4,7 @@
     <!-- Exam Header -->
     <div class="flex flex-column gap-3 mobile-row flex-wrap justify-content-center">
       <section class="section-header p-3 d-flex flex-column ">
-        <h5 *ngIf="course && course.lesson">
+        <h5 *ngIf="course && course.lectureList">
           {{ getLessonTitle(lessonId) }}
         </h5>
         <h6>{{ exam.title }}</h6>

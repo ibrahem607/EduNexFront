@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
-import { ICourse, ILesson, ILessonContent } from 'src/app/Model/icourse';
+import { IAttachment, ICourse, ILecture, IVideo } from 'src/app/Model/icourse';
 import { LessonDialogComponent } from '../Dialog/lesson-dialog/lesson-dialog.component';
 import { ContentDialogComponent } from '../Dialog/content-dialog/content-dialog.component';
 import { ConfirmationDialogComponent } from '../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { ExamDialogComponent } from '../Dialog/exam-dialog/exam-dialog.component';
+import { CoursesService } from 'src/app/Services/Courses/courses.service';
 
 @Component({
   selector: 'app-course-details',
@@ -18,16 +18,19 @@ export class CourseDetailsComponent implements OnInit {
   course: ICourse | null = null;
   courseID: number = 0;
   showDetails: boolean = false;
-  lessons: ILesson[] = [];
-  lessonContact: ILessonContent[] = [];
+  lectures: ILecture[] = [];
+  lectureContact: (IVideo | IAttachment)[] = [];
+  video!: IVideo;
+  attachment!: IAttachment;
   role: string = '';
+
 
   options = [
     { label: 'محتوي الكورس', selected: true },
     { label: 'عن المعلم', selected: false },
   ];
 
-  constructor(private activatedRoute: ActivatedRoute, private dynamicData: DynamicDataService, public dialog: MatDialog, private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, private courseData: CoursesService, public dialog: MatDialog, private router: Router) {
     this.courseID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.role = 'teacher';
   }
@@ -37,8 +40,18 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   getCourseById() {
-    this.dynamicData.getCourseById(this.courseID).subscribe(course => {
+    this.courseData.getCourseById(this.courseID).subscribe(course => {
       this.course = course;
+      if (this.course?.lectureList) {
+        this.course.lectureList.forEach((lecture: ILecture) => {
+          if (lecture.videos) {
+            this.lectureContact.push(...lecture.videos);
+          }
+          if (lecture.attachments) {
+            this.lectureContact.push(...lecture.attachments);
+          }
+        });
+      }
     });
   }
 
@@ -62,13 +75,13 @@ export class CourseDetailsComponent implements OnInit {
       data: {
         confirmButtonText: 'أضف الحصة',
         courseId: this.course?.id,
-        name: this.course?.teacher,
+        name: this.course?.teacherName,
       }
     });
   }
 
   //edit lesson
-  editLessonDialog(lessonId?: number, initialLessonTitle?: string): void {
+  editLessonDialog(lectureId?: number, initialLectureTitle?: string): void {
     this.dialog.open(LessonDialogComponent, {
       width: '400px',
       panelClass: 'dialog-container',
@@ -76,27 +89,27 @@ export class CourseDetailsComponent implements OnInit {
       data: {
         confirmButtonText: 'تعديل الأسم',
         courseId: this.course?.id,
-        name: this.course?.teacher,
-        initialLessonId: lessonId,
-        initialLessonTitle: initialLessonTitle,
+        name: this.course?.teacherName,
+        initialLectureId: lectureId,
+        initialLectureTitle: initialLectureTitle,
       }
     });
   }
 
   //delete lesson
-  openDeleteConfirmationDialog(lessonId: number): void {
+  openDeleteConfirmationDialog(lectureId: number): void {
     this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
       data: {
         message: 'هل أنت متأكد أنك تريد حذف الحصة؟',
         confirmButtonText: 'حذف الحصة',
-        lessonId: lessonId,
+        lectureId: lectureId,
       }
     });
   }
 
   //add content
-  addContentDialog(contentTitle: string, lessonId: number): void {
+  addContentDialog(contentTitle: string, lectureId: number): void {
     this.dialog.open(ContentDialogComponent, {
       width: '400px',
       panelClass: 'dialog-container',
@@ -106,14 +119,25 @@ export class CourseDetailsComponent implements OnInit {
         operation: 'add',
         courseId: this.course?.id,
         contentTitle: contentTitle,
-        name: this.course?.teacher,
-        lessonId: lessonId,
+        name: this.course?.teacherName,
+        lectureId: lectureId,
       }
     });
   }
 
   //edit content
-  editContentDialog(lessonId: number, content: ILessonContent): void {
+  editContentDialog(lectureId: number, lectureContact: IVideo | IAttachment): void {
+    let contentTitle: string;
+    let url: string | null = null;
+
+    if ('videoPath' in lectureContact) {
+      contentTitle = 'video';
+      url = (lectureContact as IVideo).videoPath;
+    } else {
+      contentTitle = 'file';
+      url = (lectureContact as IAttachment).attachmentPath;
+    }
+
     this.dialog.open(ContentDialogComponent, {
       width: '400px',
       panelClass: 'dialog-container',
@@ -122,55 +146,64 @@ export class CourseDetailsComponent implements OnInit {
         confirmButtonText: 'تعديل الملفات',
         operation: 'edit',
         courseId: this.course?.id,
-        name: this.course?.teacher,
-        lessonId: lessonId,
-        content: content,
-        contentId: content.id,
-        contentTitle: content.videoUrl ? 'video' : 'file',
-        videoUrl: content.videoUrl,
-        pdfUrl: content.pdfUrl,
+        name: this.course?.teacherName,
+        lectureId: lectureId,
+        content: lectureContact,
+        contentId: lectureContact.id,
+        contentTitle: contentTitle,
+        url: url,
       }
     });
   }
 
   //delete content
-  openDeleteContentConfirmationDialog(lessonId: number, contentId: number): void {
+  openDeleteContentConfirmationDialog(lectureId: number, content?: IVideo | IAttachment): void {
+    let contentType: string | undefined;
+    if (content) {
+      contentType = 'videoPath' in content ? 'video' : 'file';
+    }
+
     this.dialog.open(ConfirmationDialogComponent, {
       width: '600px',
       data: {
         message: 'هل أنت متأكد أنك تريد حذف هذا المحتوى؟',
         confirmButtonText: 'حذف المحتوى',
-        lessonId: lessonId,
-        contentId: contentId,
+        lectureId: lectureId,
+        contentId: content?.id,
+        contentType: contentType
       }
     });
   }
 
   //addExam / homeWork
-  openExamDialog(examType: string, course: ICourse, lesson: ILesson, contentId: number): void {
+  openExamDialog(examType: string, course: ICourse, lecture: ILecture, contentId: number): void {
     this.dialog.open(ExamDialogComponent, {
       width: '600px',
       data: {
         header: examType == 'exam' ? 'بيانات الامتحان' : 'بيانات الواجب',
         confirmButtonText: examType == 'exam' ? 'أضف الامتحان' : 'أضف لاواجب',
-        lessonId: lesson.id,
-        lessonTitle: lesson.title,
+        lectureId: lecture.id,
+        lectureTitle: lecture.lectureTitle,
         contentId: contentId,
         courseID: course.id,
-        courseTitle: course.description,
-        grade: course.grade,
+        courseTitle: course.courseName,
+        grade: course.levelName,
         examType: examType,
       }
     });
   }
 
-  passLesson(lesson: any): void {
-    const queryParams = { courseId: this.course?.id };
+  passLesson(lecture: any): void {
+    const queryParams = { courseId: this.course?.id, lectureId: lecture.id };
 
-    this.router.navigate(['/lesson', lesson.id], {
-      state: { lesson: lesson, courseId: this.course?.id },
-      queryParams: queryParams
-    });
+    this.router.navigate(['/lesson', lecture.id], { queryParams: queryParams });
   }
 
+  getContentTitle(content: IVideo | IAttachment): string {
+    if ('videoTitle' in content) {
+      return (content as IVideo).videoTitle;
+    } else {
+      return (content as IAttachment).attachmentTitle;
+    }
+  }
 }

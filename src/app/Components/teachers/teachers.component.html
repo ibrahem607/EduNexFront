@@ -12,7 +12,8 @@
           <mat-form-field class="example-full-width" color="accent">
             <mat-label>اسم المدرس</mat-label>
             <mat-icon matPrefix>search</mat-icon>
-            <input matInput placeholder="" value="" class="mt-1 icon">
+            <input matInput placeholder="" [(ngModel)]="searchTerm" class="mt-1 icon"
+              [ngModelOptions]="{ standalone: true }" (input)="filterTeachers()">
           </mat-form-field>
         </form>
       </mat-expansion-panel>
@@ -26,20 +27,24 @@
             المادة
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button value="1" color="accent">Option 1</mat-radio-button>
-          <mat-radio-button value="2" color="accent">Option 2</mat-radio-button>
+        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio" [(ngModel)]="subject"
+          (change)="filterTeachers()">
+          <mat-radio-button value="all" color="accent">All</mat-radio-button>
+          <mat-radio-button *ngFor="let subject of extractUniqueSubjects(teachers)" [value]="subject" color="accent">
+            {{ subject }}
+          </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
 
-  <div class="flex flex-wrap gap-3">
-    <ng-container *ngFor="let teacher of teachers">
-      <app-teacher-card [teacher]="teacher"></app-teacher-card>
-    </ng-container>
+  <div>
+    <div class="flex flex-wrap gap-3">
+      <ng-container *ngFor="let teacher of filteredPaginatedTeachers">
+        <app-teacher-card [teacher]="teacher"></app-teacher-card>
+      </ng-container>
+    </div>
+    <app-custom-pagination [length]="filteredTeachers.length"
+      (pageChanged)="onPageChange($event)"></app-custom-pagination>
   </div>
 </div>
-
-
-<app-custom-pagination></app-custom-pagination>

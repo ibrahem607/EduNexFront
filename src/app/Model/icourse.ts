@@ -1,24 +1,35 @@
 export interface ICourse {
-  id: number;
-  imageUrl: string;
-  subject: string;
-  profilePictureUrl: string;
-  teacher: string;
-  description: string;
-  grade: string;
-  price: number;
-  lesson?: ILesson[];
+  id: number,
+  courseName: string,
+  thumbnail: string,
+  courseType: string,
+  price: number,
+  subjectName: string,
+  teacherName: string,
+  profilePhoto: string,
+  levelName: string,
+  lectureList?: ILecture[]
 }
 
-export interface ILesson {
-  id: number;
-  title: string;
-  content?: ILessonContent[];
+export interface ILecture {
+  id: number,
+  lectureTitle: string,
+  price: number,
+  courseId: number,
+  videos?: IVideo[],
+  attachments?: IAttachment[],
+  preExam?: number,
+  assignment?: number
 }
 
-export interface ILessonContent {
-  id: number;
-  title: string;
-  videoUrl?: string;
-  pdfUrl?: string;
+export interface IVideo {
+  id?: number,
+  videoTitle: string,
+  videoPath: string
+}
+
+export interface IAttachment {
+  id?: number,
+  attachmentTitle: string,
+  attachmentPath: string
 }

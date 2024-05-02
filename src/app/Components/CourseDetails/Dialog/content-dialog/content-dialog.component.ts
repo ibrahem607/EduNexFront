@@ -1,7 +1,7 @@
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
-import { ICourse } from 'src/app/Model/icourse';
+import { AttachmentsService } from 'src/app/Services/Attachments/attachments.service';
+import { VideosService } from 'src/app/Services/Videos/videos.service';
 
 @Component({
   selector: 'app-content-dialog',
@@ -9,8 +9,7 @@ import { ICourse } from 'src/app/Model/icourse';
   styleUrls: ['./content-dialog.component.css']
 })
 export class ContentDialogComponent {
-  videoFile: File | null = null;
-  pdfFile: File | null = null;
+  file: FileList | null = null;
   contentType: string = '';
 
   @ViewChild('videoInput') videoInput!: ElementRef<HTMLInputElement>;
@@ -19,7 +18,8 @@ export class ContentDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ContentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dynamicData: DynamicDataService
+    private attachmentData: AttachmentsService,
+    private videoData: VideosService
   ) { }
 
   onNoClick(): void {
@@ -29,113 +29,90 @@ export class ContentDialogComponent {
   onYesClick(): void {
     this.dialogRef.close(true);
     if (this.data.operation === 'edit') {
-      this.editContent(this.data.lessonId, this.data.contentId);
+      this.editContent(this.data.lectureId, this.data.contentId);
     } else {
-      this.addContent(this.data.lessonId);
+      this.addContent(this.data.lectureId);
     }
   }
 
-  onVideoFileSelected(event: any): void {
-    this.videoFile = event.target.files[0];
+  onFileSelected(event: any): void {
+    this.file = event.target.files;
   }
 
-  onPdfFileSelected(event: any): void {
-    this.pdfFile = event.target.files[0];
-  }
-
-  private editContent(lessonId: number, contentId: number): void {
-    this.dynamicData.getAllCourses().subscribe((courses: ICourse[]) => {
-      const courseToUpdate = courses.find(course => course.lesson?.some(lesson => lesson.id === lessonId));
-      if (courseToUpdate) {
-        const lessonToUpdate = courseToUpdate.lesson?.find(lesson => lesson.id === lessonId);
-        if (lessonToUpdate) {
-          const contentToUpdate = lessonToUpdate.content?.find(content => content.id === contentId);
-          if (contentToUpdate) {
-            const updatedContent = { ...contentToUpdate };
-            updatedContent.title = this.contentType;
-            updatedContent.videoUrl = this.videoFile?.name ?? updatedContent.videoUrl;
-            updatedContent.pdfUrl = this.pdfFile?.name ?? updatedContent.pdfUrl;
-
-            const updatedLesson = {
-              ...lessonToUpdate,
-              content: lessonToUpdate.content?.map(content => (content.id === contentId ? updatedContent : content))
-            };
-
-            const updatedCourse = {
-              ...courseToUpdate,
-              lesson: courseToUpdate.lesson?.map(lesson => (lesson.id === lessonId ? updatedLesson : lesson))
-            };
-
-            this.dynamicData.editCourse(courseToUpdate.id, updatedCourse).subscribe(
-              () => {
-                console.log(`Lesson content with ID ${contentId} updated successfully`);
-                window.location.reload();
-              },
-              (error) => {
-                console.error(`Failed to update lesson content with ID ${contentId}:`, error);
-              }
-            );
-          } else {
-            console.error(`Content with ID ${contentId} not found.`);
-          }
-        } else {
-          console.error(`Lesson with ID ${lessonId} not found.`);
-        }
-      } else {
-        console.error(`Course containing lesson with ID ${lessonId} not found.`);
-      }
-    });
-  }
-
-
-  private addContent(lessonId: number): void {
-    const newContentId = this.generateUniqueId();
-
-    const newContent: any = {
-      id: `${newContentId}`,
-      title: this.contentType,
-      videoUrl: this.videoFile ? this.videoFile.name : null,
-      pdfUrl: this.pdfFile ? this.pdfFile.name : null
+  private editContent(lectureId: number, contentId: number): void {
+    // Create a copy of the content to modify
+    const updatedContent: any = {
+      id: contentId,
+      attachmentTitle: this.contentType
     };
 
-    this.dynamicData.getAllCourses().subscribe((courses: ICourse[]) => {
-      courses.forEach(course => {
-        if (course.id === this.data.courseId) {
-          const updatedCourse = { ...course };
-          const lesson = updatedCourse.lesson?.find(lesson => lesson.id === lessonId);
-
-          if (lesson) {
-            lesson.content = lesson.content || [];
-            lesson.content.push(newContent);
-
-            this.dynamicData.editCourse(course.id, updatedCourse).subscribe(
-              () => {
-                console.log('New content added successfully');
-                this.dialogRef.close(true);
-                window.location.reload();
-              },
-              (error) => {
-                console.error('Failed to add new content:', error);
-                this.dialogRef.close(false);
-              }
-            );
-          } else {
-            console.error(`Lesson with ID ${lessonId} not found.`);
-          }
+    if (this.data.contentTitle === 'file') {
+      this.attachmentData.editAttachment(this.data.courseId, lectureId, updatedContent, contentId).subscribe(
+        () => {
+          console.log(`Attachment with ID ${contentId} updated successfully`);
+          window.location.reload();
+        },
+        (error) => {
+          console.error(`Failed to update attachment with ID ${contentId}:`, error);
         }
-      });
-    });
-  }
-
-  onSubmit(): void {
-    if (this.data.operation === 'edit') {
-      this.editContent(this.data.lessonId, this.data.contentId);
+      );
+    } else if (this.data.contentTitle === 'video') {
+      this.videoData.editVideo(this.data.courseId, lectureId, updatedContent, contentId).subscribe(
+        () => {
+          console.log(`Video with ID ${contentId} updated successfully`);
+          window.location.reload();
+        },
+        (error) => {
+          console.error(`Failed to update video with ID ${contentId}:`, error);
+        }
+      );
     } else {
-      this.addContent(this.data.lessonId);
+      console.error(`Unsupported content type: ${this.data.contentTitle}`);
     }
   }
 
-  private generateUniqueId(): number {
-    return Math.floor(Math.random() * 1000000);
+  private addContent(lectureId: number): void {
+    if (!this.file) {
+      console.error('No file selected.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('AttachmentTitle', this.contentType);
+    formData.append('LectureId', lectureId.toString());
+
+    if (this.data.contentTitle === 'file') {
+      formData.append('File', this.file[0]);
+
+      // Add the attachment using FormData
+      this.attachmentData.addAttachment(this.data.courseId, lectureId, formData).subscribe(
+        () => {
+          console.log('New attachment added successfully');
+          // window.location.reload();
+        },
+        (error) => {
+          console.error('Failed to add new attachment:', error);
+          // window.location.reload();
+        }
+      );
+    } else if (this.data.contentTitle === 'video') {
+      formData.append('videoPath', this.file[0]);
+
+      // Add the video using FormData
+      this.videoData.addVideo(this.data.courseId, lectureId, formData).subscribe(
+        () => {
+          console.log('New video added successfully');
+          // window.location.reload();
+        },
+        (error) => {
+          console.error('Failed to add new video:', error);
+          // window.location.reload();
+        }
+      );
+    } else {
+      console.error(`Unsupported content type: ${this.data.contentTitle}`);
+    }
   }
+
+
 }

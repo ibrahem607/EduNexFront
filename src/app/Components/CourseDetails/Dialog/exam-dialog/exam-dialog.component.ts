@@ -46,7 +46,6 @@ export class ExamDialogComponent {
   }
 
   onYesClick(event: Event): void {
-
     if (this.contentForm.invalid) {
       this.displayErrorMessages();
       return;
@@ -54,7 +53,8 @@ export class ExamDialogComponent {
 
     const formData = this.contentForm.value;
     this.dialogRef.close();
-    this.router.navigate(['/course', this.data.courseID, 'lesson', this.data.lessonId, 'create'], {
+
+    this.router.navigate(['/course', this.data.courseID, 'lesson', this.data.lectureId, 'create'], {
       queryParams: {
         type: this.data.examType,
         title: formData.title,
@@ -65,7 +65,7 @@ export class ExamDialogComponent {
         duration: formData.duration,
         grade: this.data.grade,
         courseTitle: this.data.courseTitle,
-        lessonTitle: this.data.lessonTitle,
+        lectureTitle: this.data.lectureTitle,
       }
     });
   }

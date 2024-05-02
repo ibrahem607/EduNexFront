@@ -9,8 +9,8 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button value="1" color="accent">Option 1</mat-radio-button>
-          <mat-radio-button value="2" color="accent">Option 2</mat-radio-button>
+          <mat-radio-button *ngFor="let subject of subjectName" [value]="subject" color="accent"
+            (change)="filterBySubject(subject)">{{ subject }}</mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
@@ -24,8 +24,10 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button value="1" color="accent">Option 1</mat-radio-button>
-          <mat-radio-button value="2" color="accent">Option 2</mat-radio-button>
+          <mat-radio-button *ngFor="let type of courseType" [value]="type" color="accent"
+            (change)="filterByCourseType(type)">
+            {{ type }}
+          </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
@@ -39,8 +41,10 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button value="1" color="accent">Option 1</mat-radio-button>
-          <mat-radio-button value="2" color="accent">Option 2</mat-radio-button>
+          <mat-radio-button *ngFor="let level of levelName" [value]="level" color="accent"
+            (change)="filterByLevel(level)">
+            {{ level }}
+          </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
@@ -53,12 +57,14 @@
             أدني السعر
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-slider min="0" max="3000" step="100" color="accent" showTickMarks discrete style="direction: ltr;">
+        <mat-slider [min]="minPrice" [max]="middlePrice" step="5" color="accent" showTickMarks discrete
+          style="direction: ltr;" (input)="filterByPriceRange(minPrice, maxPrice)">
           <input matSliderThumb>
         </mat-slider>
+
         <div class="flex justify-content-between">
-          <span class="price-text">EGP 0</span>
-          <span class="price-text">EGP 3000</span>
+          <span class="price-text">EGP {{minPrice}}</span>
+          <span class="price-text">EGP {{middlePrice}}</span>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
@@ -68,26 +74,30 @@
         class="custom-expansion-panel">
         <mat-expansion-panel-header>
           <mat-panel-title style="font-weight: 500;">
-            أعلي السعر
+            أعلى السعر
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-slider min="3000" max="6000" step="100" color="accent" showTickMarks discrete style="direction: ltr;">
+        <mat-slider [min]="middlePrice" [max]="maxPrice" step="5" color="accent" showTickMarks discrete
+          style="direction: ltr;" (input)="filterByPriceRange(middlePrice, maxPrice)">
           <input matSliderThumb>
         </mat-slider>
+
         <div class="flex justify-content-between">
-          <span class="price-text">EGP 3000</span>
-          <span class="price-text">EGP 6000</span>
+          <span class="price-text">EGP {{ middlePrice }}</span>
+          <span class="price-text">EGP {{ maxPrice }}</span>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
 
-  <div class="flex flex-wrap gap-3">
-    <ng-container *ngFor="let course of courses">
-      <app-course-card [course]="course"></app-course-card>
-    </ng-container>
+  <div>
+    <div class="flex flex-wrap gap-3">
+      <ng-container *ngFor="let course of filteredPaginatedCourses">
+        <app-course-card [course]="course"></app-course-card>
+      </ng-container>
+    </div>
+
+    <app-custom-pagination [length]="filteredCourses.length"
+      (pageChanged)="onPageChange($event)"></app-custom-pagination>
   </div>
 </div>
-
-
-<app-custom-pagination></app-custom-pagination>
