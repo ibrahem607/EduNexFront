@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ICourse } from 'src/app/Model/icourse';
 
 @Component({
@@ -6,7 +6,8 @@ import { ICourse } from 'src/app/Model/icourse';
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.css']
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements OnInit{
+
   @Input() course!: ICourse;
 
   handleMouseMove(event: MouseEvent) {
@@ -28,5 +29,8 @@ export class CourseCardComponent {
       card.style.transform = '';
       card.style.boxShadow = ''
     }
+  }
+  ngOnInit(): void {
+    console.log(this.course)
   }
 }

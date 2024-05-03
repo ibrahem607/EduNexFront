@@ -95,6 +95,12 @@
       <ng-container *ngFor="let course of filteredPaginatedCourses">
         <app-course-card [course]="course"></app-course-card>
       </ng-container>
+
+      <ng-container *ngIf="courses.length === 0">
+        <ng-container *ngFor="let course of [1,2,3,4,5,6]">
+          <app-loading-cards></app-loading-cards>
+        </ng-container>
+      </ng-container>
     </div>
 
     <app-custom-pagination [length]="filteredCourses.length"

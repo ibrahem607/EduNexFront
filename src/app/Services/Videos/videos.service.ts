@@ -24,7 +24,7 @@ export class VideosService {
   }
 
   addVideo(courseId: number, lectureId: number, VideoData: any): Observable<IVideo> {
-    return this.httpClient.post<IVideo>(`${this.URL}/api/courses/${courseId}/lectures/${lectureId}/attachments`, VideoData);
+    return this.httpClient.post<IVideo>(`${this.URL}/api/courses/${courseId}/lectures/${lectureId}/videos`, VideoData);
   }
 
   editVideo(courseId: number, lectureId: number, updatedLecture: any, videoId: number): Observable<void> {

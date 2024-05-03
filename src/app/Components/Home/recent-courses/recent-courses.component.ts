@@ -56,7 +56,7 @@ export class RecentCoursesComponent implements OnInit {
     this.getAll();
 
     this.courseData.getAllCourses().subscribe(courses => {
-      this.subjectName = courses.map(course => course.subjectName);
+      this.subjectName = [...new Set(courses.map(course => course.subjectName))];
       this.options = this.subjectName.map((subject, index) => ({ subjectName: subject, selected: index === 0 }));
 
       this.toggleOption(0);

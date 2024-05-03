@@ -463,11 +463,9 @@ export class CreateExamComponent implements OnInit {
       this.examData.addExam(examData).subscribe(
         (addedExam: IExam) => {
           console.log('Exam added successfully:', addedExam);
-          // Additional actions after exam addition, if needed
         },
         (error) => {
           console.error('Error occurred while adding exam:', error);
-          // Handle error, if needed
         }
       );
     } else {

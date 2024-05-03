@@ -9,8 +9,8 @@ h5 {
   background-color: var(--bg);
 }
 
-.custom-expansion-panel button{
-width: 100%;
+.custom-expansion-panel button {
+  width: 100%;
 }
 
 .custom-checkbox-container {
@@ -65,9 +65,19 @@ width: 100%;
 .home-work-button:focus {
   outline: none;
 }
+
 .home-work-button a button {
   width: 100%;
 }
+
+.spinner {
+  min-height: 90dvh;
+}
+
+.spinner ::ng-deep circle {
+  stroke: var(--wave2);
+}
+
 @media (min-width: 990px) {
   .accordion-section {
     margin-top: 2.5rem;

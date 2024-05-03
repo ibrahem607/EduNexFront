@@ -44,7 +44,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   startTimer() {
     if (this.duration) {
-      this.timeLeft = this.duration;
+      this.timeLeft = this.duration * 60;
       this.timerStarted = true;
 
       const countdown = setInterval(() => {

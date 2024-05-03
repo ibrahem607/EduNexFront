@@ -4,8 +4,8 @@
     <!-- Exam Header -->
     <div class="flex flex-column gap-3 mobile-row flex-wrap justify-content-center">
       <section class="section-header p-3 d-flex flex-column ">
-        <h5 *ngIf="course && course.lectureList">
-          {{ getLessonTitle(lessonId) }}
+        <h5 *ngIf="lecture">
+          {{ lecture.lectureTitle }}
         </h5>
         <h6>{{ exam.title }}</h6>
       </section>
@@ -31,7 +31,7 @@
   </div>
 
   <!-- Exam Questions Section -->
-  <form [formGroup]="form" class="d-flex flex-column gap-3 mb-auto">
+  <form [formGroup]="form" class="d-flex flex-column gap-3 mb-auto w-100">
     <section class="exam-section p-4">
       <div *ngFor="let question of questions; let i = index">
         <div *ngIf="selectedQuestionIndex == i">
@@ -96,4 +96,8 @@
       </div>
     </div>
   </form>
+</div>
+
+<div *ngIf="!exam" class="spinner flex justify-content-center">
+  <mat-spinner></mat-spinner>
 </div>

@@ -29,6 +29,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';;
@@ -89,6 +91,7 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { LoadingCardsComponent } from './Components/Shared/loading-cards/loading-cards.component';
 
 @NgModule({
   declarations: [
@@ -144,7 +147,8 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     CustomCloudNavbarComponent,
     NotFoundComponent,
     StudentSignUpComponent,
-    TeacherSignUpComponent
+    TeacherSignUpComponent,
+    LoadingCardsComponent
   ],
   imports: [
     BrowserModule,
@@ -181,6 +185,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     LoadingBarModule,
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     OverlayContainer,

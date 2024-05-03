@@ -11,17 +11,25 @@
     </div>
   </div>
 
- <section>
-  <app-side-scroll-buttons [sectionName]="'scroll-section-r-courses'"></app-side-scroll-buttons>
+  <section>
+    <app-side-scroll-buttons [sectionName]="'scroll-section-r-courses'"></app-side-scroll-buttons>
 
-   <div class="flex scroll-section-r-courses hidden gap-3 p-1" AppearFromRight>
-     <ng-container *ngFor="let course of filteredCourses.slice(currentIndex, currentIndex + cardsToShow); let i = index">
-       <div class="card-container" [@fadeInOut]>
-         <app-course-card [course]="course"></app-course-card>
-       </div>
-     </ng-container>
-   </div>
- </section>
+    <div class="flex scroll-section-r-courses hidden gap-3 p-1" AppearFromRight>
+      <ng-container
+        *ngFor="let course of filteredCourses.slice(currentIndex, currentIndex + cardsToShow); let i = index">
+        <div class="card-container" [@fadeInOut]>
+          <app-course-card [course]="course"></app-course-card>
+        </div>
+      </ng-container>
+      <div class="card-container flex gap-3" [@fadeInOut]>
+        <ng-container *ngIf="courses.length === 0">
+          <ng-container *ngFor="let course of [1,2,3,4,5,6]">
+            <app-loading-cards></app-loading-cards>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </section>
 
   <div class="flex justify-content-center">
     <button mat-button routerLink="/courses" class="custom-button my-3">مشاهدة الكورسات</button>

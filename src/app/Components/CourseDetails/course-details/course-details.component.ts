@@ -24,7 +24,6 @@ export class CourseDetailsComponent implements OnInit {
   attachment!: IAttachment;
   role: string = '';
 
-
   options = [
     { label: 'محتوي الكورس', selected: true },
     { label: 'عن المعلم', selected: false },

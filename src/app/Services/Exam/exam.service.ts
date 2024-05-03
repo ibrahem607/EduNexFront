@@ -33,8 +33,8 @@ export class ExamService {
     return this.httpClient.put<void>(`${this.URL}/api/Exams/${examId}`, updatedExam);
   }
 
-  startExam(examId: number, studentId: number): Observable<IExam> {
-    return this.httpClient.post<IExam>(`${this.URL}/api/Exams/${examId}/start`, studentId);
+  startExam(examId: number, student: any): Observable<IExam> {
+    return this.httpClient.post<IExam>(`${this.URL}/api/Exams/${examId}/start`, student);
   }
 
   submitExam(examId: number, submittedExam: any): Observable<IExam> {

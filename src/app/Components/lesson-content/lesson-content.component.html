@@ -2,7 +2,7 @@
 
   <div class="accordion-section flex gap-2">
     <button mat-menu-item class="flex px-2 mx-2 my-0 home-work-button" *ngIf="lecture.assignment"
-      [routerLink]="['/course', courseId,'lesson' ,lecture.id ,'view']">
+      [routerLink]="['/course', courseId, 'lesson', lecture.id, 'view', { examType: 'Assignment', examId: lecture.assignment}]">
       <i class="fas fa-clipboard-list"></i>
       الواجب
     </button>
@@ -42,3 +42,7 @@
     </div>
   </div>
 </section>
+
+<div *ngIf="!lecture" class="spinner flex justify-content-center">
+  <mat-spinner></mat-spinner>
+</div>

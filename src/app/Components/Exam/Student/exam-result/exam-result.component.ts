@@ -1,24 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AnswerChoices, IExamResult } from 'src/app/Model/iexam-result';
 import { ExamService } from 'src/app/Services/Exam/exam.service';
+
 @Component({
   selector: 'app-exam-result',
   templateUrl: './exam-result.component.html',
   styleUrls: ['./exam-result.component.css']
 })
-export class ExamResultComponent {
+export class ExamResultComponent implements OnInit {
   result!: IExamResult;
+  examId: number;
 
-  constructor(private examData: ExamService) { }
-
-  getAll() {
-    this.examData.getExamResult(1).subscribe(result => {
-      this.result = result
-    });
+  constructor(private examData: ExamService, private route: ActivatedRoute) {
+    this.examId = 0;
   }
 
   ngOnInit(): void {
-    this.getAll();
+    this.route.queryParams.subscribe(params => {
+      this.examId = params['examId'];
+      this.getExamResult(this.examId);
+    });
+  }
+
+  getExamResult(examId: number) {
+    this.examData.getExamResult(examId).subscribe(result => {
+      this.result = result;
+    });
   }
 
   getAnswerChoices(answerChoices: AnswerChoices[]): string[] {
