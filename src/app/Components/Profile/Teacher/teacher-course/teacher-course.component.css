@@ -1,0 +1,81 @@
+table,
+.overflow-x {
+  box-shadow: var(--border) 0px 0px 0px 1px;
+  border-radius: 10px;
+  background-color: var(--bg);
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.overflow-x {
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.table-container {
+  width: 100%;
+}
+
+tr td:first-of-type,
+tr th:first-of-type {
+  padding-right: 1rem;
+}
+
+th,
+td {
+  padding: 8px;
+  border-radius: 10px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+th {
+  font-weight: 700;
+}
+
+.custom-icon-button {
+  background-color: var(--active);
+  border-radius: 50% !important;
+}
+
+.width-50 {
+  width: 50px !important;
+}
+
+.buttons ::ng-deep .mat-icon {
+  overflow: unset !important;
+  width: 17px !important;
+}
+
+@media (min-width: 992px) {
+  .overflow-x {
+    margin-top: calc(100px + 1rem);
+    width: calc(80vw - 230px - 3rem);
+  }
+}
+
+@media (max-width: 992px) {
+  .overflow-x {
+    width: calc(70vw + 100px);
+  }
+}
+
+@media (max-width: 776px) {
+  .overflow-x {
+    width: calc(85vw - 24px);
+  }
+}
+
+@media (max-width: 576px) {
+  .overflow-x {
+    width: calc(98vw - 24px);
+  }
+}

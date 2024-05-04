@@ -1,8 +1,8 @@
-<form [formGroup]="examForm" (ngSubmit)="onSaveClicked()" class="container flex" style="overflow-x: hidden;">
+<form [formGroup]="examForm" (ngSubmit)="onSaveClicked()" class="container flex" *ngIf="exam && lecture">
   <div class="flex column flex-wrap gap-3 justify-content-center column-mobile mb-auto">
     <section class="section-header p-3 d-flex flex-column">
       <h5>{{courseTitle}}</h5>
-      <h6>{{lectureTitle}}</h6>
+      <h6>{{lecture.lectureTitle}}</h6>
     </section>
     <div class="flex column flex-wrap gap-3 justify-content-center column-mobile mb-auto">
       <app-exam-controller (sectionChange)="activeSection = $event"
@@ -101,7 +101,7 @@
                   <mat-form-field appearance="outline">
                     <mat-label>نص الاجابة</mat-label>
                     <input matInput type="text" formControlName="header"
-                      [readonly]="getQuestionFormGroup(i).get('type')?.value === 'trueFalse'" required>
+                      [readonly]="getQuestionFormGroup(i).get('type')?.value === 'TrueFalse'" required>
                     <mat-error
                       *ngIf="answer.get('header')?.hasError('required') && (answer.get('header')?.dirty || answer.get('header')?.touched)">
                       هذا الحقل مطلوب
@@ -131,6 +131,9 @@
               </div>
             </form>
           </div>
+          <mat-error *ngIf="getQuestionFormGroup(i)?.get('answers')?.value.length < 2 && formSubmitted">
+            يجب أن يحتوي السؤال على ما لا يقل عن إجابتين
+          </mat-error>
         </form>
       </div>
     </div>
@@ -228,3 +231,7 @@
     </div>
   </div>
 </form>
+
+<div *ngIf="!(exam && lecture)" class="spinner flex justify-content-center">
+  <mat-spinner></mat-spinner>
+</div>

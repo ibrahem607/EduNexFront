@@ -2,16 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { convertDateFormat, convertTimeFormat } from 'src/app/Components/Exam/DateTimeFormat';
+import { ILecture } from 'src/app/Model/icourse';
 import { IExam } from 'src/app/Model/iexam';
 import { ExamService } from 'src/app/Services/Exam/exam.service';
-import { isAnyValueMissing, isDurationValid, isStartDateAfterEndDate, isStartDatePast } from 'src/app/Validator/exam-validators';
+import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
+import { isAnyValueMissing, isDurationValid, isStartDateBeforeEndDate, isStartDateInFuture } from 'src/app/Validator/exam-validators';
 
 @Component({
-  selector: 'app-create-exam',
-  templateUrl: './create-exam.component.html',
-  styleUrls: ['./create-exam.component.css']
+  selector: 'app-edit-exam',
+  templateUrl: './edit-exam.component.html',
+  styleUrls: ['./edit-exam.component.css']
 })
-export class CreateExamComponent implements OnInit {
+export class EditExamComponent implements OnInit {
+  exam!: IExam;
+  lecture!: ILecture;
   examForm!: FormGroup;
   activeSection: string = 'questionSettings';
   activeQuestions: boolean[] = [];
@@ -20,31 +25,14 @@ export class CreateExamComponent implements OnInit {
   questions: any[] = [];
   selectedValue: number = 10;
   courseTitle!: string;
-  lectureTitle!: string;
   questionsControls!: FormArray;
 
   formSubmitted: boolean = false;
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private examData: ExamService, private snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private examData: ExamService, private lectureData: LecturesService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.examForm = this.fb.group({
-      examId: [this.questionIndex],
-      title: ['', [Validators.required, Validators.pattern(/^[\u0600-\u06FF\u0750-\u077F\s0-9a-zA-Z]+$/)]],
-      startDate: [new Date(), Validators.required],
-      endDate: [new Date(), Validators.required],
-      startTime: [0, Validators.required],
-      endTime: [0, Validators.required],
-      duration: [0, [Validators.required, Validators.min(5), Validators.max(180)]],
-      questions: this.fb.array([]),
-    }, {
-      validators: [
-        isAnyValueMissing,
-        isStartDateAfterEndDate,
-        isStartDatePast,
-        isDurationValid
-      ]
-    });
+    this.initForm();
 
     this.examForm.get('questionIndex')?.valueChanges.subscribe((index: number) => {
       this.activeQuestionIndex = index;
@@ -56,22 +44,107 @@ export class CreateExamComponent implements OnInit {
       this.activeQuestions.push(false);
     }
 
+    this.getLectureId(Number(this.activatedRoute.snapshot.paramMap.get('courseId')), Number(this.activatedRoute.snapshot.paramMap.get('lessonId')));
     this.activatedRoute.queryParams.subscribe(params => {
-      const startDate = params['startDate'] ? new Date(params['startDate']) : new Date();
-      const endDate = params['endDate'] ? new Date(params['endDate']) : new Date();
+      this.getExamById(params['examId']);
+    });
 
-      this.examForm.patchValue({
-        title: params['title'] || '',
-        startTime: params['startTime'] || '',
-        endTime: params['endTime'] || '',
-        startDate: startDate,
-        endDate: endDate,
-        duration: params['duration'] || ''
+    // this.questionsControls.valueChanges.subscribe(() => {
+    //   if (this.exam.questions.length !== this.questionsControls.length) {
+    //     const diff = this.exam.questions.length - this.questionsControls.length;
+    //     if (diff > 0) {
+    //       // If the length of exam.questions is greater, it means questions were added
+    //       // You might want to handle this scenario differently, like adding questions instead of removing them
+    //     } else if (diff < 0) {
+    //       // If the length of exam.questions is smaller, it means questions were removed
+    //       const removedIndex = this.questionsControls.length - 1; // Get the index of the last question in the form
+    //       this.removeQuestion(removedIndex);
+    //     }
+    //   }
+    // });
+  }
+
+  getExamById(id: number) {
+    this.examData.getExamById(id).subscribe(exam => {
+      // console.log('Received exam object:', exam);
+      this.exam = exam;
+      this.getExamDate(exam);
+    });
+  }
+
+  getLectureId(courseId: number, lectureId: number) {
+    this.lectureData.getLectureById(courseId, lectureId).subscribe(lecture => {
+      this.lecture = lecture;
+      // console.log(this.lecture)
+    });
+  }
+
+  initForm(): void {
+    this.examForm = this.fb.group({
+      id: [this.questionIndex],
+      title: ['', [Validators.required, Validators.pattern(/^[\u0600-\u06FF\u0750-\u077F\s0-9a-zA-Z]+$/)]],
+      startDate: [new Date(), Validators.required],
+      endDate: [new Date(), Validators.required],
+      startTime: [0, Validators.required],
+      endTime: [0, Validators.required],
+      duration: [0, [Validators.required, Validators.min(5), Validators.max(180)]],
+      questions: this.fb.array([]),
+    }, {
+      validators: [
+        isAnyValueMissing,
+        isStartDateBeforeEndDate,
+        isStartDateInFuture,
+        isDurationValid,
+      ]
+    });
+  }
+
+  initQuestions(): void {
+    const questionsArray = this.examForm.get('questions') as FormArray;
+    this.exam.questions.forEach(question => {
+      const questionGroup = this.fb.group({
+        points: [question.points, Validators.required],
+        header: [question.header, Validators.required],
+        type: [question.type, Validators.required],
+        answers: this.fb.array([])
       });
 
-      this.courseTitle = params['courseTitle'] || '';
-      this.lectureTitle = params['lectureTitle'] || '';
+      const answersArray = questionGroup.get('answers') as FormArray;
+      question.answers.forEach(answer => {
+        answersArray.push(this.fb.group({
+          header: [answer.header, Validators.required],
+          isCorrect: answer.isCorrect
+        }));
+      });
+
+      questionsArray.push(questionGroup);
     });
+  }
+
+  getExamDate(exam: IExam) {
+    const startDateTime = new Date(exam.startDateTime);
+    const endDateTime = new Date(exam.endDateTime);
+
+    this.examForm.patchValue({
+      title: exam.title || '',
+      startDate: startDateTime || '',
+      endDate: endDateTime || '',
+      startTime: this.formatTime(startDateTime) || '',
+      endTime: this.formatTime(endDateTime) || '',
+      duration: exam.duration
+    });
+
+    this.courseTitle = exam.title;
+
+    this.initQuestions();
+  }
+
+  formatTime(date: Date): string {
+    return `${this.padZero(date.getHours())}:${this.padZero(date.getMinutes())}`;
+  }
+
+  padZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
   }
 
   //getFormGroup
@@ -118,13 +191,13 @@ export class CreateExamComponent implements OnInit {
       points: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
       header: ['', [Validators.required, Validators.pattern(/^[\u0600-\u06FF\u0750-\u077F\s0-9a-zA-Z]+$/)]],
       type: ['', Validators.required],
-      answers: this.fb.array([])
+      answers: this.fb.array([], [this.validateAnswersLength])
     });
   }
 
   createAnswerFormGroup(answer: any, questionType: string, index: number): FormGroup {
     let headerValue = '';
-    if (questionType === 'trueFalse') {
+    if (questionType === 'TrueFalse') {
       headerValue = index === 0 ? 'صح' : 'خطأ';
     }
 
@@ -262,7 +335,7 @@ export class CreateExamComponent implements OnInit {
     const questionFormGroup = this.getQuestionFormGroup(questionIndex);
     if (questionFormGroup) {
       const questionType = questionFormGroup.get('type')?.value;
-      if ((questionType === 'oneChoice' || questionType === 'trueFalse') && isTrueAnswer) {
+      if ((questionType === 'OneChoice' || questionType === 'TrueFalse') && isTrueAnswer) {
         const answersFormArray = questionFormGroup.get('answers') as FormArray;
         if (answersFormArray) {
           for (let i = 0; i < answersFormArray.length; i++) {
@@ -364,6 +437,14 @@ export class CreateExamComponent implements OnInit {
     );
   }
 
+  validateAnswersLength(control: AbstractControl): { [key: string]: boolean } | null {
+    const answersArray = control as FormArray;
+    if (answersArray && answersArray.length < 2) {
+      return { 'minAnswers': true };
+    }
+    return null;
+  }
+
   //SnackBar
   displayErrorMessages(): void {
     const formErrors = this.examForm.errors;
@@ -401,55 +482,59 @@ export class CreateExamComponent implements OnInit {
     });
   }
 
-  // Function to combine date and time into a single variable
-  combineDateTime(dateControl: AbstractControl | null, timeControl: AbstractControl | null): string {
-    if (!dateControl || !timeControl) {
-      console.error('Date or time control is missing.');
-      return '';
-    }
-
-    const date = dateControl.value;
-    const time = timeControl.value;
-
-    if (!date || !time) {
-      console.error('Date or time value is missing.');
-      return '';
-    }
-
-    const dateTime = new Date(date);
-    dateTime.setHours(Number(time.split(':')[0])); // Convert hours to number
-    dateTime.setMinutes(Number(time.split(':')[1])); // Convert minutes to number
-    dateTime.setSeconds(0);
-    return dateTime.toISOString();
-  }
-
   onSaveClicked(): void {
     this.examForm.markAllAsTouched();
     this.formSubmitted = true;
 
     if (this.examForm.valid) {
+      this.removeQuestion(0);this.removeQuestion(1);this.removeQuestion(2);this.removeQuestion(4);this.removeQuestion(3);this.removeQuestion(5);this.removeQuestion(6);this.removeQuestion(7);this.removeQuestion(8);this.removeQuestion(9);
       console.log('Form submitted successfully!');
 
-      // Combine date and time for startDateTime
-      const startDateTime = this.combineDateTime(this.examForm.get('startDate'), this.examForm.get('startTime'));
+      const startDate = convertDateFormat(this.examForm.value.startDate);
+      const endDate = convertDateFormat(this.examForm.value.endDate);
 
-      // Combine date and time for endDateTime
-      const endDateTime = this.combineDateTime(this.examForm.get('endDate'), this.examForm.get('endTime'));
-
-      // Retrieve type from params
-      const params = this.activatedRoute.snapshot.queryParams;
-      const type = params['type'];
+      const startTime = convertTimeFormat(this.examForm.value.startTime);
+      const endTime = convertTimeFormat(this.examForm.value.endTime);
 
       // Convert duration to number
       const duration = Number(this.examForm.get('duration')!.value);
 
+      // Get the id from the URL
+      const params = this.activatedRoute.snapshot.queryParams;
+      const id = params['examId'];
+
+      const questionsData = this.examForm.value.questions.map((question: any, index: number) => {
+        // Retrieve question ID if it exists
+        const questionId = this.exam.questions && this.exam.questions.length > index ? this.exam.questions[index].id : null;
+
+        // Map answers and add IDs
+        const answersData = question.answers.map((answer: any, answerIndex: number) => {
+          // Retrieve answer ID if it exists
+          const answerId = this.exam.questions && this.exam.questions.length > index &&
+            this.exam.questions[index].answers && this.exam.questions[index].answers.length > answerIndex ?
+            this.exam.questions[index].answers[answerIndex].id : null;
+
+          return {
+            ...answer,
+            id: answerId
+          };
+        });
+
+        return {
+          ...question,
+          id: questionId,
+          answers: answersData
+        };
+      });
+
       const examData = {
         ...this.examForm.value,
-        type: type, // Add type to examData
-        startDateTime: startDateTime,
-        endDateTime: endDateTime,
-        duration: duration, // Convert duration to number
-        lectureId: Number(this.activatedRoute.snapshot.paramMap.get('lessonId'))
+        type: this.exam.type,
+        startDateTime: `${startDate}T${startTime}`,
+        endDateTime: `${endDate}T${endTime}`,
+        duration: duration,
+        lectureId: Number(this.activatedRoute.snapshot.paramMap.get('lessonId')),
+        questions: questionsData // Include the updated questions data with preserved IDs
       };
 
       // Remove startDate, endDate, startTime, and endTime from examData
@@ -458,11 +543,14 @@ export class CreateExamComponent implements OnInit {
       delete examData.startTime;
       delete examData.endTime;
 
+      // Replace id with the one from the URL
+      examData.id = Number(id);
+
       console.log(examData);
 
-      this.examData.addExam(examData).subscribe(
-        (addedExam: IExam) => {
-          console.log('Exam added successfully:', addedExam);
+      this.examData.editExam(examData.id, examData).subscribe(
+        (editedExam: any) => {
+          console.log('Exam edited successfully:', editedExam);
         },
         (error) => {
           console.error('Error occurred while adding exam:', error);

@@ -38,7 +38,11 @@ export class ExamService {
   }
 
   submitExam(examId: number, submittedExam: any): Observable<IExam> {
-    return this.httpClient.post<IExam>(`${this.URL}/api/Exams/${examId}/start`, submittedExam);
+    return this.httpClient.post<IExam>(`${this.URL}/api/Exams/${examId}/submit`, submittedExam);
+  }
+
+  getInfoExam(examId: number): Observable<IExam> {
+    return this.httpClient.get<IExam>(`${this.URL}/api/Exams/${examId}/getinfo`);
   }
 
   // examResult

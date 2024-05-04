@@ -105,6 +105,7 @@ export class CourseDetailsComponent implements OnInit {
         message: 'هل أنت متأكد أنك تريد حذف الحصة؟',
         confirmButtonText: 'حذف الحصة',
         lectureId: lectureId,
+        courseId:this.courseID
       }
     });
   }
@@ -182,7 +183,7 @@ export class CourseDetailsComponent implements OnInit {
       width: '600px',
       data: {
         header: examType == 'exam' ? 'بيانات الامتحان' : 'بيانات الواجب',
-        confirmButtonText: examType == 'exam' ? 'أضف الامتحان' : 'أضف لاواجب',
+        confirmButtonText: examType == 'exam' ? 'أضف الامتحان' : 'أضف الواجب',
         lectureId: lecture.id,
         lectureTitle: lecture.lectureTitle,
         contentId: contentId,

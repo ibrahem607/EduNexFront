@@ -31,9 +31,9 @@ export class CoursesComponent implements OnInit {
   getAllCourses() {
     this.courseData.getAllCourses().subscribe(courses => {
       this.courses = courses;
-      this.filteredCourses = courses; // Initialize filteredCourses with all courses
-      this.extractProperties(); // Call function to extract properties
-      this.updateFilteredPaginatedCourses(); // Update pagination after loading courses
+      this.filteredCourses = courses;
+      this.extractProperties()
+      this.updateFilteredPaginatedCourses();
     });
   }
 

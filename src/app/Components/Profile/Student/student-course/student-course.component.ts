@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-profile-course',
-  templateUrl: './profile-course.component.html',
-  styleUrls: ['./profile-course.component.css']
+  selector: 'app-student-course',
+  templateUrl: './student-course.component.html',
+  styleUrls: ['./student-course.component.css']
 })
-export class ProfileCourseComponent {
+export class StudentCourseComponent {
   displayedColumns: string[] = ['Course'
   // , 'Price', 'PurchaseDate', 'Level', 'Actions'
 ];

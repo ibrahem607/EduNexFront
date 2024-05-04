@@ -24,6 +24,7 @@ export class StudentExamComponent implements OnInit {
   visitedQuestions: boolean[] = [];
   form: FormGroup;
   skippedQuestions: boolean[] = [];
+  duration!: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,7 +47,6 @@ export class StudentExamComponent implements OnInit {
     this.visitedQuestions[0] = true;
 
     this.getLectureById(this.lectureId);
-    this.getExamById(this.examId);
     this.startExam(this.examId);
   }
 
@@ -55,7 +55,7 @@ export class StudentExamComponent implements OnInit {
       this.exam = exam;
       this.questions = exam.questions;
       this.buildFormControls();
-      // console.log(exam)
+      console.log(this.exam)
     });
   }
 
@@ -73,11 +73,16 @@ export class StudentExamComponent implements OnInit {
     this.examData.startExam(id, student).subscribe(
       () => {
         console.log(`Exam : ${id} started successfully`);
+        this.getExamById(this.examId);
       },
       (error) => {
         console.error('Error occurred while starting exam:', error);
       }
     );
+  }
+
+  durationCalculation() {
+
   }
 
   buildFormControls() {
@@ -178,8 +183,8 @@ export class StudentExamComponent implements OnInit {
             const answer = question.answers[answerIndex];
             console.log("Answer:", answer);
             // Add the ID of the selected answer to the selectedAnswersIds array
-            selectedAnswersIds.push(answer.answerId);
-            console.log("Answer ID:", answer?.answerId);
+            selectedAnswersIds.push(answer.id);
+            console.log("Answer ID:", answer?.id);
           }
         });
       }

@@ -1,75 +1,60 @@
-import { Component } from '@angular/core';
-import { ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
-import { TeacherService } from 'src/app/Services/Auth/teacher.service';
-
+import { Component, Renderer2 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { SignOutComponent } from '../../sign-out/sign-out.component';
+import { trigger, style, transition, animate } from '@angular/animations';
 @Component({
   selector: 'app-teacher-profile',
   templateUrl: './teacher-profile.component.html',
-  styleUrls: ['./teacher-profile.component.css']
+  styleUrls: ['./teacher-profile.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(-200%)' }),
+        animate('300ms', style({ opacity: 1, transform: 'translateX(0)' }))
+      ]),
+    ])
+  ]
 })
 export class TeacherProfileComponent {
-  edittext: boolean = true;
-  edittext1: boolean = true;
-  edittext2: boolean = true;
-  selectedImage: string | ArrayBuffer | null = 'https://bootdey.com/img/Content/avatar/avatar7.png';
+  activeSection: string = '';
+  selectedOptionIndex: number = 0;
+  leavingAnimationInProgress: boolean = false;
 
-  @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
-  teacher: any;
-  teacherHint: any = '';
-  constructor(private route: ActivatedRoute, private authService: AuthService, private teacherService: TeacherService) { }
+  options = [
+    { label: 'الرئيسية', icon: 'home', selected: true },
+    { label: 'الكورسات', icon: 'book', selected: false },
+    { label: 'تغيير كلمة السر', icon: 'key', selected: false },
+    { label: 'تسجيل الخروج', icon: 'sign-out-alt', selected: false }
+  ];
 
-  ngOnInit(): void {
-    console.log('Teacher id:', this.authService.teacherId);
-    this.teacherHint = this.teacherService.getTeacherAbout()
+  constructor(private dialog: MatDialog, private renderer: Renderer2) { }
 
-  }
-
-  saveupdate(updateData: string | null) {
-    if (updateData !== null) {
-      const id = this.authService.teacherId;
-      const aboutTeacher = updateData.toString(); // Ensure aboutTeacher is a string
-      this.teacherService.saveTeacherAbout(id, aboutTeacher).subscribe(
-        (response) => {
-          console.log('Update successful:', response);
-        },
-        (error) => {
-          console.error('Update failed:', error);
-        }
-      );
+  setActiveSection(index: number): void {
+    if (index === 3) {
+      this.openSignOutDialog();
+      this.selectedOptionIndex = -1;
     } else {
-      console.error('Update data is null.');
+      this.options.forEach((option, i) => {
+        option.selected = i === index;
+      });
+      this.activeSection = this.options[index].label;
+      this.selectedOptionIndex = index;
     }
   }
 
-  toggleEdit() {
-    this.edittext = !this.edittext;
+  openSignOutDialog(): void {
+    const dialogRef = this.dialog.open(SignOutComponent, {
+      data: {
+        message: 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
+        confirmButtonText: 'تسجيل الخروج'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'logout') {
+      }
+    });
   }
-
-  toggleEdit2() {
-    this.edittext2 = !this.edittext2;
-  }
-
-  toggleEditp() {
-    this.edittext1 = !this.edittext1;
-  }
-
-  previewImage(event: any) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      this.selectedImage = reader.result;
-    };
-
-    reader.readAsDataURL(file);
-  }
-
-  openFileInput() {
-    this.uploadInput.nativeElement.click();
-  }
-
 }
 
 

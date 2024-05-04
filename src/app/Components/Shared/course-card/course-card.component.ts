@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ICourse } from 'src/app/Model/icourse';
 
 @Component({
@@ -6,7 +6,7 @@ import { ICourse } from 'src/app/Model/icourse';
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.css']
 })
-export class CourseCardComponent implements OnInit{
+export class CourseCardComponent {
 
   @Input() course!: ICourse;
 
@@ -29,8 +29,5 @@ export class CourseCardComponent implements OnInit{
       card.style.transform = '';
       card.style.boxShadow = ''
     }
-  }
-  ngOnInit(): void {
-    console.log(this.course)
   }
 }

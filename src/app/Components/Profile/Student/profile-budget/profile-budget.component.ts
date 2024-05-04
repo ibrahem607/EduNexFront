@@ -1,5 +1,16 @@
 import { Component } from "@angular/core";
 
+@Component({
+  selector: 'app-profile-budget',
+  templateUrl: './profile-budget.component.html',
+  styleUrls: ['./profile-budget.component.css']
+})
+
+export class ProfileBudgetComponent {
+  displayedColumns: string[] = ['MaterialName', 'Price', 'PurchaseDate', 'PriceBefore', 'PriceAfter', 'AddedBy'];
+  dataSource = ELEMENT_DATA;
+}
+
 export interface PeriodicElement {
   materialName: string;
   price: number;
@@ -15,14 +26,3 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { materialName: 'الكيمياء', price: 150, purchaseDate: '2024-04-15 06:47:10', priceBefore: 180, priceAfter: 150, addedBy: 'سارة' },
   { materialName: 'علم الأحياء', price: 200, purchaseDate: '2024-04-15 06:47:10', priceBefore: 220, priceAfter: 200, addedBy: 'أمير' }
 ];
-
-@Component({
-  selector: 'app-profile-budget',
-  templateUrl: './profile-budget.component.html',
-  styleUrls: ['./profile-budget.component.css']
-})
-
-export class ProfileBudgetComponent {
-  displayedColumns: string[] = ['MaterialName', 'Price', 'PurchaseDate', 'PriceBefore', 'PriceAfter', 'AddedBy'];
-  dataSource = ELEMENT_DATA;
-}

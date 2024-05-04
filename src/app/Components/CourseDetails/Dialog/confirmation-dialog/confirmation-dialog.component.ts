@@ -34,7 +34,7 @@ export class ConfirmationDialogComponent {
 
   deleteLecture(lectureId: number): void {
     const courseId = this.data.courseId;
-
+    console.log(lectureId)
     this.lectureData.deleteLectureById(courseId, lectureId).subscribe(
       () => {
         console.log(`Lesson with ID ${lectureId} and its content deleted successfully`);
@@ -47,7 +47,6 @@ export class ConfirmationDialogComponent {
       }
     );
   }
-
 
   deleteContent(lectureId: number, contentId: number, contentType: string): void {
     const courseId = this.data.courseId;

@@ -1,0 +1,34 @@
+<form [formGroup]="courseForm" class="container col-lg-8" (ngSubmit)="onSubmit()" dir="rtl">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>اسم الدورة</mat-label>
+    <input matInput formControlName="courseName" id="courseName" placeholder="اسم الدورة" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>نوع الدورة</mat-label>
+    <input matInput formControlName="courseType" id="courseType" placeholder="نوع الدورة" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>السعر</mat-label>
+    <input matInput type="number" formControlName="price" id="price" placeholder="السعر" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>اسم المادة</mat-label>
+    <input matInput formControlName="subjectName" id="subjectName" placeholder="اسم المادة" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>رابط صورة الملف الشخصي</mat-label>
+    <input matInput formControlName="profilePhoto" id="profilePhoto" placeholder="رابط صورة الملف الشخصي">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>اسم المستوى</mat-label>
+    <input matInput formControlName="levelName" id="levelName" placeholder="اسم المستوى" required>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="!courseForm.valid">تأكيد</button>
+  <button mat-raised-button color="accent" type="button" (click)="resetForm()">إعادة تعيين</button>
+</form>

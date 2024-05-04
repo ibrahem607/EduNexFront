@@ -126,6 +126,14 @@ label::after {
   color: #333; /* Adjust color as needed */
 }
 
+.spinner {
+  min-height: 90dvh;
+}
+
+.spinner ::ng-deep circle {
+  stroke: var(--wave2);
+}
+
 /*
 ::ng-deep .mdc-button__label{
   margin-inline:auto !important;
