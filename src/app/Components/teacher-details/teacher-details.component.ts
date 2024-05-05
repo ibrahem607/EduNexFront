@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICourse } from 'src/app/Model/icourse';
 import { ITeacher } from 'src/app/Model/iteacher';
-import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
+import { CoursesService } from 'src/app/Services/Courses/courses.service';
+import { TeachersService } from 'src/app/Services/Teachers/teachers.service';
 
 @Component({
   selector: 'app-teacher-details',
@@ -11,11 +12,11 @@ import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
 })
 export class TeacherDetailsComponent {
   teacher!: ITeacher;
-  teacherID: number = 0;
+  teacherID: string;
   courses: ICourse[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private dynamicData: DynamicDataService) {
-    this.teacherID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+  constructor(private activatedRoute: ActivatedRoute, private teacherData: TeachersService, private courseData: CoursesService) {
+    this.teacherID = this.activatedRoute.snapshot.paramMap.get('id') ?? '';
   }
 
   ngOnInit(): void {
@@ -23,8 +24,9 @@ export class TeacherDetailsComponent {
   }
 
   getTeacherById() {
-    this.dynamicData.getTeacherById(this.teacherID).subscribe(teacher => {
+    this.teacherData.getTeacherById(this.teacherID).subscribe(teacher => {
       this.teacher = teacher;
+      console.log(teacher)
       if (teacher) {
         this.getAllCoursesForTeacher(teacher.name);
       }
@@ -32,8 +34,8 @@ export class TeacherDetailsComponent {
   }
 
   getAllCoursesForTeacher(teacherName: string) {
-    this.dynamicData.getAllCourses().subscribe(courses => {
-      this.courses = courses.filter(course => course.teacher === teacherName);
+    this.courseData.getAllCourses().subscribe(courses => {
+      this.courses = courses.filter(course => course.teacherName === teacherName);
     });
   }
 }

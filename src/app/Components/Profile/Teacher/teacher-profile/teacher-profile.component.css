@@ -1,0 +1,181 @@
+.header-section,
+.navigation-section {
+  border-radius: 10px;
+  box-shadow: var(--border) 0px 1px 3px 0px, var(--border) 0px 0px 0px 1px;
+  background-color: var(--bg);
+}
+
+.header-section {
+  min-height: 100px;
+}
+
+.header-section h5,
+.header-section h6 {
+  font-weight: 700;
+}
+
+.header-section h6 {
+  opacity: 0.75;
+}
+
+.navigation-section {
+  overflow-y: hidden;
+}
+
+.form-button-1 {
+  width: 100%;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 0;
+  border-bottom-left-radius: 0;
+  color: black;
+  transition: 0.3s;
+  color: var(--bgHeader);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.active {
+  background-color: rgba(204, 204, 204, 0.7);
+  border-left: 4px solid transparent;
+  border-image: var(--btn) 1;
+  color: var(--bgHeader);
+}
+
+.form-button-1 .fa {
+  font-size: 1.25rem;
+  transition: 0.3s;
+}
+.active .fa {
+  color: var(--wave1);
+}
+
+.signOut {
+  color: red;
+}
+
+@media (min-width: 992px) {
+  .header-section,
+  .navigation-section {
+    width: 230px;
+  }
+}
+@media (max-width: 992px) {
+  .header-section,
+  .navigation-section,
+  section,
+  .navigation-container {
+    width: 100%;
+  }
+  .header-section {
+    align-items: center;
+  }
+}
+
+/* Change the border color */
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__notch,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__trailing {
+  border-color: var(--bgHeader) !important;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+
+/* Change the border width */
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline
+  .mdc-notched-outline__notch,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline
+  .mdc-notched-outline__trailing {
+  border-width: 1.5px !important;
+}
+
+/* Change the border focused color */
+::ng-deep
+  .mdc-text-field--outlined:not(
+    .mdc-text-field--disabled
+  ).mdc-text-field--focused
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(
+    .mdc-text-field--disabled
+  ).mdc-text-field--focused
+  .mdc-notched-outline__notch,
+::ng-deep
+  .mdc-text-field--outlined:not(
+    .mdc-text-field--disabled
+  ).mdc-text-field--focused
+  .mdc-notched-outline__trailing {
+  border-color: var(--wave2) !important;
+}
+
+/* Change the border hover color */
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+    .mdc-text-field--focused
+  ):hover
+  .mdc-notched-outline
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+    .mdc-text-field--focused
+  ):hover
+  .mdc-notched-outline
+  .mdc-notched-outline__notch,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+    .mdc-text-field--focused
+  ):hover
+  .mdc-notched-outline
+  .mdc-notched-outline__trailing {
+  border-color: var(--wave2) !important;
+}
+
+::ng-deep
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled)
+  .mdc-list-item__primary-text,
+::ng-deep .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after {
+  color: var(--wave3) !important;
+}
+
+mat-form-field mat-label {
+  color: var(--bgHeader);
+}
+
+mat-error {
+  color: red !important;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  background-color: var(--bg) !important;
+  box-shadow: var(--border) 0px 0px 0px 1px !important;
+}
+
+::ng-deep .mdc-snackbar__surface,
+::ng-deep .mat-mdc-snack-bar-label {
+  background-color: brown !important;
+  border-radius: 10px !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-actions .mdc-button__label,
+::ng-deep .mat-mdc-snack-bar-label {
+  color: white !important;
+}

@@ -10,14 +10,8 @@ section {
   width: 242px;
 }
 
-/* .header-section,
-.section-timer {
-  height: 100px;
-} */
-
 .questions-section {
   min-height: 150px;
-  /* overflow-y: auto; */
 }
 
 .questions-container {
@@ -152,6 +146,14 @@ h5 span {
 
 mat-error {
   color: red !important;
+}
+
+.spinner {
+  min-height: 90dvh;
+}
+
+.spinner ::ng-deep circle {
+  stroke: var(--wave2);
 }
 
 @media (max-width: 992px) {

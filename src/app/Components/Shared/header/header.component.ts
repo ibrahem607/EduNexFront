@@ -5,6 +5,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { TeacherService } from 'src/app/Services/Auth/teacher.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -36,6 +37,7 @@ export class HeaderComponent implements OnInit {
   isShowing: boolean = false;
   isLogin:boolean=true;
   userData:any="";
+  hideHeader:boolean=false;
   constructor(private renderer: Renderer2, public loader: LoadingBarService, private authService: AuthService,private techServices:TeacherService) { }
 
   toggleRightSidenav() {
@@ -101,8 +103,13 @@ export class HeaderComponent implements OnInit {
         this.moveMarker(activeButton);
       }
     });
-  }
 
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.hideHeader = this.activatedRoute.firstChild?.snapshot.routeConfig?.path === 'notfound';
+    //   }
+    // });
+  }
 
   ngAfterViewInit(): void {
     if (localStorage.getItem('themePreference') === 'dark') {

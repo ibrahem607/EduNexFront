@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ICourse } from 'src/app/Model/icourse';
 import { trigger, style, transition, animate } from '@angular/animations';
-import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
+import { CoursesService } from 'src/app/Services/Courses/courses.service';
 
 @Component({
   selector: 'app-recent-courses',
@@ -19,16 +19,14 @@ import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
 export class RecentCoursesComponent implements OnInit {
   courses: ICourse[] = [];
   filteredCourses: ICourse[] = [];
-  options = [
-    { label: 'علمي', selected: true },
-    { label: 'المواد الفلسفية', selected: false },
-    { label: 'تعويضات السنتر', selected: false },
-    { label: 'مادة الجغرافيا', selected: false },
-  ];
+  subjectName: string[] = [];
+
+  options: { subjectName: string; selected: boolean; }[] = [];
+
   currentIndex = 0;
   cardsToShow = 18;
 
-  constructor(private dynamicData: DynamicDataService) { }
+  constructor(private courseData: CoursesService) { }
 
   toggleOption(index: number) {
     this.options.forEach((option, i) => {
@@ -39,23 +37,16 @@ export class RecentCoursesComponent implements OnInit {
   }
 
   filterCourses() {
-    if (this.options[0].selected) {
-      // Show latest courses
-      this.filteredCourses = this.courses.slice(8, 16);
-    } else if (this.options[1].selected) {
-      // Show courses related to 'المواد الفلسفية'
-      this.filteredCourses = this.courses.slice(0, 8);
-    } else if (this.options[2].selected) {
-      // Show courses related to 'تعويضات السنتر'
-      this.filteredCourses = this.courses.slice(8, 16);
-    } else {
-      // Show courses related to 'مادة الجغرافيا'
-      this.filteredCourses = this.courses.slice(0, 8);
+    const selectedOption = this.options.find(option => option.selected);
+
+    if (selectedOption) {
+      const selectedSubjectName = selectedOption.subjectName;
+      this.filteredCourses = this.courses.filter(course => course.subjectName === selectedSubjectName);
     }
   }
 
   getAll() {
-    this.dynamicData.getAllCourses().subscribe(courses => {
+    this.courseData.getAllCourses().subscribe(courses => {
       this.courses = courses;
       this.filterCourses();
     });
@@ -63,5 +54,12 @@ export class RecentCoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
+
+    this.courseData.getAllCourses().subscribe(courses => {
+      this.subjectName = [...new Set(courses.map(course => course.subjectName))];
+      this.options = this.subjectName.map((subject, index) => ({ subjectName: subject, selected: index === 0 }));
+
+      this.toggleOption(0);
+    });
   }
 }

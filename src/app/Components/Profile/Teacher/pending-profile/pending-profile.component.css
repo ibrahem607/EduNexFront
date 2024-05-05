@@ -1,0 +1,138 @@
+.border-0 {
+  border: 0 !important;
+}
+
+section {
+  background-color: var(--bg);
+  box-shadow: var(--border) 0px 0px 0px 1px;
+  border-radius: 10px;
+  max-width: fit-content;
+  /* pa */
+}
+
+.section-title {
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.font-weight-600 {
+  font-weight: 600;
+}
+
+.display-28 {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h4 {
+  font-weight: 700;
+}
+
+label {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  opacity: 0.9;
+}
+
+button {
+  width: 150px;
+  border-radius: 20rem;
+  transition: 0.3s;
+}
+
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  animation: ellipsis steps(3, end) 0.9s infinite;
+  content: "\2026";
+  width: 0px;
+  color: var(--wave2);
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+
+/* Change the border color */
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__notch,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__trailing {
+  border-color: var(--bgHeader) !important;
+  transition: 0.3s;
+}
+
+/* Change the border width */
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline
+  .mdc-notched-outline__notch,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline
+  .mdc-notched-outline__trailing {
+  border-width: 1.5px !important;
+}
+
+/* Change the border focused color */
+::ng-deep
+  .mdc-text-field--outlined:not(
+    .mdc-text-field--disabled
+  ).mdc-text-field--focused
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(
+    .mdc-text-field--disabled
+  ).mdc-text-field--focused
+  .mdc-notched-outline__notch,
+::ng-deep
+  .mdc-text-field--outlined:not(
+    .mdc-text-field--disabled
+  ).mdc-text-field--focused
+  .mdc-notched-outline__trailing {
+  border-color: var(--wave2) !important;
+}
+
+/* Change the border hover color */
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+    .mdc-text-field--focused
+  ):hover
+  .mdc-notched-outline
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+    .mdc-text-field--focused
+  ):hover
+  .mdc-notched-outline
+  .mdc-notched-outline__notch,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+    .mdc-text-field--focused
+  ):hover
+  .mdc-notched-outline
+  .mdc-notched-outline__trailing {
+  border-color: var(--wave2) !important;
+}
+
+::ng-deep
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled)
+  .mdc-list-item__primary-text,
+::ng-deep .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after {
+  color: var(--wave3) !important;
+}

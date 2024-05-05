@@ -1,6 +1,4 @@
-<!-- custom-pagination.component.html -->
-
-<div class="custom-pagination my-5">
+<div class="custom-pagination my-5"  *ngIf="length > itemsPerPage">
   <button mat-icon-button (click)="previousPage()" [disabled]="currentPage === 1">
     <mat-icon>chevron_right</mat-icon>
   </button>

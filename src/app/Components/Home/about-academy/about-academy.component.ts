@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ICourse } from 'src/app/Model/icourse';
 import { ITeacher } from 'src/app/Model/iteacher';
 import { trigger, style, transition, animate } from '@angular/animations';
-import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
+import { TeachersService } from 'src/app/Services/Teachers/teachers.service';
+import { CoursesService } from 'src/app/Services/Courses/courses.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-about-academy',
@@ -17,7 +19,7 @@ import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
     ])
   ]
 })
-export class AboutAcademyComponent {
+export class AboutAcademyComponent implements OnInit {
   courses: ICourse[] = [];
   teachers: ITeacher[] = [];
   chosenCards: (ICourse | ITeacher)[] = [];
@@ -30,18 +32,21 @@ export class AboutAcademyComponent {
   currentIndex = 0;
   cardsToShow = 18;
 
-  constructor(private dynamicData: DynamicDataService) { }
+  constructor(private teacherData: TeachersService, private courseData: CoursesService) { }
 
   isCourse(card: any): card is ICourse {
-    return !card.hasOwnProperty('name')
-  }
-
-  isTeacher(card: any): card is ITeacher {
-    return card.hasOwnProperty('name')
+    return card.hasOwnProperty('teacherName')
   }
 
   ngOnInit(): void {
-    this.getAll();
+    forkJoin([
+      this.teacherData.getAllTeachers(),
+      this.courseData.getAllCourses()
+    ]).subscribe(([teachers, courses]) => {
+      this.teachers = teachers;
+      this.courses = courses;
+      this.filterCourses();
+    });
   }
 
   toggleOption(index: number) {
@@ -58,16 +63,5 @@ export class AboutAcademyComponent {
     } else if (this.options[1].selected) {
       this.chosenCards = this.teachers;
     }
-  }
-
-  getAll() {
-    this.dynamicData.getAllTeachers().subscribe(teachers => {
-      this.teachers = teachers;
-      this.filterCourses();
-    });
-    this.dynamicData.getAllCourses().subscribe(courses => {
-      this.courses = courses;
-      this.filterCourses();
-    });
   }
 }

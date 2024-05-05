@@ -29,10 +29,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SignUpComponent } from './Components/sign-up/sign-up.component';
+
+import { AppComponent } from './app.component';;
 import { LoginComponent } from './Components/login/login.component';
 import { HeaderComponent } from './Components/Shared/header/header.component';
 import { CoursesComponent } from './Components/courses/courses.component';
@@ -61,38 +62,49 @@ import { LessonDialogComponent } from './Components/CourseDetails/Dialog/lesson-
 import { ContentDialogComponent } from './Components/CourseDetails/Dialog/content-dialog/content-dialog.component';
 import { ConfirmationDialogComponent } from './Components/CourseDetails/Dialog/confirmation-dialog/confirmation-dialog.component';
 import { HeroComponent } from './Components/Home/hero/hero.component';
-import { CreateExamComponent } from './Components/Exam/Teacher/create-exam/create-exam.component';
+import { EditExamComponent } from './Components/Exam/Teacher/edit-exam/edit-exam.component';
 import { ExamDialogComponent } from './Components/CourseDetails/Dialog/exam-dialog/exam-dialog.component';
 import { QuestionControllerComponent } from './Components/Exam/Teacher/question-controller/question-controller.component';
 import { ExamControllerComponent } from './Components/Exam/Teacher/exam-controller/exam-controller.component';
-import { LessonContentComponent } from './Components/lesson-content/lesson-content.component';
 import { StudentExamComponent } from './Components/Exam/Student/student-exam/student-exam.component';
 import { TimerComponent } from './Components/Exam/Student/timer/timer.component';
 import { ExamResultComponent } from './Components/Exam/Student/exam-result/exam-result.component';
 import { ExamTimeOutComponent } from './Components/Exam/Student/exam-time-out/exam-time-out.component';
-import { StudentProfileComponent } from './Components/Profile/student-profile/student-profile.component';
-import { ProfileHomeComponent } from './Components/Profile/profile-home/profile-home.component';
-import { ProfileCourseComponent } from './Components/Profile/profile-course/profile-course.component';
-import { ProfileBudgetComponent } from './Components/Profile/profile-budget/profile-budget.component';
-import { StudentShippingCodesComponent } from './Components/Profile/student-shipping-codes/student-shipping-codes.component';
-import { ChangePasswordComponent } from './Components/Profile/change-password/change-password.component';
-import { StudentSettingsComponent } from './Components/Profile/student-settings/student-settings.component';
+import { StudentProfileComponent } from './Components/Profile/Student/student-profile/student-profile.component';
+import { ProfileHomeComponent } from './Components/Profile/Student/profile-home/profile-home.component';
+import { StudentCourseComponent } from './Components/Profile/Student/student-course/student-course.component';
+import { ProfileBudgetComponent } from './Components/Profile/Student/profile-budget/profile-budget.component';
+import { StudentShippingCodesComponent } from './Components/Profile/Student/student-shipping-codes/student-shipping-codes.component';
+import { ChangePasswordComponent } from './Components/Profile/Student/change-password/change-password.component';
+import { StudentSettingsComponent } from './Components/Profile/Student/student-settings/student-settings.component';
 import { SignOutComponent } from './Components/Profile/sign-out/sign-out.component';
 import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
+import { TeacherProfileComponent } from './Components/Profile/Teacher/teacher-profile/teacher-profile.component';
+import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
+import { NotFoundComponent } from './Components/not-found/not-found.component';
+import { StudentSignUpComponent } from './Components/SignUp/student-sign-up/student-sign-up.component';
+import { TeacherSignUpComponent } from './Components/SignUp/teacher-sign-up/teacher-sign-up.component';
+import { LoadingCardsComponent } from './Components/Shared/loading-cards/loading-cards.component';
+
+import { TeacherCourseComponent } from './Components/Profile/Teacher/teacher-course/teacher-course.component';
+import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-course/add-edit-course.component';
+import { TeacherSettingsComponent } from './Components/Profile/Teacher/teacher-settings/teacher-settings.component';
+import { LectureComponent } from './Components/lecture/lecture.component';
 
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
-import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
-import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
+// import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
+// import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
 import { AdminDashComponent } from './Components/admin-dash/admin-dash.component';
+import { ImageUploaderComponent } from './Components/Shared/image-uploader/image-uploader.component';
+import { PendingProfileComponent } from './Components/Profile/Teacher/pending-profile/pending-profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    SignUpComponent,
     LoginComponent,
     HeaderComponent,
     CoursesComponent,
@@ -121,28 +133,36 @@ import { AdminDashComponent } from './Components/admin-dash/admin-dash.component
     ContentDialogComponent,
     ConfirmationDialogComponent,
     HeroComponent,
-    CreateExamComponent,
+    EditExamComponent,
     ExamDialogComponent,
     QuestionControllerComponent,
     ExamControllerComponent,
-    LessonContentComponent,
+    LectureComponent,
     StudentExamComponent,
     TimerComponent,
     ExamResultComponent,
     ExamTimeOutComponent,
     StudentProfileComponent,
     ProfileHomeComponent,
-    ProfileCourseComponent,
+    StudentCourseComponent,
     ProfileBudgetComponent,
     StudentShippingCodesComponent,
     ChangePasswordComponent,
     StudentSettingsComponent,
     SignOutComponent,
     TeacherDetailsComponent,
-    SignupTeacherComponent,
     TeacherProfileComponent,
     CustomCloudNavbarComponent,
-    AdminDashComponent
+    AdminDashComponent,
+    NotFoundComponent,
+    StudentSignUpComponent,
+    LoadingCardsComponent,
+    PendingProfileComponent,
+    TeacherCourseComponent,
+    AddEditCourseComponent,
+    TeacherSettingsComponent,
+    ImageUploaderComponent,
+    TeacherSignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -179,6 +199,7 @@ import { AdminDashComponent } from './Components/admin-dash/admin-dash.component
     LoadingBarModule,
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     OverlayContainer,

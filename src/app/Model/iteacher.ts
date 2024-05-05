@@ -1,6 +1,15 @@
 export interface ITeacher {
-  id:number;
-  name: string;
-  subject: string;
-  imageUrl: string;
+  id: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  profilePhoto: string,
+  phoneNumber: string,
+  nationalId: string,
+  gender: number,
+  address: string,
+  aboutMe: string,
+  accountNote: string,
+  age: string,
+  subject: string
 }

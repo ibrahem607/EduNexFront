@@ -1,13 +1,13 @@
-<div class="container d-flex flex-md-row flex-column gap-4">
+<div class="container d-flex flex-md-row flex-column gap-4" *ngIf="teacher">
   <section class="teacher-info-section flex flex-column">
     <div class="mat-card-wrapper" #cardWrapper>
       <mat-card class="example-card">
         <div class="image-container">
-          <img mat-card-image [src]="teacher.imageUrl" alt="Sample Image">
+          <img mat-card-image [src]="teacher.profilePhoto" alt="Sample Image">
         </div>
         <div class="overlay"></div>
         <div class="top-bottom-container">
-          <p class="name">{{ teacher.name }}</p>
+          <p class="name">{{ teacher.firstName }} {{ teacher.lastName }}</p>
           <p class="category mt-0">{{ teacher.subject }}</p>
         </div>
       </mat-card>
@@ -31,12 +31,13 @@
     </div>
   </section>
 
-  <!-- <div class="flex flex-column justify-content-center w-100"> -->
-    <!-- <h4 class="mb-4" style="color: orange;">كورساتي</h4> -->
-    <section class="d-flex flex-wrap gap-3 cards-container">
-      <ng-container *ngFor="let course of courses">
-        <app-course-card [course]="course"></app-course-card>
-      </ng-container>
-    </section>
-  <!-- </div> -->
+  <section class="d-flex flex-wrap gap-3 cards-container">
+    <ng-container *ngFor="let course of courses">
+      <app-course-card [course]="course"></app-course-card>
+    </ng-container>
+  </section>
+</div>
+
+<div *ngIf="!teacher" class="spinner flex justify-content-center">
+  <mat-spinner></mat-spinner>
 </div>

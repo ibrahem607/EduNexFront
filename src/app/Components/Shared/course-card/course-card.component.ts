@@ -7,6 +7,7 @@ import { ICourse } from 'src/app/Model/icourse';
   styleUrls: ['./course-card.component.css']
 })
 export class CourseCardComponent {
+
   @Input() course!: ICourse;
 
   handleMouseMove(event: MouseEvent) {

@@ -48,6 +48,7 @@ export class ExamTimeOutComponent implements AfterViewInit, OnDestroy {
 
   navigateToResultPage(): void {
     const navigationExtras: NavigationExtras = {
+      queryParams: { examId: this.data.examId },
       replaceUrl: true
     };
     this.router.navigate(['/course', this.data.courseId, 'lesson', this.data.lessonId, 'result'], navigationExtras);

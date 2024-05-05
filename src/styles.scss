@@ -7,7 +7,7 @@ html {
   scroll-behavior: smooth;
   box-sizing: border-box;
   direction: rtl;
-  // overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 *,
@@ -67,6 +67,8 @@ html {
   --bg: #212121;
 
   --icon-hover: #333;
+
+  --loading: #b2b2b2;
 }
 
 .theme-light {
@@ -91,6 +93,8 @@ html {
   --bg: #FBFBFB;
 
   --icon-hover: #d4d4d8;
+
+  --loading: #f5f5f5;
 }
 
 

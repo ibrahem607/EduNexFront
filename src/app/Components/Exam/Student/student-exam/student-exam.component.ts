@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { ICourse } from 'src/app/Model/icourse';
+import { ILecture } from 'src/app/Model/icourse';
 import { IExam, IQuestion } from 'src/app/Model/iexam';
+import { ExamService } from 'src/app/Services/Exam/exam.service';
+import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 
-import { DynamicDataService } from 'src/app/Services/dynamic-data.service';
 import { atLeastOneCheckboxChecked, atLeastOneRadioButtonChecked } from 'src/app/Validator/exam-validators';
 
 @Component({
@@ -14,18 +15,22 @@ import { atLeastOneCheckboxChecked, atLeastOneRadioButtonChecked } from 'src/app
 })
 export class StudentExamComponent implements OnInit {
   courseId!: number;
-  lessonId!: number;
+  lectureId!: number;
+  lecture!: ILecture;
+  examId!: number;
   exam!: IExam;
-  course!: ICourse;
   questions!: IQuestion[];
   selectedQuestionIndex: number = 0;
   visitedQuestions: boolean[] = [];
   form: FormGroup;
   skippedQuestions: boolean[] = [];
+  duration!: number;
+  startData!: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private dynamicData: DynamicDataService,
+    private examData: ExamService,
+    private lectureData: LecturesService,
     private fb: FormBuilder,
     private router: Router
   ) {
@@ -33,37 +38,66 @@ export class StudentExamComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.courseId = params['courseId'];
-      this.lessonId = params['lessonId'];
+    this.activatedRoute.queryParamMap.subscribe(queryParams => {
+      this.examId = +queryParams.get('examId')!;
+      this.startExam(this.examId);
     });
-    this.getCourseById(this.courseId);
-    this.getExamById(1);
+
+    this.activatedRoute.params.subscribe(params => {
+      this.courseId = +params['courseId'];
+      this.lectureId = +params['lessonId'];
+    });
+
     this.visitedQuestions[0] = true;
   }
 
   getExamById(id: number) {
-    this.dynamicData.getExamById(id).subscribe(exam => {
+    this.examData.getExamById(id).subscribe(exam => {
       this.exam = exam;
       this.questions = exam.questions;
       this.buildFormControls();
     });
   }
 
-  getCourseById(id: number) {
-    this.dynamicData.getCourseById(id).subscribe(course => {
-      this.course = course;
+  getLectureById(id: number) {
+    this.lectureData.getLectureById(this.courseId, id).subscribe(lecture => {
+      this.lecture = lecture;
     });
   }
 
-  getLessonTitle(lessonId: number): string {
-    if (this.course && this.course.lesson) {
-      const lesson = this.course.lesson.find(lesson => lesson.id === lessonId);
-      if (lesson) {
-        return lesson.title;
-      }
+  startExam(id: number) {
+    const student = {
+      studentId: "4a653d27-1fa9-4820-9b60-1d54cf78ce76"
     }
-    return '';
+
+    this.examData.startExam(id, student).subscribe(
+      () => {
+        console.log(`Exam : ${id} started successfully`);
+        this.getExamById(this.examId);
+        this.getStartData(this.examId, student.studentId);
+      },
+      (error) => {
+        console.error('Error occurred while starting exam:', error);
+      }
+    );
+  }
+
+  getStartData(id: number, student: any) {
+    this.examData.getInfoExam(id, student).subscribe(startData => {
+      this.startData = startData;
+      this.duration = this.exam.duration - this.durationCalculation();
+    });
+  }
+
+  durationCalculation() {
+    const currentDateTime = new Date();
+    const startDateTimeString = this.startData.startTime;
+
+    const startDateTime = new Date(startDateTimeString);
+
+    const timeDifferenceInMillis = currentDateTime.getTime() - startDateTime.getTime();
+
+    return Math.floor(timeDifferenceInMillis / (1000 * 60));
   }
 
   buildFormControls() {
@@ -87,7 +121,6 @@ export class StudentExamComponent implements OnInit {
     this.form = this.fb.group(formControls);
   }
 
-
   selectQuestion(index: number) {
     if (index === 0 || this.visitedQuestions[index]) {
       this.selectedQuestionIndex = index;
@@ -97,54 +130,6 @@ export class StudentExamComponent implements OnInit {
   navigateBack() {
     if (this.selectedQuestionIndex > 0) {
       this.selectedQuestionIndex--;
-    }
-  }
-
-  navigateForward() {
-    if (this.selectedQuestionIndex === this.exam.questions.length - 1) {
-      const navigationExtras: NavigationExtras = {
-        replaceUrl: true
-      };
-      this.router.navigate(['/course', this.courseId, 'lesson', this.lessonId, 'result'], navigationExtras);
-      return;
-    }
-
-    this.form.get('question_' + this.selectedQuestionIndex)?.markAllAsTouched();
-    if (this.form.get('question_' + this.selectedQuestionIndex)?.invalid) {
-      return;
-    }
-
-    this.visitedQuestions[this.selectedQuestionIndex] = true;
-
-    if (!this.visitedQuestions[this.selectedQuestionIndex + 1] && !this.skippedQuestions[this.selectedQuestionIndex + 1]) {
-      this.visitedQuestions[this.selectedQuestionIndex + 1] = true;
-    }
-
-    this.selectedQuestionIndex++;
-
-    this.updateQuestionButtonClasses(this.selectedQuestionIndex - 1, 'solved', 'skipped');
-
-    if (this.selectedQuestionIndex === this.exam.questions.length) {
-      const formData: { questionId: number, selectedAnswersIds: number[] }[] = [];
-      this.exam.questions.forEach((question, i) => {
-        const selectedAnswersIds: number[] = [];
-        const questionFormGroup = this.form.get('question_' + i) as FormGroup;
-        if (questionFormGroup) {
-          Object.keys(questionFormGroup.controls).forEach(key => {
-            const control = questionFormGroup.get(key);
-            if (control?.value) {
-              selectedAnswersIds.push(parseInt(key.split('_').pop() || '0'));
-            }
-          });
-        }
-        formData.push({
-          questionId: i,
-          selectedAnswersIds: selectedAnswersIds
-        });
-      });
-      console.log('Formatted Form Data:', { answers: formData });
-      this.router.navigate(['/course', this.courseId, 'lesson', this.lessonId, 'result'])
-      // this.submitFormattedFormData({ answers: formData });
     }
   }
 
@@ -162,5 +147,100 @@ export class StudentExamComponent implements OnInit {
         button.classList.remove(removeClass);
       }
     });
+  }
+
+  navigateForward() {
+    if (this.selectedQuestionIndex === this.exam.questions.length - 1) {
+      this.submitExam(this.examId);
+    }
+
+    this.form.get('question_' + this.selectedQuestionIndex)?.markAllAsTouched();
+
+    if (this.form.get('question_' + this.selectedQuestionIndex)?.invalid) {
+      return;
+    }
+
+    this.visitedQuestions[this.selectedQuestionIndex] = true;
+
+    if (!this.visitedQuestions[this.selectedQuestionIndex + 1] && !this.skippedQuestions[this.selectedQuestionIndex + 1]) {
+      this.visitedQuestions[this.selectedQuestionIndex + 1] = true;
+    }
+
+    this.selectedQuestionIndex++;
+
+    this.updateQuestionButtonClasses(this.selectedQuestionIndex - 1, 'solved', 'skipped');
+  }
+
+  getSelectedAnswersIdsAndIndex(questionId: number): number[] {
+    const selectedAnswersIdsAndIndex: number[] = [];
+    const question = this.exam.questions.find(q => q.id === questionId);
+
+    if (question) {
+      const formControls = this.form.controls;
+      const controlKeys = Object.keys(formControls).filter(key => key.startsWith('question_'));
+
+      controlKeys.forEach(key => {
+        const questionIndex = parseInt(key.split('_')[1]);
+        if (questionIndex !== -1 && questionIndex < this.exam.questions.length) {
+          const questionFormGroup = formControls[key] as FormGroup;
+          const answerControl = questionFormGroup.get('answer_' + questionIndex);
+          if (answerControl && answerControl.value !== null) {
+            const answerId = question.answers.find(answer => answer.header === answerControl.value)?.id;
+            if (answerId !== undefined) {
+              selectedAnswersIdsAndIndex.push(answerId, questionIndex);
+            }
+          }
+        }
+      });
+    }
+
+    return selectedAnswersIdsAndIndex;
+  }
+
+  compareSelectedAnswers(questionId: number): number[] {
+    const selectedAnswersIdsAndIndex = this.getSelectedAnswersIdsAndIndex(questionId);
+
+    // Extract the selected answer IDs from the array
+    const selectedAnswersIds = selectedAnswersIdsAndIndex.filter((value, index) => index % 2 === 0);
+
+    return selectedAnswersIds;
+  }
+
+  formattedExam() {
+    const formattedExam: any = {
+      studentId: "4a653d27-1fa9-4820-9b60-1d54cf78ce76",
+      answers: []
+    };
+
+    this.exam.questions.forEach(question => {
+      const selectedAnswersIds = this.compareSelectedAnswers(question.id);
+      formattedExam.answers.push({
+        questionId: question.id,
+        selectedAnswersIds: selectedAnswersIds
+      });
+    });
+
+    // console.log('Submitted Exam:', formattedExam);
+    return formattedExam;
+  }
+
+  submitExam(examId: number) {
+    const formattedExam = this.formattedExam();
+
+    // console.log(formattedExam);
+    this.examData.submitExam(examId, formattedExam).subscribe(
+      (response) => {
+        console.log('Exam submitted successfully:', response);
+      },
+      (error) => {
+        console.error('Error occurred while submitting exam:', error);
+      }
+    );
+
+    const navigationExtras: NavigationExtras = {
+      queryParams: { examId: examId },
+      replaceUrl: true
+    };
+    this.router.navigate(['/course', this.courseId, 'lesson', this.lectureId, 'result'], navigationExtras);
   }
 }

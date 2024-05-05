@@ -7,7 +7,7 @@ section {
 }
 
 .questions-container {
-  overflow-y: auto;
+ overflow-y: scroll;
 }
 
 .circle-button {

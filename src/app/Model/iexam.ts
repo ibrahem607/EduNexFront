@@ -9,16 +9,15 @@ export interface IExam {
 }
 
 export interface IQuestion {
-  questionId: number;
+  id: number;
   header: string;
   type: string;
   points: number;
   answers: IAnswer[];
 }
 
-
 export interface IAnswer {
-  answerId: number;
+  id: number;
   header: string;
   isCorrect: boolean;
 }

@@ -1,4 +1,4 @@
-<div class="d-flex align-items-start parent container gap-4">
+<section class="d-flex align-items-start parent container gap-4">
   <div class="flex filter-container gap-2 flex-wrap">
     <mat-accordion class="flex">
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
@@ -12,7 +12,8 @@
           <mat-form-field class="example-full-width" color="accent">
             <mat-label>اسم المدرس</mat-label>
             <mat-icon matPrefix>search</mat-icon>
-            <input matInput placeholder="" value="" class="mt-1 icon">
+            <input matInput placeholder="" [(ngModel)]="searchTerm" class="mt-1 icon"
+              [ngModelOptions]="{ standalone: true }" (input)="filterTeachers()">
           </mat-form-field>
         </form>
       </mat-expansion-panel>
@@ -26,20 +27,30 @@
             المادة
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button value="1" color="accent">Option 1</mat-radio-button>
-          <mat-radio-button value="2" color="accent">Option 2</mat-radio-button>
+        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio" [(ngModel)]="subject"
+          (change)="filterTeachers()">
+          <mat-radio-button value="all" color="accent">الكل</mat-radio-button>
+          <mat-radio-button *ngFor="let subject of extractUniqueSubjects(teachers)" [value]="subject" color="accent">
+            {{ subject }}
+          </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
 
-  <div class="flex flex-wrap gap-3">
-    <ng-container *ngFor="let teacher of teachers">
-      <app-teacher-card [teacher]="teacher"></app-teacher-card>
-    </ng-container>
+  <div>
+    <div class="flex flex-wrap gap-3">
+      <ng-container *ngFor="let teacher of filteredPaginatedTeachers">
+        <app-teacher-card [teacher]="teacher"></app-teacher-card>
+      </ng-container>
+
+      <ng-container *ngIf="teachers.length === 0">
+        <ng-container *ngFor="let course of [1,2,3,4,5,6]">
+          <app-loading-cards></app-loading-cards>
+        </ng-container>
+      </ng-container>
+    </div>
+    <app-custom-pagination [length]="filteredTeachers.length"
+      (pageChanged)="onPageChange($event)"></app-custom-pagination>
   </div>
-</div>
-
-
-<app-custom-pagination></app-custom-pagination>
+</section>

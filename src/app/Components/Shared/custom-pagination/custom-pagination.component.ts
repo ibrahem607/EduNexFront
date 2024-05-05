@@ -1,16 +1,27 @@
-// custom-pagination.component.ts
-
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-custom-pagination',
   templateUrl: './custom-pagination.component.html',
   styleUrls: ['./custom-pagination.component.css'],
 })
-export class CustomPaginationComponent {
+export class CustomPaginationComponent implements OnChanges {
   @Output() pageChanged: EventEmitter<number> = new EventEmitter();
+  @Output() lengthChanged: EventEmitter<number> = new EventEmitter();
+  @Input() length!: number;
+  @Input() itemsPerPage: number = 5;
   currentPage: number = 1;
-  totalPages: number = 4;
+  totalPages!: number;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['itemsPerPage'] || changes['length']) {
+      this.calculateTotalPages();
+    }
+  }
+
+  calculateTotalPages(): void {
+    this.totalPages = Math.ceil(this.length / this.itemsPerPage);
+  }
 
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
@@ -31,7 +42,6 @@ export class CustomPaginationComponent {
     }
   }
 
-  // Helper function to generate an array of page numbers
   getPageNumbers(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }

@@ -8,7 +8,6 @@ section {
 
 .custom-checkbox-container {
   display: flex;
-  /* justify-content: space-evenly; */
   width: 93.5%;
 }
 
@@ -97,6 +96,14 @@ section {
   padding-inline: 0 !important;
 }
 
+.spinner {
+  min-height: 90dvh;
+}
+
+.spinner ::ng-deep circle {
+  stroke: var(--wave2);
+}
+
 @media (max-width: 460px) {
   .cards-container {
     flex-direction: column-reverse;
@@ -133,6 +140,9 @@ section {
   .content-container {
     width: 100%;
     flex-grow: 1;
+  }
+  .card-container {
+    margin-inline: auto;
   }
   section {
     flex-wrap: nowrap;
@@ -236,4 +246,20 @@ mat-error {
 
 ::ng-deep .mat-mdc-dialog-surface {
   border-radius: 10px !important;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  background-color: var(--bg) !important;
+  box-shadow: var(--border) 0px 0px 0px 1px !important;
+}
+
+::ng-deep .mdc-snackbar__surface,
+::ng-deep .mat-mdc-snack-bar-label {
+  background-color: brown !important;
+  border-radius: 10px !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-actions .mdc-button__label,
+::ng-deep .mat-mdc-snack-bar-label {
+  color: white !important;
 }

@@ -10,7 +10,7 @@ svg:last-of-type {
   z-index: 0;
 }
 .cards-container {
-  margin-bottom: 5rem;
+  /* margin-bottom: 5rem; */
   margin-top: 5rem;
   z-index: 1;
   font-size: 35px;

@@ -3,9 +3,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { isAnyValueMissing, isDurationValid, isStartDateAfterEndDate, isStartDatePast } from 'src/app/Validator/exam-validators';
-
-
+import { IExam } from 'src/app/Model/iexam'; // Assuming the interface IExam is imported from the correct path
+import { ExamService } from 'src/app/Services/Exam/exam.service'; // Assuming the service is imported from the correct path
+import { isAnyValueMissing, isDurationValid, isStartDateBeforeEndDate, isStartDateInFuture } from 'src/app/Validator/exam-validators';
+import { convertDateFormat, convertTimeFormat } from 'src/app/Components/Exam/DateTimeFormat';
 
 @Component({
   selector: 'app-exam-dialog',
@@ -20,7 +21,8 @@ export class ExamDialogComponent {
     public dialogRef: MatDialogRef<ExamDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private examService: ExamService // Inject the ExamService
   ) { }
 
   ngOnInit(): void {
@@ -34,39 +36,10 @@ export class ExamDialogComponent {
     }, {
       validators: [
         isAnyValueMissing,
-        isStartDateAfterEndDate,
-        isStartDatePast,
+        isStartDateBeforeEndDate,
         isDurationValid,
+        isStartDateInFuture
       ]
-    });
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close(false);
-  }
-
-  onYesClick(event: Event): void {
-
-    if (this.contentForm.invalid) {
-      this.displayErrorMessages();
-      return;
-    }
-
-    const formData = this.contentForm.value;
-    this.dialogRef.close();
-    this.router.navigate(['/course', this.data.courseID, 'lesson', this.data.lessonId, 'create'], {
-      queryParams: {
-        type: this.data.examType,
-        title: formData.title,
-        startTime: formData.startTime,
-        endTime: formData.endTime,
-        startDate: formData.startDate,
-        endDate: formData.endDate,
-        duration: formData.duration,
-        grade: this.data.grade,
-        courseTitle: this.data.courseTitle,
-        lessonTitle: this.data.lessonTitle,
-      }
     });
   }
 
@@ -104,5 +77,49 @@ export class ExamDialogComponent {
       verticalPosition: 'top',
       horizontalPosition: 'center'
     });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close(false);
+  }
+
+  onYesClick(event: Event): void {
+    if (this.contentForm.invalid) {
+      this.displayErrorMessages();
+      return;
+    }
+
+    const formData = this.contentForm.value;
+
+    // Convert start date and end date formats
+    const startDate = convertDateFormat(formData.startDate);
+    const endDate = convertDateFormat(formData.endDate);
+
+    const startTime = convertTimeFormat(formData.startTime);
+    const endTime = convertTimeFormat(formData.endTime);
+
+    // Prepare exam data
+    const examData = {
+      title: formData.title,
+      startDateTime: `${startDate}T${startTime}`,
+      endDateTime: `${endDate}T${endTime}`,
+      duration: formData.duration,
+      type: this.data.examType,
+      lectureId: this.data.lectureId,
+    };
+
+    this.examService.addExam(examData).subscribe(
+      (exam: IExam) => {
+        console.log('Exam created successfully:', exam);
+        this.router.navigate(['/course', this.data.courseID, 'lesson', this.data.lectureId, 'create'], {
+          queryParams: { examId: exam.id }
+        });
+      },
+      (error) => {
+        console.error('Error occurred while creating exam:', error);
+
+      }
+    );
+    this.dialogRef.close();
   }
 }

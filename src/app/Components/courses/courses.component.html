@@ -8,9 +8,12 @@
             المادة
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button value="1" color="accent">Option 1</mat-radio-button>
-          <mat-radio-button value="2" color="accent">Option 2</mat-radio-button>
+        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio" [(ngModel)]="subject"
+          (change)="filterBySubject()">
+          <mat-radio-button value="all" color="accent">الكل</mat-radio-button>
+          <mat-radio-button *ngFor="let subject of subjectName" [value]="subject" color="accent">
+            {{ subject }}
+          </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
@@ -23,9 +26,12 @@
             نوع الكورس
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button value="1" color="accent">Option 1</mat-radio-button>
-          <mat-radio-button value="2" color="accent">Option 2</mat-radio-button>
+        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio" [(ngModel)]="type"
+          (change)="filterByCourseType()">
+          <mat-radio-button value="all" color="accent">الكل</mat-radio-button>
+          <mat-radio-button *ngFor="let type of courseType" [value]="type" color="accent">
+            {{ type }}
+          </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
@@ -38,14 +44,17 @@
             الصف الدراسي
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button value="1" color="accent">Option 1</mat-radio-button>
-          <mat-radio-button value="2" color="accent">Option 2</mat-radio-button>
+        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio" [(ngModel)]="level"
+          (change)="filterByLevel()">
+          <mat-radio-button value="all" color="accent">الكل</mat-radio-button>
+          <mat-radio-button *ngFor="let level of levelName" [value]="level" color="accent">
+            {{ level }}
+          </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
 
-    <mat-accordion class="flex">
+    <mat-accordion class="flex" dir="rtl">
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         class="custom-expansion-panel">
         <mat-expansion-panel-header>
@@ -53,41 +62,53 @@
             أدني السعر
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-slider min="0" max="3000" step="100" color="accent" showTickMarks discrete style="direction: ltr;">
+        <mat-slider #sliderOne [min]="minPrice" [max]="middlePrice" step="3" color="accent" showTickMarks discrete
+          (input)="filterByPriceRange(sliderOne)">
           <input matSliderThumb>
         </mat-slider>
+
         <div class="flex justify-content-between">
-          <span class="price-text">EGP 0</span>
-          <span class="price-text">EGP 3000</span>
+          <span class="price-text">EGP {{minPrice}}</span>
+          <span class="price-text">EGP {{middlePrice}}</span>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
 
-    <mat-accordion class="flex">
+    <mat-accordion class="flex" dir="rtl">
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         class="custom-expansion-panel">
         <mat-expansion-panel-header>
           <mat-panel-title style="font-weight: 500;">
-            أعلي السعر
+            أعلى السعر
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-slider min="3000" max="6000" step="100" color="accent" showTickMarks discrete style="direction: ltr;">
+        <mat-slider #sliderTwo [min]="middlePrice" [max]="maxPrice" step="5" color="accent" showTickMarks discrete
+          (input)="filterByPriceRange(sliderTwo)">
           <input matSliderThumb>
         </mat-slider>
+
         <div class="flex justify-content-between">
-          <span class="price-text">EGP 3000</span>
-          <span class="price-text">EGP 6000</span>
+          <span class="price-text">EGP {{ middlePrice }}</span>
+          <span class="price-text">EGP {{ maxPrice }}</span>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
 
-  <div class="flex flex-wrap gap-3">
-    <ng-container *ngFor="let course of courses">
-      <app-course-card [course]="course"></app-course-card>
-    </ng-container>
+  <div>
+    <div class="flex flex-wrap gap-3">
+      <ng-container *ngFor="let course of filteredPaginatedCourses">
+        <app-course-card [course]="course"></app-course-card>
+      </ng-container>
+
+      <ng-container *ngIf="courses.length === 0">
+        <ng-container *ngFor="let course of [1,2,3,4,5,6]">
+          <app-loading-cards></app-loading-cards>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <app-custom-pagination [length]="filteredCourses.length"
+      (pageChanged)="onPageChange($event)"></app-custom-pagination>
   </div>
 </div>
-
-
-<app-custom-pagination></app-custom-pagination>

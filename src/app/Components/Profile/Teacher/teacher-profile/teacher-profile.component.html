@@ -1,0 +1,27 @@
+<section class="container flex gap-5 flex-lg-row flex-column align-items-start">
+  <div class="flex flex-column gap-3 navigation-container">
+    <div class="d-flex flex-column justify-content-center header-section p-3">
+      <h5>أ. محمد علاء</h5>
+      <h6>الفيزياء</h6>
+    </div>
+    <div class="navigation-section">
+      <button mat-button *ngFor="let option of options; let i = index" class="form-button-1"
+        [ngClass]="{'signOut': i == options.length - 1 ,'active':(i == selectedOptionIndex) && i != 3}"
+        (click)="setActiveSection(i)">
+        <i class="fa fa-{{ option.icon }} px-2"></i>
+        {{ option.label }}
+      </button>
+    </div>
+  </div>
+  <div>
+    <div [@fadeInOut] *ngIf="selectedOptionIndex === 0">
+      <app-profile-home></app-profile-home>
+    </div>
+    <div [@fadeInOut] *ngIf="selectedOptionIndex === 1">
+      <app-teacher-course></app-teacher-course>
+    </div>
+    <div [@fadeInOut] *ngIf="selectedOptionIndex === 2">
+      <app-change-password></app-change-password>
+    </div>
+  </div>
+</section>

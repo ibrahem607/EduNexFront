@@ -1,5 +1,6 @@
 .example-card {
-  max-width: 350px;
+  width: 325px;
+  height: 405px;
   /* margin: 10px; */
   border-radius: 10px;
   box-shadow: var(--border) 0px 0px 0px 1px;
@@ -10,6 +11,10 @@
 .example-card:hover {
   transform: rotateY(-5deg) rotateX(10deg);
   cursor: pointer;
+  -webkit-transform: rotateY(-5deg) rotateX(10deg);
+  -moz-transform: rotateY(-5deg) rotateX(10deg);
+  -ms-transform: rotateY(-5deg) rotateX(10deg);
+  -o-transform: rotateY(-5deg) rotateX(10deg);
 }
 
 .top-bottom-container {
