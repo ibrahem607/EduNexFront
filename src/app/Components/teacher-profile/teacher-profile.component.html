@@ -27,7 +27,7 @@
                 <span class="display-26 text-secondary me-2 font-weight-600" style="color: rgba(205, 134, 63, 0.584) !important;">العنوان: <li
                     [attr.contenteditable]="edittext1?'false':'true' "
                     [style.background-color]="edittext1 ? 'transparent':'#ccc'" style="color: black; font-size: 18px;"
-                    class="me-3 mb-2 mb-xl-3 display-28"> {{teacherData.address}}</li></span>
+                    class="me-3 mb-2 mb-xl-3 display-28" #address> {{teacherData.address}}</li></span>
                 <!-- <span class="display-26 text-secondary me-2 font-weight-600">الخبرة: <li
                     [attr.contenteditable]="edittext1?'false':'true' "
                     [style.background-color]="edittext1 ? 'transparent':'#ccc'" style="color: black; font-size: 18px;"
@@ -35,15 +35,16 @@
                 <span class="display-26 text-secondary me-2 font-weight-600" style="color: rgba(205, 134, 63, 0.584) !important;">المادة التعليمية: <li
                     [attr.contenteditable]="edittext1?'false':'true' "
                     [style.background-color]="edittext1 ? 'transparent':'#ccc'" style="color: black; font-size: 18px;"
-                    class="me-3 mb-2 mb-xl-3 display-28"> {{teacherData.subject}} </li></span>
+                    class="me-3 mb-2 mb-xl-3 display-28"#subject> {{teacherData.subject}} </li></span>
                
                 <span class="display-26 text-secondary me-2 font-weight-600"style="color: rgba(205, 134, 63, 0.584) !important;">رقم الهاتف: <li
                     [attr.contenteditable]="edittext1?'false':'true' "
                     [style.background-color]="edittext1 ? 'transparent':'#ccc'" style="color: black; font-size: 18px;"
-                    class="me-3 mb-2 mb-xl-3 display-28"> {{teacherData.phoneNumber}}</li></span>
+                    class="me-3 mb-2 mb-xl-3 display-28"#pNumber> {{teacherData.phoneNumber}}</li></span>
               </ul>
               <button (click)="toggleEditp()" *ngIf="edittext1" class="custom-button disk btn-gradient p-2" style="border-radius: 10px;"> تعديل البيانات</button>
-              <button (click)="toggleEditp()" *ngIf="!edittext1" class="custom-button disk btn-gradient p-2" style="border-radius: 10px;">حفظ البيانات</button>
+              <span *ngIf="errorReq" style="color: red;">All fields are required.</span>
+              <button (click)="toggleEditp();updateData(teacherData.id,address.textContent,subject.textContent,pNumber.textContent)" *ngIf="!edittext1" class="custom-button disk btn-gradient p-2" style="border-radius: 10px;">حفظ البيانات</button>
             </div>
           </div>
         </div>
@@ -60,6 +61,7 @@
       <button (click)="toggleEdit()" *ngIf="edittext" class="custom-button disk btn-gradient p-2" style="border-radius: 10px;">تعديل</button>
       <button (click)="toggleEdit(); saveupdate((teacherHintValue?.textContent ?? ''))" *ngIf="!edittext"
         class="custom-button disk btn-gradient p-2" style="border-radius: 10px;">حفظ</button>
+        <span *ngIf="errorReq2" style="color: red;">All fields are required.</span>
     </div>
     <!-- <div class="col-lg-12">
       <div class="row">

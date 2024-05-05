@@ -13,6 +13,9 @@ export class TeacherProfileComponent {
   edittext: boolean = true;
   edittext1: boolean = true;
   edittext2: boolean = true;
+  errorReq:boolean=false;
+  errorReq2:boolean=false;
+
   selectedImage: string | ArrayBuffer | null = 'https://bootdey.com/img/Content/avatar/avatar7.png';
 
   @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
@@ -44,9 +47,9 @@ export class TeacherProfileComponent {
   }
 
   saveupdate(updateData: string | null) {
-    if (updateData !== null) {
+    if (updateData) {
       const id = this.authService.getUserId();
-     
+     this.errorReq2=false;
       const aboutTeacher ={
          aboutMe: updateData.toString(),
         //  accountNote: " "
@@ -61,9 +64,33 @@ export class TeacherProfileComponent {
         }
       );
     } else {
+      this.errorReq2=true;
+      this.edittext = !this.edittext;
       console.error('Update data is null.');
     }
   }
+
+  updateData(id: string, address: any, subject: any, number: any) {
+    if (address && subject && number) {
+        console.log(`${address} and ${subject} and ${number}`);
+
+        const updatedTeachData = {
+            phoneNumber: number,
+            address: address,
+            subject: subject
+        };
+
+        this.teacherService.updateTeacherProfile(id, updatedTeachData).subscribe({
+            next: (data) => {
+                console.log(data);
+            }
+        });
+        this.errorReq = false;
+    } else {
+        this.errorReq = true;
+        this.edittext1 = !this.edittext1;
+    }
+}
 
 
 
@@ -94,6 +121,7 @@ export class TeacherProfileComponent {
 
   openFileInput() {
     this.uploadInput.nativeElement.click();
+    console.log()
   }
 
 }
