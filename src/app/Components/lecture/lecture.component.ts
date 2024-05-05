@@ -4,11 +4,11 @@ import { ILecture, IVideo, IAttachment } from 'src/app/Model/icourse';
 import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 
 @Component({
-  selector: 'app-lesson-content',
-  templateUrl: './lesson-content.component.html',
-  styleUrls: ['./lesson-content.component.css']
+  selector: 'app-lecture',
+  templateUrl: './lecture.component.html',
+  styleUrls: ['./lecture.component.css']
 })
-export class LessonContentComponent implements OnInit {
+export class LectureComponent implements OnInit {
   lecture!: ILecture;
   courseId!: number;
   contentIndex: number = 0;

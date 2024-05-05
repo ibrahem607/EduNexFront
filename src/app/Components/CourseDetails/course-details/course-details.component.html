@@ -34,9 +34,9 @@
                       </button>
                     </div>
 
-                    <button mat-menu-item
-                      [routerLink]="['/course', course.id, 'lesson', lecture.id, 'view', { examType: 'PreExam', examId: lecture.preExam}]"
-                      *ngIf="lecture.preExam" class="flex px-2 mx-2 my-0 exam-button">
+                    <button mat-menu-item [routerLink]="['/course', course.id, 'lesson', lecture.id, 'view']"
+                      [queryParams]="{ examId: lecture.preExam }" *ngIf="lecture.preExam"
+                      class="flex px-2 mx-2 my-0 exam-button">
                       <i class="fas fa-clipboard-list"></i>
                       امتحان
                     </button>

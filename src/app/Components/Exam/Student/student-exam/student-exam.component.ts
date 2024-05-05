@@ -40,7 +40,6 @@ export class StudentExamComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe(queryParams => {
       this.examId = +queryParams.get('examId')!;
-      this.getExamById(this.examId);
       this.startExam(this.examId);
     });
 

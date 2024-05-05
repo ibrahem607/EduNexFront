@@ -66,7 +66,6 @@ import { EditExamComponent } from './Components/Exam/Teacher/edit-exam/edit-exam
 import { ExamDialogComponent } from './Components/CourseDetails/Dialog/exam-dialog/exam-dialog.component';
 import { QuestionControllerComponent } from './Components/Exam/Teacher/question-controller/question-controller.component';
 import { ExamControllerComponent } from './Components/Exam/Teacher/exam-controller/exam-controller.component';
-import { LessonContentComponent } from './Components/lesson-content/lesson-content.component';
 import { StudentExamComponent } from './Components/Exam/Student/student-exam/student-exam.component';
 import { TimerComponent } from './Components/Exam/Student/timer/timer.component';
 import { ExamResultComponent } from './Components/Exam/Student/exam-result/exam-result.component';
@@ -90,6 +89,7 @@ import { PendingProfileComponent } from './Components/Profile/Teacher/pending-pr
 import { TeacherCourseComponent } from './Components/Profile/Teacher/teacher-course/teacher-course.component';
 import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-course/add-edit-course.component';
 import { TeacherSettingsComponent } from './Components/Profile/Teacher/teacher-settings/teacher-settings.component';
+import { LectureComponent } from './Components/lecture/lecture.component';
 
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
@@ -133,7 +133,7 @@ import { ImageUploaderComponent } from './Components/Shared/image-uploader/image
     ExamDialogComponent,
     QuestionControllerComponent,
     ExamControllerComponent,
-    LessonContentComponent,
+    LectureComponent,
     StudentExamComponent,
     TimerComponent,
     ExamResultComponent,

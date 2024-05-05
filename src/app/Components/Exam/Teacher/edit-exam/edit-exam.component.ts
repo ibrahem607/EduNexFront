@@ -295,7 +295,12 @@ export class EditExamComponent implements OnInit {
     }
 
     if (!this.isAnswersLimitReached(questionIndex)) {
-      answersFormArray.push(this.createAnswerFormGroup({}, questionType, answersFormArray.length));
+      if (questionType === 'TrueFalse') {
+        answersFormArray.push(this.createAnswerFormGroup({ text: 'True', isCorrect: false }, questionType, answersFormArray.length));
+        answersFormArray.push(this.createAnswerFormGroup({ text: 'False', isCorrect: false }, questionType, answersFormArray.length));
+      } else {
+        answersFormArray.push(this.createAnswerFormGroup({}, questionType, answersFormArray.length));
+      }
     } else {
       console.error('Maximum number of answers reached.');
       return;
