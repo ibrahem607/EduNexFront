@@ -10,12 +10,12 @@ import { TeacherService } from 'src/app/Services/Auth/teacher.service';
   styleUrls: ['./pending-profile.component.css']
 })
 export class PendingProfileComponent {
-  edittext: boolean = true;
-  edittext1: boolean = true;
-  edittext2: boolean = true;
+  editText: boolean = true;
+
   selectedImage: string | ArrayBuffer | null = 'https://bootdey.com/img/Content/avatar/avatar7.png';
 
   @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
+
   teacher: any;
   teacherHint: any = '';
   constructor(private route: ActivatedRoute, private authService: AuthService, private teacherService: TeacherService) { }
@@ -23,13 +23,12 @@ export class PendingProfileComponent {
   ngOnInit(): void {
     console.log('Teacher id:', this.authService.teacherId);
     this.teacherHint = this.teacherService.getTeacherAbout()
-
   }
 
-  saveupdate(updateData: string | null) {
+  saveUpdate(updateData: string | null) {
     if (updateData !== null) {
       const id = this.authService.teacherId;
-      const aboutTeacher = updateData.toString(); // Ensure aboutTeacher is a string
+      const aboutTeacher = updateData.toString();
       this.teacherService.saveTeacherAbout(id, aboutTeacher).subscribe(
         (response) => {
           console.log('Update successful:', response);
@@ -44,15 +43,7 @@ export class PendingProfileComponent {
   }
 
   toggleEdit() {
-    this.edittext = !this.edittext;
-  }
-
-  toggleEdit2() {
-    this.edittext2 = !this.edittext2;
-  }
-
-  toggleEditp() {
-    this.edittext1 = !this.edittext1;
+    this.editText = !this.editText;
   }
 
   previewImage(event: any) {

@@ -175,7 +175,7 @@ mat-error {
   border-radius: 10px !important;
 }
 
-::ng-deep .mdc-button__label,
+::ng-deep .mat-mdc-snack-bar-actions .mdc-button__label,
 ::ng-deep .mat-mdc-snack-bar-label {
   color: white !important;
 }

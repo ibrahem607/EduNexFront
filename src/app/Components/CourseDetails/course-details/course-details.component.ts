@@ -190,8 +190,8 @@ export class CourseDetailsComponent implements OnInit {
     this.dialog.open(ExamDialogComponent, {
       width: '600px',
       data: {
-        header: examType == 'exam' ? 'بيانات الامتحان' : 'بيانات الواجب',
-        confirmButtonText: examType == 'exam' ? 'أضف الامتحان' : 'أضف الواجب',
+        header: examType == 'PreExam' ? 'بيانات الامتحان' : 'بيانات الواجب',
+        confirmButtonText: examType == 'PreExam' ? 'أضف الامتحان' : 'أضف الواجب',
         lectureId: lecture.id,
         lectureTitle: lecture.lectureTitle,
         contentId: contentId,
