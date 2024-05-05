@@ -8,9 +8,12 @@
             المادة
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button *ngFor="let subject of subjectName" [value]="subject" color="accent"
-            (change)="filterBySubject(subject)">{{ subject }}</mat-radio-button>
+        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio" [(ngModel)]="subject"
+          (change)="filterBySubject()">
+          <mat-radio-button value="all" color="accent">الكل</mat-radio-button>
+          <mat-radio-button *ngFor="let subject of subjectName" [value]="subject" color="accent">
+            {{ subject }}
+          </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
@@ -23,9 +26,10 @@
             نوع الكورس
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button *ngFor="let type of courseType" [value]="type" color="accent"
-            (change)="filterByCourseType(type)">
+        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio" [(ngModel)]="type"
+          (change)="filterByCourseType()">
+          <mat-radio-button value="all" color="accent">الكل</mat-radio-button>
+          <mat-radio-button *ngFor="let type of courseType" [value]="type" color="accent">
             {{ type }}
           </mat-radio-button>
         </mat-radio-group>
@@ -40,16 +44,17 @@
             الصف الدراسي
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio">
-          <mat-radio-button *ngFor="let level of levelName" [value]="level" color="accent"
-            (change)="filterByLevel(level)">
+        <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio" [(ngModel)]="level"
+          (change)="filterByLevel()">
+          <mat-radio-button value="all" color="accent">الكل</mat-radio-button>
+          <mat-radio-button *ngFor="let level of levelName" [value]="level" color="accent">
             {{ level }}
           </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
     </mat-accordion>
 
-    <mat-accordion class="flex">
+    <mat-accordion class="flex" dir="rtl">
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         class="custom-expansion-panel">
         <mat-expansion-panel-header>
@@ -57,8 +62,8 @@
             أدني السعر
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-slider [min]="minPrice" [max]="middlePrice" step="5" color="accent" showTickMarks discrete
-          style="direction: ltr;" (input)="filterByPriceRange(minPrice, maxPrice)">
+        <mat-slider #sliderOne [min]="minPrice" [max]="middlePrice" step="3" color="accent" showTickMarks discrete
+          (input)="filterByPriceRange(sliderOne)">
           <input matSliderThumb>
         </mat-slider>
 
@@ -69,7 +74,7 @@
       </mat-expansion-panel>
     </mat-accordion>
 
-    <mat-accordion class="flex">
+    <mat-accordion class="flex" dir="rtl">
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         class="custom-expansion-panel">
         <mat-expansion-panel-header>
@@ -77,8 +82,8 @@
             أعلى السعر
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-slider [min]="middlePrice" [max]="maxPrice" step="5" color="accent" showTickMarks discrete
-          style="direction: ltr;" (input)="filterByPriceRange(middlePrice, maxPrice)">
+        <mat-slider #sliderTwo [min]="middlePrice" [max]="maxPrice" step="5" color="accent" showTickMarks discrete
+          (input)="filterByPriceRange(sliderTwo)">
           <input matSliderThumb>
         </mat-slider>
 

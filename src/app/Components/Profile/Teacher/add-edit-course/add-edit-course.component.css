@@ -8,6 +8,12 @@
   margin-bottom: 8px;
 }
 
+.custom-button {
+  border-radius: 20rem;
+  padding-inline: 2rem;
+  transition: 0.3s;
+}
+
 .input-file {
   width: 100%;
   padding: 8px;
@@ -109,4 +115,20 @@ mat-form-field mat-label {
 
 mat-error {
   color: red !important;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  border-radius: 10px !important;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  background-color: var(--bg) !important;
+  box-shadow: var(--border) 0px 0px 0px 1px !important;
+}
+
+@media (max-width: 760px) {
+  .close {
+    margin-right: -1rem;
+    margin-top: -1rem;
+  }
 }

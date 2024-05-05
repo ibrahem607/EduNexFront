@@ -1,40 +1,51 @@
-<form [formGroup]="courseForm" class="container col-lg-6 p-3" (ngSubmit)="onSubmit()" dir="rtl">
-  <div class="flex flex-column justify-content-center">
-    <h3 style="font-weight: 700; color: orange;" class="mb-3">املأ بيانات الكورس</h3>
+<form [formGroup]="courseForm" class="container p-4 pb-5" (ngSubmit)="onYesClick()" dir="rtl">
+
+
+  <div class="d-flex flex-row flex-md-column justify-content-between">
+    <div class="d-flex align-items-start justify-content-between close">
+      <button mat-icon-button (click)="onNoClick()" style="color: red;" class="mb-3">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div></div>
+    </div>
+
+    <div class="flex gap-2 mx-auto">
+      <app-image-uploader (imageSelected)="onFileSelected($event)" (imageDeleted)="onImageDeleted()"
+        (formSubmitted)="onYesClick()"></app-image-uploader>
+    </div>
   </div>
 
-  <div class="flex gap-2">
-    <label for="coursePhoto" style="font-weight: 700;">صورة الكورس</label>
-    <app-image-uploader (imageSelected)="onFileSelected($event)"></app-image-uploader>
+  <div class="flex flex-md-row flex-column justify-content-between gap-3">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>اسم الكورس</mat-label>
+      <input matInput formControlName="courseName" id="courseName" placeholder="اسم الكورس" required>
+      <mat-icon matSuffix>account_circle</mat-icon>
+      <mat-error *ngIf="courseForm.get('courseName')?.errors?.['required']">اسم الكورس مطلوب</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>نوع الكورس</mat-label>
+      <input matInput formControlName="courseType" id="courseType" placeholder="نوع الكورس" required>
+      <mat-icon matSuffix>category</mat-icon>
+      <mat-error *ngIf="courseForm.get('courseType')?.errors?.['required']">نوع الكورس مطلوب</mat-error>
+    </mat-form-field>
   </div>
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>اسم الدورة</mat-label>
-    <input matInput formControlName="courseName" id="courseName" placeholder="اسم الدورة" required>
-    <mat-icon matSuffix>account_circle</mat-icon>
-    <mat-error *ngIf="courseForm.get('courseName')?.errors?.['required']">اسم الدورة مطلوب</mat-error>
-  </mat-form-field>
+  <div class="flex flex-md-row flex-column justify-content-between gap-3">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>السعر</mat-label>
+      <input matInput type="number" formControlName="price" id="price" placeholder="السعر" required>
+      <mat-icon matSuffix>attach_money</mat-icon>
+      <mat-error *ngIf="courseForm.get('price')?.errors?.['required']">السعر مطلوب</mat-error>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>نوع الدورة</mat-label>
-    <input matInput formControlName="courseType" id="courseType" placeholder="نوع الدورة" required>
-    <mat-icon matSuffix>category</mat-icon>
-    <mat-error *ngIf="courseForm.get('courseType')?.errors?.['required']">نوع الدورة مطلوب</mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>السعر</mat-label>
-    <input matInput type="number" formControlName="price" id="price" placeholder="السعر" required>
-    <mat-icon matSuffix>attach_money</mat-icon>
-    <mat-error *ngIf="courseForm.get('price')?.errors?.['required']">السعر مطلوب</mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>اسم المادة</mat-label>
-    <input matInput formControlName="subjectName" id="subjectName" placeholder="اسم المادة" required>
-    <mat-icon matSuffix>subject</mat-icon>
-    <mat-error *ngIf="courseForm.get('subjectName')?.errors?.['required']">اسم المادة مطلوب</mat-error>
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>اسم المادة</mat-label>
+      <input matInput formControlName="subjectName" id="subjectName" placeholder="اسم المادة" required>
+      <mat-icon matSuffix>subject</mat-icon>
+      <mat-error *ngIf="courseForm.get('subjectName')?.errors?.['required']">اسم المادة مطلوب</mat-error>
+    </mat-form-field>
+  </div>
 
   <mat-form-field appearance="outline" class="w-100">
     <mat-label>المستوى</mat-label>
@@ -43,7 +54,7 @@
     <mat-error *ngIf="courseForm.get('levelName')?.errors?.['required']">المستوى مطلوب</mat-error>
   </mat-form-field>
 
-  <div class="flex gap-2">
+  <div class="flex justify-content-center">
     <button mat-raised-button class="custom-button" type="submit">{{ data.confirmButtonText }}</button>
   </div>
 </form>

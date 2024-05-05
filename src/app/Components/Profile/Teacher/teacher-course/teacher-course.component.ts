@@ -28,6 +28,8 @@ export class TeacherCourseComponent {
 
   openAddEditCourseConfirmationDialog(courseID?: number): void {
     this.dialog.open(AddEditCourseComponent, {
+      // minWidth: '100%',
+      maxHeight: 'calc(100vh - 40px)',
       data: {
         message: 'هل أنت متأكد أنك تريد حذف الكورس؟',
         confirmButtonText: courseID ? 'تعديل الكورس' : 'اضافه كورس',

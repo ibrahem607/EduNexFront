@@ -105,11 +105,6 @@ section {
   stroke: var(--wave2);
 }
 
-::ng-deep .mat-mdc-dialog-surface {
-  background-color: var(--bg) !important;
-  box-shadow: var(--border) 0px 0px 0px 1px !important;
-}
-
 @media (max-width: 460px) {
   .cards-container {
     flex-direction: column-reverse;
@@ -252,4 +247,20 @@ mat-error {
 
 ::ng-deep .mat-mdc-dialog-surface {
   border-radius: 10px !important;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  background-color: var(--bg) !important;
+  box-shadow: var(--border) 0px 0px 0px 1px !important;
+}
+
+::ng-deep .mdc-snackbar__surface,
+::ng-deep .mat-mdc-snack-bar-label {
+  background-color: brown !important;
+  border-radius: 10px !important;
+}
+
+::ng-deep .mdc-button__label,
+::ng-deep .mat-mdc-snack-bar-label {
+  color: white !important;
 }

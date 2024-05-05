@@ -29,7 +29,7 @@
         </mat-expansion-panel-header>
         <mat-radio-group aria-label="Select an option" class="flex flex-column sub-radio" [(ngModel)]="subject"
           (change)="filterTeachers()">
-          <mat-radio-button value="all" color="accent">All</mat-radio-button>
+          <mat-radio-button value="all" color="accent">الكل</mat-radio-button>
           <mat-radio-button *ngFor="let subject of extractUniqueSubjects(teachers)" [value]="subject" color="accent">
             {{ subject }}
           </mat-radio-button>

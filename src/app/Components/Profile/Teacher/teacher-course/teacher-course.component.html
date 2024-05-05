@@ -20,12 +20,11 @@
           <td mat-cell *matCellDef="let element">{{element.purchaseTimes}}</td>
         </ng-container>
 
-        <!-- Added By Column -->
         <!-- Actions Column -->
         <ng-container matColumnDef="Actions">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element">
-            <div class="flex buttons gap-1">3
+            <div class="flex buttons gap-1">
               <button mat-icon-button class="width-50 m-0 custom-icon-button" style="color: red;"
                 (click)="openDeleteCourseConfirmationDialog(13)">
                 <mat-icon class="mx-2">delete</mat-icon>

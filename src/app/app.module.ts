@@ -87,15 +87,16 @@ import { StudentSignUpComponent } from './Components/SignUp/student-sign-up/stud
 import { TeacherSignUpComponent } from './Components/SignUp/teacher-sign-up/teacher-sign-up.component';
 import { LoadingCardsComponent } from './Components/Shared/loading-cards/loading-cards.component';
 import { PendingProfileComponent } from './Components/Profile/Teacher/pending-profile/pending-profile.component';
+import { TeacherCourseComponent } from './Components/Profile/Teacher/teacher-course/teacher-course.component';
+import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-course/add-edit-course.component';
+import { TeacherSettingsComponent } from './Components/Profile/Teacher/teacher-settings/teacher-settings.component';
 
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { TeacherCourseComponent } from './Components/Profile/Teacher/teacher-course/teacher-course.component';
-import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-course/add-edit-course.component';
-import { TeacherSettingsComponent } from './Components/Profile/Teacher/teacher-settings/teacher-settings.component';
+import { ImageUploaderComponent } from './Components/Shared/image-uploader/image-uploader.component';
 
 @NgModule({
   declarations: [
@@ -157,6 +158,7 @@ import { TeacherSettingsComponent } from './Components/Profile/Teacher/teacher-s
     TeacherCourseComponent,
     AddEditCourseComponent,
     TeacherSettingsComponent,
+    ImageUploaderComponent
   ],
   imports: [
     BrowserModule,
@@ -193,7 +195,7 @@ import { TeacherSettingsComponent } from './Components/Profile/Teacher/teacher-s
     LoadingBarModule,
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   providers: [
     OverlayContainer,

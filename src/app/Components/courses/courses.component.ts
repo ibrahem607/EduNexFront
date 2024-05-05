@@ -10,6 +10,10 @@ import { CoursesService } from 'src/app/Services/Courses/courses.service';
 export class CoursesComponent implements OnInit {
   panelOpenState = false;
 
+  subject: string = 'all';
+  type: string = 'all';
+  level: string = 'all';
+
   page: number = 1;
   itemsPerPage: number = 6;
   filteredCourses: ICourse[] = [];
@@ -68,23 +72,36 @@ export class CoursesComponent implements OnInit {
     return sortedPrices[middleIndex];
   }
 
-  filterBySubject(subject: string) {
-    this.filteredCourses = this.courses.filter(course => course.subjectName === subject);
+  filterBySubject() {
+    if (this.subject === 'all') {
+      this.filteredCourses = this.courses;
+    } else {
+      this.filteredCourses = this.courses.filter(course => course.subjectName === this.subject);
+    }
     this.updateFilteredPaginatedCourses();
   }
 
-  filterByCourseType(type: string) {
-    this.filteredCourses = this.courses.filter(course => course.courseType === type);
+  filterByCourseType() {
+    if (this.type === 'all') {
+      this.filteredCourses = this.courses;
+    } else {
+      this.filteredCourses = this.courses.filter(course => course.courseType === this.type);
+    }
     this.updateFilteredPaginatedCourses();
   }
 
-  filterByLevel(level: string) {
-    this.filteredCourses = this.courses.filter(course => course.levelName === level);
+  filterByLevel() {
+    if (this.level === 'all') {
+      this.filteredCourses = this.courses;
+    } else {
+      this.filteredCourses = this.courses.filter(course => course.levelName === this.level);
+    }
     this.updateFilteredPaginatedCourses();
   }
 
-  filterByPriceRange(minPrice: number, maxPrice: number) {
-    this.filteredCourses = this.courses.filter(course => course.price >= minPrice && course.price <= maxPrice);
+  filterByPriceRange(maxPrice: any) {
+    console.log(maxPrice.endValueIndicatorText)
+    this.filteredCourses = this.courses.filter(course => course.price <= maxPrice.endValueIndicatorText);
     this.updateFilteredPaginatedCourses();
   }
 

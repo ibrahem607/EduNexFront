@@ -221,6 +221,21 @@ mat-form-field mat-label {
   color: var(--bgHeader);
 }
 
+::ng-deep .mdc-snackbar__surface,
+::ng-deep .mat-mdc-snack-bar-label {
+  background-color: brown !important;
+  border-radius: 10px !important;
+}
+
+::ng-deep .mdc-button__label,
+::ng-deep .mat-mdc-snack-bar-label {
+  color: white !important;
+}
+
+mat-error {
+  color: red !important;
+}
+
 .section mat-card-content {
   display: flex;
   flex-wrap: wrap;
@@ -231,15 +246,6 @@ mat-form-field mat-label {
 form.container {
   gap: 2rem;
 }
-
-mat-error {
-  color: red !important;
-}
-
-/* ::ng-deep .snackbar {
-  background-color: brown !important;
-  color: white !important;
-} */
 
 @media (min-width: 992px) {
   .column {

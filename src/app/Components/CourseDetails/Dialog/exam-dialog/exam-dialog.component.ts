@@ -112,7 +112,7 @@ export class ExamDialogComponent {
       (exam: IExam) => {
         console.log('Exam created successfully:', exam);
         this.router.navigate(['/course', this.data.courseID, 'lesson', this.data.lectureId, 'create'], {
-          queryParams: { examId: exam.id}
+          queryParams: { examId: exam.id }
         });
       },
       (error) => {
