@@ -41,12 +41,12 @@ export class ExamService {
     return this.httpClient.post<IExam>(`${this.URL}/api/Exams/${examId}/submit`, submittedExam);
   }
 
-  getInfoExam(examId: number): Observable<IExam> {
-    return this.httpClient.get<IExam>(`${this.URL}/api/Exams/${examId}/getinfo`);
+  getInfoExam(examId: number, student: any): Observable<IExam> {
+    return this.httpClient.get<IExam>(`${this.URL}/api/Exams/${examId}/getinfo/${student}`);
   }
 
   // examResult
-  getExamResult(examId: number): Observable<IExamResult> {
-    return this.httpClient.get<IExamResult>(`${this.URL}/api/Exams/${examId}/result`);
+  getExamResult(examId: number, student: any): Observable<IExamResult> {
+    return this.httpClient.get<IExamResult>(`${this.URL}/api/Exams/${examId}/result/${student}`);
   }
 }

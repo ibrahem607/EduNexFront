@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/Components/CourseDetails/Dialog/confirmation-dialog/confirmation-dialog.component';
+import { AddEditCourseComponent } from '../add-edit-course/add-edit-course.component';
 
 @Component({
   selector: 'app-teacher-course',
@@ -8,6 +11,30 @@ import { Component } from '@angular/core';
 export class TeacherCourseComponent {
   displayedColumns: string[] = ['CourseName', 'Price', 'PurchaseTimes', 'Actions'];
   dataSource = ELEMENT_DATA;
+
+  constructor(public dialog: MatDialog) { }
+
+  openDeleteCourseConfirmationDialog(courseID: number): void {
+    this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      data: {
+        message: 'هل أنت متأكد أنك تريد حذف الكورس؟',
+        confirmButtonText: 'حذف الكورس',
+        courseId: courseID,
+        deleteType: "course"
+      }
+    });
+  }
+
+  openAddEditCourseConfirmationDialog(courseID?: number): void {
+    this.dialog.open(AddEditCourseComponent, {
+      data: {
+        message: 'هل أنت متأكد أنك تريد حذف الكورس؟',
+        confirmButtonText: courseID ? 'تعديل الكورس' : 'اضافه كورس',
+        courseId: courseID,
+      }
+    });
+  }
 }
 
 export interface PeriodicElement {

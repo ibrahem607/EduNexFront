@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { ICourse } from 'src/app/Model/icourse';
+import { CoursesService } from 'src/app/Services/Courses/courses.service';
 
 @Component({
   selector: 'app-add-edit-course',
@@ -11,41 +14,78 @@ export class AddEditCourseComponent implements OnInit {
   courseForm: FormGroup;
   courseId: number | null = null;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(
+    public dialogRef: MatDialogRef<AddEditCourseComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private courseData: CoursesService
+  ) {
     this.courseForm = this.fb.group({
-      id: [],
       courseName: ['', Validators.required],
-      thumbnail: [''],
+      thumbnail: ['', Validators.required],
       courseType: ['', Validators.required],
       price: ['', Validators.required],
       subjectName: ['', Validators.required],
       teacherName: ['', Validators.required],
-      profilePhoto: [''],
       levelName: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const id = +params['id']; // Convert to number
-      if (!isNaN(id)) {
-        this.courseId = id;
-        // Fetch course details based on courseId if needed
-        // Here you can make an HTTP request to fetch the course details
-      } else {
-        this.courseId = null;
-      }
-    });
+    this.courseId = this.data.courseId;
   }
 
   onSubmit() {
-    // Process the form submission
+    console.log(this.courseForm)
     if (this.courseForm.valid) {
-      const formData = this.courseForm.value;
-      // Perform create or update operation here
-      console.log(formData);
-    } else {
-      // Form is invalid, handle accordingly
+      const formData = this.getCourseData();
+      console.log(this.courseId)
+      if (this.courseId !== null) {
+        this.updateCourse(formData);
+      } else {
+        this.addCourse(formData);
+      }
+    }
+  }
+
+  getCourseData(): ICourse {
+    const formData = this.courseForm.value as ICourse;
+    if (this.courseId !== null) {
+      formData.id = this.courseId;
+    }
+    return formData;
+  }
+
+  addCourse(courseData: ICourse): void {
+    this.courseData.addCourse(courseData)
+      .subscribe(
+        (newCourse: ICourse) => {
+          console.log('Course added:', newCourse);
+        },
+        (error: any) => {
+          console.error('Error adding course:', error);
+        }
+      );
+  }
+
+  updateCourse(courseData: ICourse): void {
+    if (this.courseId !== null) {
+      this.courseData.editCourse(this.courseId, courseData)
+        .subscribe(
+          () => {
+            console.log('Course updated successfully');
+          },
+          (error: any) => {
+            console.error('Error updating course:', error);
+          }
+        );
+    }
+  }
+
+  onFileSelected(file: File) {
+    if (file) {
+      this.courseForm.patchValue({ thumbnail: file, teacherName: "ahmed" });
     }
   }
 

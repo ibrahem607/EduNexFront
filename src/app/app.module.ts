@@ -95,6 +95,7 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { TeacherCourseComponent } from './Components/Profile/Teacher/teacher-course/teacher-course.component';
 import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-course/add-edit-course.component';
+import { TeacherSettingsComponent } from './Components/Profile/Teacher/teacher-settings/teacher-settings.component';
 
 @NgModule({
   declarations: [
@@ -155,6 +156,7 @@ import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-co
     PendingProfileComponent,
     TeacherCourseComponent,
     AddEditCourseComponent,
+    TeacherSettingsComponent,
   ],
   imports: [
     BrowserModule,

@@ -487,7 +487,7 @@ export class EditExamComponent implements OnInit {
     this.formSubmitted = true;
 
     if (this.examForm.valid) {
-      this.removeQuestion(0);this.removeQuestion(1);this.removeQuestion(2);this.removeQuestion(4);this.removeQuestion(3);this.removeQuestion(5);this.removeQuestion(6);this.removeQuestion(7);this.removeQuestion(8);this.removeQuestion(9);
+      //this.removeQuestion(0);this.removeQuestion(1);this.removeQuestion(2);this.removeQuestion(4);this.removeQuestion(3);this.removeQuestion(5);this.removeQuestion(6);this.removeQuestion(7);this.removeQuestion(8);this.removeQuestion(9);
       console.log('Form submitted successfully!');
 
       const startDate = convertDateFormat(this.examForm.value.startDate);

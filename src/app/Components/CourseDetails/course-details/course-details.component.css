@@ -147,6 +147,9 @@ section {
     width: 100%;
     flex-grow: 1;
   }
+  .card-container {
+    margin-inline: auto;
+  }
   section {
     flex-wrap: nowrap;
     flex-direction: column;

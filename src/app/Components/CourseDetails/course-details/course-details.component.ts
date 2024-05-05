@@ -41,6 +41,7 @@ export class CourseDetailsComponent implements OnInit {
   getCourseById() {
     this.courseData.getCourseById(this.courseID).subscribe(course => {
       this.course = course;
+      console.log(course);
       if (this.course?.lectureList) {
         this.course.lectureList.forEach((lecture: ILecture) => {
           let lectureContents: (IVideo | IAttachment)[] = [];
@@ -82,7 +83,7 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   //edit lesson
-  editLessonDialog(lectureId?: number, initialLectureTitle?: string): void {
+  editLessonDialog(lectureId?: number, initialLectureTitle?: string, initialPrice?: number): void {
     this.dialog.open(LessonDialogComponent, {
       width: '400px',
       panelClass: 'dialog-container',
@@ -93,25 +94,27 @@ export class CourseDetailsComponent implements OnInit {
         name: this.course?.teacherName,
         initialLectureId: lectureId,
         initialLectureTitle: initialLectureTitle,
+        initialPrice: initialPrice,
       }
     });
   }
 
   //delete lesson
-  openDeleteConfirmationDialog(lectureId: number): void {
+  openDeleteLectureConfirmationDialog(lectureId: number): void {
     this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
       data: {
         message: 'هل أنت متأكد أنك تريد حذف الحصة؟',
         confirmButtonText: 'حذف الحصة',
         lectureId: lectureId,
-        courseId:this.courseID
+        courseId: this.courseID,
+        deleteType: "lecture"
       }
     });
   }
 
   //add content
-  addContentDialog(contentTitle: string, lectureId: number): void {
+  addContentDialog(contentType: string, lectureId: number): void {
     this.dialog.open(ContentDialogComponent, {
       width: '400px',
       panelClass: 'dialog-container',
@@ -120,7 +123,7 @@ export class CourseDetailsComponent implements OnInit {
         confirmButtonText: 'أضف الملفات',
         operation: 'add',
         courseId: this.course?.id,
-        contentTitle: contentTitle,
+        contentType: contentType,
         name: this.course?.teacherName,
         lectureId: lectureId,
       }
@@ -129,15 +132,18 @@ export class CourseDetailsComponent implements OnInit {
 
   //edit content
   editContentDialog(lectureId: number, lectureContact: IVideo | IAttachment): void {
-    let contentTitle: string;
+    let contentType: string;
     let url: string | null = null;
+    let contentTitle: string;
 
     if ('videoPath' in lectureContact) {
-      contentTitle = 'video';
+      contentType = 'video';
       url = (lectureContact as IVideo).videoPath;
+      contentTitle = lectureContact.videoTitle;
     } else {
-      contentTitle = 'file';
+      contentType = 'file';
       url = (lectureContact as IAttachment).attachmentPath;
+      contentTitle = lectureContact.attachmentTitle;
     }
 
     this.dialog.open(ContentDialogComponent, {
@@ -152,6 +158,7 @@ export class CourseDetailsComponent implements OnInit {
         lectureId: lectureId,
         content: lectureContact,
         contentId: lectureContact.id,
+        contentType: contentType,
         contentTitle: contentTitle,
         url: url,
       }
@@ -172,7 +179,8 @@ export class CourseDetailsComponent implements OnInit {
         confirmButtonText: 'حذف المحتوى',
         lectureId: lectureId,
         contentId: content?.id,
-        contentType: contentType
+        contentType: contentType,
+        deleteType: "content"
       }
     });
   }

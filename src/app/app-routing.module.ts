@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: "course/:courseId/lesson/:lessonId/create", component: EditExamComponent },
   { path: "course/:courseId/lesson/:lessonId/view", component: StudentExamComponent },
   { path: "course/:courseId/lesson/:lessonId/result", component: ExamResultComponent },
-  { path: "student/:studentId", component: StudentProfileComponent },
+  { path: "student/:id", component: StudentProfileComponent },
   { path: "teacher/profile/:id", component: TeacherProfileComponent },
   { path: "teacher/pending/:id", component: PendingProfileComponent },
   { path: "crud/course", component: AddEditCourseComponent },

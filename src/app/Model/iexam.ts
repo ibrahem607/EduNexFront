@@ -16,7 +16,6 @@ export interface IQuestion {
   answers: IAnswer[];
 }
 
-
 export interface IAnswer {
   id: number;
   header: string;

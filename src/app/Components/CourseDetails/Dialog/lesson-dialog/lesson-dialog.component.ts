@@ -25,13 +25,14 @@ export class LessonDialogComponent {
     this.dialogRef.close(this.lectureTitle);
     const courseId = this.data.courseId;
     const lectureId = this.data.initialLectureId;
+    const price = this.data.initialPrice;
 
     if (this.data.initialLectureTitle) {
       // Edit existing lecture
       const updatedLecture: any = {
         id: lectureId,
         lectureTitle: this.lectureTitle,
-        price: 1,
+        price: price,
         courseId: courseId
       };
 

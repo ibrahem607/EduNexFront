@@ -2,7 +2,7 @@
   <app-course-details-header [course]="course"></app-course-details-header>
 
   <section>
-    <div class="container d-flex gap-3 justify-content-between">
+    <div class="container d-flex flex-wrap gap-3 justify-content-between">
       <div class="content-container flex-container">
         <!-- Custom checkbox container -->
         <div class="custom-checkbox-container flex-grow">
@@ -89,11 +89,11 @@
 
             </mat-expansion-panel>
             <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button" style="color: red;"
-              (click)="openDeleteConfirmationDialog(lecture.id)">
+              (click)="openDeleteLectureConfirmationDialog(lecture.id)">
               <mat-icon>delete</mat-icon>
             </button>
             <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button" style="color: green;"
-              (click)="editLessonDialog(lecture.id, lecture.lectureTitle)">
+              (click)="editLessonDialog(lecture.id, lecture.lectureTitle ,lecture.price)">
               <mat-icon>edit</mat-icon>
             </button>
           </mat-accordion>
@@ -121,7 +121,9 @@
         </div>
       </div>
 
-      <app-course-details-card [course]="course"></app-course-details-card>
+      <div class="card-container">
+        <app-course-details-card [course]="course"></app-course-details-card>
+      </div>
     </div>
   </section>
 </div>

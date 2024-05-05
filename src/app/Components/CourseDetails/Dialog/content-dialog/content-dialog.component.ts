@@ -46,7 +46,7 @@ export class ContentDialogComponent {
       attachmentTitle: this.contentType
     };
 
-    if (this.data.contentTitle === 'file') {
+    if (this.data.contentType === 'file') {
       this.attachmentData.editAttachment(this.data.courseId, lectureId, updatedContent, contentId).subscribe(
         () => {
           console.log(`Attachment with ID ${contentId} updated successfully`);
@@ -56,7 +56,7 @@ export class ContentDialogComponent {
           console.error(`Failed to update attachment with ID ${contentId}:`, error);
         }
       );
-    } else if (this.data.contentTitle === 'video') {
+    } else if (this.data.contentType === 'video') {
       this.videoData.editVideo(this.data.courseId, lectureId, updatedContent, contentId).subscribe(
         () => {
           console.log(`Video with ID ${contentId} updated successfully`);
@@ -67,7 +67,7 @@ export class ContentDialogComponent {
         }
       );
     } else {
-      console.error(`Unsupported content type: ${this.data.contentTitle}`);
+      console.error(`Unsupported content type: ${this.data.contentType}`);
     }
   }
 
@@ -84,14 +84,14 @@ export class ContentDialogComponent {
     let contentTypeKey: string;
     let addMethod: any;
 
-    if (this.data.contentTitle === 'file') {
+    if (this.data.contentType === 'file') {
       contentTypeKey = 'AttachmentTitle';
       addMethod = this.attachmentData.addAttachment.bind(this.attachmentData);
-    } else if (this.data.contentTitle === 'video') {
+    } else if (this.data.contentType === 'video') {
       contentTypeKey = 'VideoTitle';
       addMethod = this.videoData.addVideo.bind(this.videoData);
     } else {
-      console.error(`Unsupported content type: ${this.data.contentTitle}`);
+      console.error(`Unsupported content type: ${this.data.contentType}`);
       return;
     }
 
@@ -100,11 +100,11 @@ export class ContentDialogComponent {
     // Add the content using FormData
     addMethod(this.data.courseId, lectureId, formData).subscribe(
       () => {
-        console.log(`New ${this.data.contentTitle} added successfully`);
+        console.log(`New ${this.data.contentType} added successfully`);
         window.location.reload();
       },
       (error: any) => {
-        console.error(`Failed to add new ${this.data.contentTitle}:`, error);
+        console.error(`Failed to add new ${this.data.contentType}:`, error);
       }
     );
   }
