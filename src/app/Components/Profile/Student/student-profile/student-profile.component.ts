@@ -1,7 +1,8 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SignOutComponent } from '../../sign-out/sign-out.component';
 import { trigger, style, transition, animate } from '@angular/animations';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
 
 @Component({
   selector: 'app-student-profile',
@@ -16,10 +17,11 @@ import { trigger, style, transition, animate } from '@angular/animations';
     ])
   ]
 })
-export class StudentProfileComponent {
+export class StudentProfileComponent implements OnInit {
   activeSection: string = '';
   selectedOptionIndex: number = 0;
   leavingAnimationInProgress: boolean = false;
+  student!: any;
 
   options = [
     { label: 'الرئيسية', icon: 'home', selected: true },
@@ -31,7 +33,18 @@ export class StudentProfileComponent {
     { label: 'تسجيل الخروج', icon: 'sign-out-alt', selected: false }
   ];
 
-  constructor(private dialog: MatDialog, private renderer: Renderer2) { }
+  constructor(private dialog: MatDialog, private studentData: AuthService) { }
+
+  ngOnInit() {
+    this.getStudentData(this.studentData.getUserId());
+  }
+
+  getStudentData(studentId: string) {
+    this.studentData.getStudentData(studentId).subscribe(student => {
+      this.student = student;
+      console.log(student);
+    });
+  }
 
   setActiveSection(index: number): void {
     if (index === 5) {

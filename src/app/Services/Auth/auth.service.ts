@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable,BehaviorSubject, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
@@ -19,18 +19,17 @@ import { Token } from '@angular/compiler';
 export class AuthService {
 
 
-   baseUrl: string = 'http://localhost:5293';
-   tokenKey: string = 'auth_token';
-   teacherId:any='';
-   currentUserId:string='UserId';
-   currentUserRole:string='UserRole';
-   IsLogin:any= new BehaviorSubject(null);
+  baseUrl: string = 'http://localhost:5293';
+  tokenKey: string = 'auth_token';
+  teacherId: any = '';
+  currentUserId: string = 'UserId';
+  currentUserRole: string = 'UserRole';
+  IsLogin: any = new BehaviorSubject(null);
 
-  constructor(private httpClient: HttpClient,private router: Router,private snackBar: MatSnackBar) {
-    if(localStorage.getItem(this.tokenKey) !==null)
-      {
-         this.saveCurrentUserId() 
-      }
+  constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
+    if (localStorage.getItem(this.tokenKey) !== null) {
+      this.saveCurrentUserId()
+    }
   }
 
 
@@ -60,34 +59,30 @@ export class AuthService {
     return this.httpClient.post(`${this.baseUrl}/api/Auth/login`, data).pipe(
       tap((response: any) => {
         if (response && response.token) {
-         // Save token
+          // Save token
 
-          
+
           localStorage.setItem(this.tokenKey, response.token);
-           this.saveCurrentUserId()
+          this.saveCurrentUserId()
 
           this.snackBar.open('  تم تسجيل الدخول بنجاح ', 'Close', {
             duration: 2000,
             verticalPosition: 'top',
             panelClass: ['green-snackbar']
           });
-          if(localStorage.getItem(this.currentUserRole)=="Teacher")
-            { 
-              if(response.message=="pending"||response.message==("Rejected"))
-              {
-                this.router.navigate(['/teacherprofile']);
-              }else{
+          if (localStorage.getItem(this.currentUserRole) == "Teacher") {
+            if (response.message == "pending" || response.message == ("Rejected")) {
+              this.router.navigate(['/teacherprofile']);
+            } else {
               this.router.navigate(['/teachers']);
             }
           }
-            else if(localStorage.getItem(this.currentUserRole)=="Student")
-              {
-                this.router.navigate(['/home']);
-              }
-              else if(localStorage.getItem(this.currentUserRole)=="Admin")
-                {
-                  this.router.navigate(['/admindash']);
-                }
+          else if (localStorage.getItem(this.currentUserRole) == "Student") {
+            this.router.navigate(['/home']);
+          }
+          else if (localStorage.getItem(this.currentUserRole) == "Admin") {
+            this.router.navigate(['/admindash']);
+          }
         }
       }),
       catchError(error => {
@@ -122,11 +117,9 @@ export class AuthService {
   }
 
 
-  getStudentData(id:any):Observable<any>
-  {
+  getStudentData(id: any): Observable<any> {
     return this.httpClient.get(`${this.baseUrl}/api/Student/GetStudentById/${id}`)
   }
-
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
@@ -135,21 +128,25 @@ export class AuthService {
   removeToken(): void {
     localStorage.removeItem(this.tokenKey);
   }
+
   removeUserRole(): void {
     localStorage.removeItem(this.currentUserRole);
   }
+
   removeUserId(): void {
     localStorage.removeItem(this.currentUserId);
   }
+
   getUserId(): any {
-   return  localStorage.getItem(this.currentUserId);
+    return localStorage.getItem(this.currentUserId);
   }
+
   getUserRole(): any {
-    return  localStorage.getItem(this.currentUserRole);
-   }
+    return localStorage.getItem(this.currentUserRole);
+  }
 
   //have id of user
-  currentUser:any=new BehaviorSubject(null) ;
+  currentUser: any = new BehaviorSubject(null);
 
   saveCurrentUserId(): any {
     const token = localStorage.getItem(this.tokenKey);
@@ -158,7 +155,7 @@ export class AuthService {
       const decodedUser: CustomJwtPayload = jwtDecode(token);
       localStorage.setItem(this.currentUserId, decodedUser.nameid);
       localStorage.setItem(this.currentUserRole, decodedUser.role);
-      
+
       console.log(`${localStorage.getItem(this.currentUserRole)} and ${localStorage.getItem(this.currentUserId)}`);
       this.IsLogin.next(decodedUser);
       return decodedUser.nameid;

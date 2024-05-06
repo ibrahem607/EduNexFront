@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -7,12 +7,12 @@ import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ITeacherAuth } from 'src/app/Model/iteacherAuth';
 
 @Component({
-  selector: 'app-teacher-sign-up',
-  templateUrl: './teacher-sign-up.component.html',
-  styleUrls: ['./teacher-sign-up.component.css']
+  selector: 'app-teacher-sign-up-form',
+  templateUrl: './teacher-sign-up-form.component.html',
+  styleUrls: ['./teacher-sign-up-form.component.css']
 })
-export class TeacherSignUpComponent {
-
+export class TeacherSignUpFormComponent {
+  @Input() teacher?: any = null;
   isInputFocused: boolean = false;
   signupForm!: FormGroup;
 
@@ -20,7 +20,7 @@ export class TeacherSignUpComponent {
 
   ngOnInit() {
     this.signupForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.pattern('^(?!\d).{8,}$')]],
+      fullName: ['', [Validators.required, Validators.pattern('^(?!\d).{4,}$')]],
       lastName: ['', Validators.required],
       teacherPhoneNumber: ['', [Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
       birthday: ['', Validators.required],

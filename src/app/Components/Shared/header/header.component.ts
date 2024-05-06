@@ -25,6 +25,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
     ]),
   ]
 })
+
 export class HeaderComponent implements OnInit {
   theme = new FormControl(false);
   @HostBinding('class') className = '';
@@ -35,10 +36,10 @@ export class HeaderComponent implements OnInit {
   darkClass = 'theme-dark';
   lightClass = 'theme-light';
   isShowing: boolean = false;
-  isLogin:boolean=true;
-  userData:any="";
-  hideHeader:boolean=false;
-  constructor(private renderer: Renderer2, public loader: LoadingBarService, private authService: AuthService,private techServices:TeacherService) { }
+  isLogin: boolean = true;
+  userData: any = "";
+  hideHeader: boolean = false;
+  constructor(private renderer: Renderer2, public loader: LoadingBarService, private authService: AuthService, private techServices: TeacherService) { }
 
   toggleRightSidenav() {
     this.isShowing = !this.isShowing;
@@ -47,38 +48,32 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
 
     this.authService.IsLogin.subscribe({
-      next:()=>
-        {
-          if (this.authService.IsLogin.getValue() !==null)
-            {
-              this.isLogin=false;
-              if(this.authService.getUserRole()=="Student")
-                {
-                   this.authService.getStudentData(this.authService.getUserId()).subscribe({
-                    next:(data=>{
-                      console.log(data)
-                      this.userData=data;
+      next: () => {
+        if (this.authService.IsLogin.getValue() !== null) {
+          this.isLogin = false;
+          if (this.authService.getUserRole() == "Student") {
+            this.authService.getStudentData(this.authService.getUserId()).subscribe({
+              next: (data => {
+                console.log(data)
+                this.userData = data;
 
-                    })
-                  })
-                }else if(this.authService.getUserRole()=="Teacher")
-                  {
-                    this.techServices.getTeacherById(this.authService.getUserId()).subscribe({
-                      next:(data=>{
-                        console.log(data)
-                        this.userData=data;
-  
-                      })
-                    })
-                  }
-            } else{
-              this.isLogin=true; 
-            }
+              })
+            })
+          } else if (this.authService.getUserRole() == "Teacher") {
+            this.techServices.getTeacherById(this.authService.getUserId()).subscribe({
+              next: (data => {
+                console.log(data)
+                this.userData = data;
+
+              })
+            })
+          }
+        } else {
+          this.isLogin = true;
         }
+      }
     })
 
-   
-   
     const savedTheme = localStorage.getItem('themePreference');
     const currentTheme = savedTheme === 'dark';
 
@@ -147,12 +142,11 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  Logout():any
-  {
+  Logout(): any {
     this.authService.removeToken();
     this.authService.removeUserId();
     this.authService.removeUserRole();
-    this.isLogin=true;
-    this.userData=" ";
+    this.isLogin = true;
+    this.userData = " ";
   }
 }

@@ -71,7 +71,6 @@ import { TimerComponent } from './Components/Exam/Student/timer/timer.component'
 import { ExamResultComponent } from './Components/Exam/Student/exam-result/exam-result.component';
 import { ExamTimeOutComponent } from './Components/Exam/Student/exam-time-out/exam-time-out.component';
 import { StudentProfileComponent } from './Components/Profile/Student/student-profile/student-profile.component';
-import { ProfileHomeComponent } from './Components/Profile/Student/profile-home/profile-home.component';
 import { StudentCourseComponent } from './Components/Profile/Student/student-course/student-course.component';
 import { ProfileBudgetComponent } from './Components/Profile/Student/profile-budget/profile-budget.component';
 import { StudentShippingCodesComponent } from './Components/Profile/Student/student-shipping-codes/student-shipping-codes.component';
@@ -82,8 +81,8 @@ import { TeacherDetailsComponent } from './Components/teacher-details/teacher-de
 import { TeacherProfileComponent } from './Components/Profile/Teacher/teacher-profile/teacher-profile.component';
 import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
 import { NotFoundComponent } from './Components/not-found/not-found.component';
-import { StudentSignUpComponent } from './Components/SignUp/student-sign-up/student-sign-up.component';
-import { TeacherSignUpComponent } from './Components/SignUp/teacher-sign-up/teacher-sign-up.component';
+import { StudentSignUpPageComponent } from './Components/SignUp/Student/student-sign-up-page/student-sign-up-page.component';
+import { TeacherSignUpPageComponent } from './Components/SignUp/Teacher/teacher-sign-up-page/teacher-sign-up-page.component';
 import { LoadingCardsComponent } from './Components/Shared/loading-cards/loading-cards.component';
 
 import { TeacherCourseComponent } from './Components/Profile/Teacher/teacher-course/teacher-course.component';
@@ -101,6 +100,8 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { AdminDashComponent } from './Components/admin-dash/admin-dash.component';
 import { ImageUploaderComponent } from './Components/Shared/image-uploader/image-uploader.component';
 import { PendingProfileComponent } from './Components/Profile/Teacher/pending-profile/pending-profile.component';
+import { StudentSignUpFormComponent } from './Components/SignUp/Student/student-sign-up-form/student-sign-up-form.component';
+import { TeacherSignUpFormComponent } from './Components/SignUp/Teacher/teacher-sign-up-form/teacher-sign-up-form.component';
 
 @NgModule({
   declarations: [
@@ -143,7 +144,6 @@ import { PendingProfileComponent } from './Components/Profile/Teacher/pending-pr
     ExamResultComponent,
     ExamTimeOutComponent,
     StudentProfileComponent,
-    ProfileHomeComponent,
     StudentCourseComponent,
     ProfileBudgetComponent,
     StudentShippingCodesComponent,
@@ -155,14 +155,16 @@ import { PendingProfileComponent } from './Components/Profile/Teacher/pending-pr
     CustomCloudNavbarComponent,
     AdminDashComponent,
     NotFoundComponent,
-    StudentSignUpComponent,
+    StudentSignUpPageComponent,
     LoadingCardsComponent,
     PendingProfileComponent,
     TeacherCourseComponent,
     AddEditCourseComponent,
     TeacherSettingsComponent,
     ImageUploaderComponent,
-    TeacherSignUpComponent
+    TeacherSignUpPageComponent,
+    StudentSignUpFormComponent,
+    TeacherSignUpFormComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ILecture } from 'src/app/Model/icourse';
 import { IExam, IQuestion } from 'src/app/Model/iexam';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ExamService } from 'src/app/Services/Exam/exam.service';
 import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 
@@ -17,6 +18,7 @@ export class StudentExamComponent implements OnInit {
   courseId!: number;
   lectureId!: number;
   lecture!: ILecture;
+  studentId!: string;
   examId!: number;
   exam!: IExam;
   questions!: IQuestion[];
@@ -31,6 +33,7 @@ export class StudentExamComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private examData: ExamService,
     private lectureData: LecturesService,
+    private studentData: AuthService,
     private fb: FormBuilder,
     private router: Router
   ) {
@@ -38,6 +41,8 @@ export class StudentExamComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.studentId = this.studentData.getUserId();
+
     this.activatedRoute.queryParamMap.subscribe(queryParams => {
       this.examId = +queryParams.get('examId')!;
       this.startExam(this.examId);
@@ -67,7 +72,7 @@ export class StudentExamComponent implements OnInit {
 
   startExam(id: number) {
     const student = {
-      studentId: "4a653d27-1fa9-4820-9b60-1d54cf78ce76"
+      studentId: this.studentData.getUserId()
     }
 
     this.examData.startExam(id, student).subscribe(
@@ -95,9 +100,9 @@ export class StudentExamComponent implements OnInit {
 
     const startDateTime = new Date(startDateTimeString);
 
-    const timeDifferenceInMillis = currentDateTime.getTime() - startDateTime.getTime();
+    const timeDifferenceInMills = currentDateTime.getTime() - startDateTime.getTime();
 
-    return Math.floor(timeDifferenceInMillis / (1000 * 60));
+    return Math.floor(timeDifferenceInMills / (1000 * 60));
   }
 
   buildFormControls() {
@@ -208,7 +213,7 @@ export class StudentExamComponent implements OnInit {
 
   formattedExam() {
     const formattedExam: any = {
-      studentId: "4a653d27-1fa9-4820-9b60-1d54cf78ce76",
+      studentId: this.studentData.getUserId(),
       answers: []
     };
 
