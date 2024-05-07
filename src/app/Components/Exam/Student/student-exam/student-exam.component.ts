@@ -51,35 +51,21 @@ export class StudentExamComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.courseId = +params['courseId'];
       this.lectureId = +params['lessonId'];
+      this.getLectureById(this.lectureId);
     });
 
     this.visitedQuestions[0] = true;
   }
 
-  getExamById(id: number) {
-    this.examData.getExamById(id).subscribe(exam => {
-      this.exam = exam;
-      this.questions = exam.questions;
-      this.buildFormControls();
-    });
-  }
-
-  getLectureById(id: number) {
-    this.lectureData.getLectureById(this.courseId, id).subscribe(lecture => {
-      this.lecture = lecture;
-    });
-  }
-
   startExam(id: number) {
     const student = {
-      studentId: this.studentData.getUserId()
+      studentId: this.studentId
     }
 
     this.examData.startExam(id, student).subscribe(
       () => {
         console.log(`Exam : ${id} started successfully`);
         this.getExamById(this.examId);
-        this.getStartData(this.examId, student.studentId);
       },
       (error) => {
         console.error('Error occurred while starting exam:', error);
@@ -87,10 +73,25 @@ export class StudentExamComponent implements OnInit {
     );
   }
 
+  getExamById(id: number) {
+    this.examData.getExamById(id).subscribe(exam => {
+      this.exam = exam;
+      this.questions = exam.questions;
+      this.buildFormControls();
+      this.getStartData(this.examId, this.studentId);
+    });
+  }
+
   getStartData(id: number, student: any) {
     this.examData.getInfoExam(id, student).subscribe(startData => {
       this.startData = startData;
       this.duration = this.exam.duration - this.durationCalculation();
+    });
+  }
+
+  getLectureById(id: number) {
+    this.lectureData.getLectureById(this.courseId, id).subscribe(lecture => {
+      this.lecture = lecture;
     });
   }
 
@@ -213,7 +214,7 @@ export class StudentExamComponent implements OnInit {
 
   formattedExam() {
     const formattedExam: any = {
-      studentId: this.studentData.getUserId(),
+      studentId: this.studentId,
       answers: []
     };
 
