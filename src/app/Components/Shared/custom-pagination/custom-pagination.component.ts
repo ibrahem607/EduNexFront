@@ -20,7 +20,7 @@ export class CustomPaginationComponent implements OnChanges {
   }
 
   calculateTotalPages(): void {
-    this.totalPages = Math.ceil(this.length / this.itemsPerPage);
+    this.totalPages = Math.ceil((this.length - 1) / this.itemsPerPage);
   }
 
   goToPage(page: number): void {

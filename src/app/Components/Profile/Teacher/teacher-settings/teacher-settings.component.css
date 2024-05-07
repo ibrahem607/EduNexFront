@@ -1,0 +1,17 @@
+.form-container {
+  border-radius: 10px;
+  box-shadow: var(--border) 0px 1px 3px 0px, var(--border) 0px 0px 0px 1px;
+  background-color: var(--bg);
+}
+
+@media (min-width: 992px) {
+  .form-container {
+    margin-top: calc(100px + 1rem);
+  }
+}
+
+@media (min-width: 1300px) {
+  .form-container {
+    width: 70%;
+  }
+}

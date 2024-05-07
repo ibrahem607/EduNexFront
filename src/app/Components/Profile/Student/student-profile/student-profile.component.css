@@ -56,6 +56,14 @@
   color: red;
 }
 
+.spinner {
+  min-height: 90dvh;
+}
+
+.spinner ::ng-deep circle {
+  stroke: var(--wave2);
+}
+
 @media (min-width: 992px) {
   .header-section,
   .navigation-section {

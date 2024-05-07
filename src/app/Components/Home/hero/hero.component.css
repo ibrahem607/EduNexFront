@@ -60,11 +60,13 @@ button span svg {
 
 .image img {
   position: absolute;
-  top: 0;
-  right: 4rem;
+  top: -4dvw;
+  right: 4dvw;
   transform: translateX(8%);
   z-index: 1;
+  width: 100%;
 }
+
 .text {
   position: relative;
   letter-spacing: 0.5px;
@@ -74,6 +76,7 @@ button span svg {
   position: relative;
   width: 70px;
 }
+
 .shape svg {
   position: absolute;
   top: -5rem;
@@ -81,14 +84,17 @@ button span svg {
   transform: translate(150%, -50%);
   opacity: 0.3;
 }
+
 .svg-1 {
   /* min-height: 69.25dvh; */
   width: 100%;
 }
+
 .shape2 {
   position: relative;
   width: 150px;
 }
+
 .shape2 svg {
   position: absolute;
   top: 0;
@@ -104,6 +110,7 @@ button span svg {
 .flipped > span:first-child {
   margin-right: 16px;
 }
+
 @media (max-width: 990px) {
   .flex {
     flex-direction: column;

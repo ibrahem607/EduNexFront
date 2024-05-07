@@ -21,21 +21,6 @@ mat-sidenav {
   border-bottom-left-radius: 10px !important;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  display: none;
-}
-
-.overlay.active {
-  display: block;
-}
-
 mat-toolbar {
   justify-content: space-between;
   box-shadow: var(--border) 0px 4px 10px -10px;
@@ -55,15 +40,32 @@ mat-toolbar button {
   /* width: 120px; */
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  display: none;
+}
+
+.overlay.active {
+  display: block;
+}
+
 .unset-button {
   all: unset;
   cursor: pointer;
   padding: 10px;
   transition: 0.3s;
 }
+
 .unset-button.active {
   color: red var(--bgHeader) !important;
 }
+
 .unset-button:hover {
   color: var(--wave2);
 }

@@ -1,0 +1,218 @@
+<div class="container-fluid">
+
+    <div class="row d-flex justify-content-center mt-2" dir="rtl">
+      
+        <div class="slider col-md-2 offset-md-1 border border-gray rounded-4 px-4">
+          <div class="text-center mt-5 mb-5">
+            <button class="btn btn-custom custom-button disk btn-gradient" mat-raised-button color="primary" (click)="create()" style="min-height: 50px;">
+              <mat-icon>bar_chart</mat-icon> الاحصائيات
+            </button>
+          </div>
+      
+          <div class="text-center mt-5 mb-5">
+            <button class="btn btn-custom custom-button disk btn-gradient" mat-raised-button (click)="getAll()" style="min-height: 50px;">
+              <mat-icon>visibility</mat-icon> عرض المدرسين
+            </button>
+          </div>
+      
+          <div class="text-center mt-5 mb-5">
+            <button class="btn btn-custom custom-button disk btn-gradient" mat-raised-button  (click)="update()" style="min-height: 50px;">
+              <mat-icon>edit</mat-icon> طلب دخول مدرس 
+            </button>
+          </div>
+      
+          <div class="text-center mt-5 mb-5">
+            <button class="btn btn-custom custom-button disk btn-gradient" mat-raised-button  (click)="delete()" style="min-height: 50px;">
+              <mat-icon>delete</mat-icon> حذف كورس
+            </button>
+          </div>
+      
+          <div class="text-center mt-5 mb-5">
+            <button class="btn btn-custom custom-button disk btn-gradient" mat-raised-button  (click)="delete()" style="min-height: 50px;">
+              <mat-icon>delete</mat-icon> اختيار
+            </button>
+          </div>
+      
+        </div>
+      
+        <div class=" maincard col-md-9 border border-gray rounded-4 p-2 ">
+                    <div *ngIf="toCreate" class="card mt-4 custom-button disk btn-gradient" style="width: 18rem;">
+                        <div class="card-body">
+                            <div>
+                              <i class="fa-solid fa-school" style="font-size: 35px;"></i>
+                            </div>
+                         <div>
+                            <h6 class="card-subtitle mb-2 text-body-secondary mt-4" style="color: white !important;">عدد الطلاب</h6>
+                            <h3 class="card-text">500</h3>
+                         </div>
+                        </div>
+                      </div>
+    
+                      <div *ngIf="toCreate" class="card mt-4 custom-button disk btn-gradient" style="width: 18rem;">
+                        <div class="card-body">
+                            <div>
+                                <i class="fa-solid fa-person-chalkboard" style="font-size: 35px;"></i>
+                            </div>
+                         <div>
+                            <h6 class="card-subtitle mb-2 text-body-secondary mt-4" style="color: white !important;">عدد المدرسين</h6>
+                            <h3 class="card-text">20</h3>
+                         </div>
+                        </div>
+                      </div>
+    
+                      <div *ngIf="toCreate" class="card mt-4 custom-button disk btn-gradient" style="width: 18rem;">
+                        <div class="card-body">
+                            <div>
+                                <i class="fa-solid fa-book-open-reader" style="font-size: 35px;"></i>
+                            </div>
+                         <div>
+                            <h6 class="card-subtitle mb-2 text-body-secondary mt-4" style="color: white !important;">عدد الكورسات</h6>
+                            <h3 class="card-text">60</h3>
+                         </div>
+                        </div>
+                      </div>
+    
+                      <div *ngIf="toCreate" class="card mt-4 custom-button disk btn-gradient" style="width: 18rem;">
+                        <div class="card-body">
+                            <div>
+                               <i class="fa-solid fa-graduation-cap" style="font-size: 35px;"></i>
+                               <i class="fa-solid fa-1"></i>
+                            </div>
+                         <div>
+                            <h6 class="card-subtitle mb-2 text-body-secondary mt-4" style="color: white !important;">عدد طلبة الصف الاول الثانوي</h6>
+                            <h3 class="card-text">100</h3>
+                         </div>
+                        </div>
+                      </div>
+    
+                      <div *ngIf="toCreate" class="card mt-4 custom-button disk btn-gradient" style="width: 18rem;">
+                        <div class="card-body">
+                            <div>
+                               <i class="fa-solid fa-graduation-cap" style="font-size: 35px;"></i>
+                               <i class="fa-solid fa-2"></i>
+                            </div>
+                         <div>
+                            <h6 class="card-subtitle mb-2 text-body-secondary mt-4" style="color: white !important;">عدد طلبة الصف الثاني الثانوي</h6>
+                            <h3 class="card-text">120</h3>
+                         </div>
+                        </div>
+                      </div>
+                      <div *ngIf="toCreate" class="card mt-4 custom-button disk btn-gradient" style="width: 18rem;">
+                        <div class="card-body">
+                            <div>
+                               <i class="fa-solid fa-graduation-cap" style="font-size: 35px;"></i>
+                               <i class="fa-solid fa-3"></i>
+                            </div>
+                         <div>
+                            <h6 class="card-subtitle mb-2 text-body-secondary mt-4" style="color: white !important;">عدد طلبة الصف الثالث الثانوي</h6>
+                            <h3 class="card-text">280</h3>
+                         </div>
+                        </div>
+                      </div>
+                      <div *ngIf="toCreate" class="card mt-4 custom-button disk btn-gradient" style="width: 18rem;visibility:hidden;">
+                        <div class="card-body">
+                            <div>
+                               <i class="fa-solid fa-graduation-cap" style="font-size: 35px;"></i>
+                               <i class="fa-solid fa-3"></i>
+                            </div>
+                         <div>
+                            <h6 class="card-subtitle mb-2 text-body-secondary mt-4" style="color: white !important;">عدد طلبة الصف الثالث الثانوي</h6>
+                            <h3 class="card-text">280</h3>
+                         </div>
+                        </div>
+                      </div>
+    
+                      
+    
+                      
+                     
+                
+    
+               
+                
+    
+    <!-- //----get all -->
+          <div *ngIf="toGetAll" class="d-flex" style="height: 100%; flex-wrap: wrap;">
+    
+            <div class="mat-card-wrapper " #cardWrapper>
+              <mat-card class="example-card">
+                <div class="image-container">
+                  <img mat-card-image style="height: 405px;" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="Sample Image">
+                </div>
+                <div class="overlay"></div>
+                <div class="top-bottom-container">
+                  <p class="name">خلف الدهشوري</p>
+                  <p class="category mt-0">فيزياء</p>
+                </div>
+              </mat-card>
+            </div>
+            <div class="mat-card-wrapper" #cardWrapper>
+              <mat-card class="example-card">
+                <div class="image-container">
+                  <img mat-card-image style="height: 405px;" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="Sample Image">
+                </div>
+                <div class="overlay"></div>
+                <div class="top-bottom-container">
+                  <p class="name">   خضر كرويته</p>
+                  <p class="category mt-0">كمياء</p>
+                </div>
+              </mat-card>
+            </div>
+            <div class="mat-card-wrapper" #cardWrapper>
+              <mat-card class="example-card">
+                <div class="image-container">
+                  <img mat-card-image style="height: 405px;" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="Sample Image">
+                </div>
+                <div class="overlay"></div>
+                <div class="top-bottom-container">
+                  <p class="name">رمضان مبروك</p>
+                  <p class="category mt-0">رياضيات</p>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+        
+                <!-- cardADDEDTeaher---------------------------------------------------------------------------------- -->
+    
+              <div *ngFor="let pTeach of teacherPendingData" class="" style="height: 550px;"> 
+                <div  *ngIf="toUpdate" class="mat-card mt-3 " style="background-color: var(--bgHeader);width: 20rem;color: var(--title); box-shadow:0px 0px 10px gray; border-radius: 10px;height:480px;text-align: center;padding: 0px 5px;">
+                  <img style="width: 100%; max-height: 200px;border-radius: 12px;padding-top: 5px;" mat-card-image src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="...">
+                  <div class="mat-card-content">
+                    <h5 class="mat-card-title mt-2">{{pTeach.firstName}}</h5>
+                    <p style="min-height: 68px;" class="mat-card-subtitle">{{pTeach.aboutMe}}</p>
+                  </div>
+                  <ul class="mat-list-group" >
+                    <li class="mat-list-item" >{{pTeach.lastName}}</li>
+                    <li class="mat-list-item" >{{pTeach.email}}</li>
+                    <li class="mat-list-item">{{pTeach.phoneNumber}}</li>
+                  </ul>
+                  <div>
+                  <div class="mat-card-actions d-flex" style="justify-content: space-between;">
+                    <button type="button" (click)="Approve(pTeach.id)" class="btn btn-custom custom-button disk btn-gradient ms-3"><i class="fa-solid fa-person-walking-arrow-right"></i>قبول المدرس</button>
+                    <button type="button" (click)="Reject(pTeach.id)" class="btn btn-custom custom-button disk btn-gradient"><i class="fa-regular fa-comment"></i> اضافة تعليق</button>
+                  </div>
+                  <div class="mt-2 d-flex" style="justify-content: space-between;" *ngIf="addcomment">
+                    <input #InfoInp type="text" style="width: 250px;" >
+                    <button type="button" (click)="sendInfo(pTeach.id, InfoInp.value)" class="custom-button disk btn-gradient"><i class="fa-solid fa-paper-plane"></i>ارسال</button>
+                  </div>
+                  </div>
+                 </div>
+              </div>
+    
+                
+    
+                 
+    
+    
+           
+    
+          <div *ngIf="toDelete">
+            <P>Delete</P>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+      
+    
+    

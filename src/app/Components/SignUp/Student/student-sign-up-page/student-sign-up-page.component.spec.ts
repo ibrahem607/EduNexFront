@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StudentSignUpComponent } from './student-sign-up.component';
+import { StudentSignUpComponent } from './student-sign-up-page.component';
 
 describe('StudentSignUpComponent', () => {
   let component: StudentSignUpComponent;

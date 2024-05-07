@@ -71,7 +71,7 @@
             </div>
           </label>
 
-          <button mat-button routerLink="/login" class="disk" style="border-radius: 20rem;">
+          <button *ngIf="isLogin" mat-button routerLink="/login" class="disk" style="border-radius: 20rem;">
             <div class="flex">
               <i class="fa-regular fa-circle-user"></i>
               &#160;

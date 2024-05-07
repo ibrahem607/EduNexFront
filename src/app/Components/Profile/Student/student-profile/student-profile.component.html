@@ -1,8 +1,10 @@
-<section class="container flex gap-5 flex-lg-row flex-column align-items-start">
+<section class="container flex gap-5 flex-lg-row flex-column align-items-start" *ngIf="student">
   <div class="flex flex-column gap-3 navigation-container">
     <div class="d-flex flex-column justify-content-center header-section p-3">
-      <h5>محمد علاء</h5>
-      <h6>الصف الثالث الثانوي</h6>
+      <h5>{{ student.firstName }} {{ student.lastName }}</h5>
+      <h6 *ngIf="student.levelName === 'Level one'">الصف الأول الثانوي</h6>
+      <h6 *ngIf="student.levelName === 'Level two'">الصف الثاني الثانوي</h6>
+      <h6 *ngIf="student.levelName === 'Level three'">الصف الثالث الثانوي</h6>
     </div>
     <div class="navigation-section">
       <button mat-button *ngFor="let option of options; let i = index" class="form-button-1"
@@ -15,7 +17,7 @@
   </div>
   <div>
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 0">
-      <app-profile-home></app-profile-home>
+      <app-student-settings></app-student-settings>
     </div>
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 1">
       <app-student-course></app-student-course>
@@ -35,3 +37,7 @@
 
   </div>
 </section>
+
+<div *ngIf="!student" class="spinner flex justify-content-center">
+  <mat-spinner></mat-spinner>
+</div>

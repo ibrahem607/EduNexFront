@@ -20,5 +20,9 @@ export class AppComponent implements OnInit {
         this.loading = false;
       }
     });
+
+    // document.addEventListener('contextmenu', function (event) {
+    //   event.preventDefault();
+    // });
   }
 }

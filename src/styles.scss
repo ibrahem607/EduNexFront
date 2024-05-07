@@ -87,24 +87,6 @@ html {
 }
 
 
-@keyframes beating {
-  0% {
-    transform: scale(0.9);
-  }
-
-  50% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(0.9);
-  }
-}
-
-.beating-animation {
-  animation: beating 3s infinite;
-}
-
 //custom buttons
 .custom-button,
 custom-checkbox.checked {
@@ -198,6 +180,23 @@ custom-checkbox.checked {
   animation: slideFromRight 1s forwards;
 }
 
+@keyframes beating {
+  0% {
+    transform: scale(0.9);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+.beating-animation {
+  animation: beating 3s infinite;
+}
 
 ::-webkit-scrollbar {
   width: 0.6rem;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerChoices, IExamResult } from 'src/app/Model/iexam-result';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ExamService } from 'src/app/Services/Exam/exam.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class ExamResultComponent implements OnInit {
   result!: IExamResult;
   examId: number;
 
-  constructor(private examData: ExamService, private route: ActivatedRoute) {
+  constructor(private examData: ExamService, private route: ActivatedRoute, private studentData: AuthService) {
     this.examId = 0;
   }
 
@@ -24,7 +25,7 @@ export class ExamResultComponent implements OnInit {
   }
 
   getExamResult(examId: number) {
-    this.examData.getExamResult(examId, "4a653d27-1fa9-4820-9b60-1d54cf78ce76").subscribe(result => {
+    this.examData.getExamResult(examId, this.studentData.getUserId()).subscribe(result => {
       this.result = result;
       console.log(this.result);
     });
