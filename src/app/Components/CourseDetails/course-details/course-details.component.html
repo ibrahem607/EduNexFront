@@ -5,19 +5,18 @@
     <div class="container d-flex flex-wrap gap-3 justify-content-between">
       <div class="content-container flex-container">
         <!-- Custom checkbox container -->
-        <div class="custom-checkbox-container flex-grow">
-          <div class="custom-checkbox-container flex flex-wrap gap-2 my-3">
-            <button mat-button *ngFor="let opt of options; let i = index" class="custom-checkbox"
-              [class.checked]="opt.selected" (click)="toggleOption(i)">
-              <span>{{ opt.label }}</span>
-            </button>
-          </div>
+        <div class="custom-checkbox-container flex flex-wrap gap-2 my-3"
+          [ngClass]="(role === 'Teacher' ? 'teacherCheckbox' : '')">
+          <button mat-button *ngFor="let opt of options; let i = index" class="custom-checkbox"
+            [class.checked]="opt.selected" (click)="toggleOption(i)">
+            <span>{{ opt.label }}</span>
+          </button>
         </div>
 
         <div class="course d-flex flex-column gap-2" *ngIf="options[0].selected">
           <div class="flex gap-1 mb-2">
             <h3 class="m-0" style="font-weight: 700;">محتوي الكورس</h3>
-            <button mat-icon-button *ngIf="isTeacher()"
+            <button mat-icon-button *ngIf="role === 'Teacher'"
               (click)="openLessonDialog()"><mat-icon>note_add</mat-icon></button>
           </div>
 
@@ -29,13 +28,15 @@
                     <div class="flex gap-3">
                       <span class="title">{{lecture.lectureTitle}}</span>
 
-                      <button mat-icon-button *ngIf="isTeacher()" [matMenuTriggerFor]="menu" class="width-50 m-0">
+                      <button mat-icon-button *ngIf="role === 'Teacher'" [matMenuTriggerFor]="menu"
+                        class="width-50 m-0">
                         <mat-icon>add_circle</mat-icon>
                       </button>
                     </div>
 
                     <button mat-menu-item [routerLink]="['/course', course.id, 'lesson', lecture.id, 'view']"
-                      [queryParams]="{ examId: lecture.preExam }" *ngIf="lecture.preExam"
+                      [queryParams]="{ examId: lecture.preExam }"
+                      *ngIf="lecture.preExam && role === 'Student'"
                       class="flex px-2 mx-2 my-0 exam-button">
                       <i class="fas fa-clipboard-list"></i>
                       امتحان
@@ -73,12 +74,12 @@
                     </button>
 
                     <div class="flex">
-                      <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button"
+                      <button mat-icon-button *ngIf="role === 'Teacher'" class="width-50 m-0 custom-icon-button"
                         style="color: red;" (click)="openDeleteContentConfirmationDialog(lecture.id, content)">
                         <mat-icon>delete</mat-icon>
                       </button>
 
-                      <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button"
+                      <button mat-icon-button *ngIf="role === 'Teacher'" class="width-50 m-0 custom-icon-button"
                         style="color: green;" (click)="editContentDialog(lecture.id, content)">
                         <mat-icon>edit</mat-icon>
                       </button>
@@ -88,12 +89,12 @@
               </ng-container>
 
             </mat-expansion-panel>
-            <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button" style="color: red;"
-              (click)="openDeleteLectureConfirmationDialog(lecture.id)">
+            <button mat-icon-button *ngIf="role === 'Teacher'" class="width-50 m-0 custom-icon-button"
+              style="color: red;" (click)="openDeleteLectureConfirmationDialog(lecture.id)">
               <mat-icon>delete</mat-icon>
             </button>
-            <button mat-icon-button *ngIf="isTeacher()" class="width-50 m-0 custom-icon-button" style="color: green;"
-              (click)="editLessonDialog(lecture.id, lecture.lectureTitle ,lecture.price)">
+            <button mat-icon-button *ngIf="role === 'Teacher'" class="width-50 m-0 custom-icon-button"
+              style="color: green;" (click)="editLessonDialog(lecture.id, lecture.lectureTitle ,lecture.price)">
               <mat-icon>edit</mat-icon>
             </button>
           </mat-accordion>

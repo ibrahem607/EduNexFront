@@ -83,8 +83,8 @@ export class TimerComponent implements OnInit, OnDestroy, OnChanges {
     const examId = this.route.snapshot.queryParamMap.get('examId');
 
     const expectedRoute = `/course/${courseId}/lesson/${lessonId}/view`;
-    console.log(expectedRoute)
-    console.log(routeUrl)
+    // console.log(expectedRoute)
+    // console.log(routeUrl)
     if (
       routeUrl === expectedRoute &&
       courseId &&

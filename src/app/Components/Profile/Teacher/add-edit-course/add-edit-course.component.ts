@@ -52,6 +52,9 @@ export class AddEditCourseComponent implements OnInit {
           console.log('Course added:', newCourse);
         },
         (error: any) => {
+          if (error.status == 200) {
+            window.location.reload();
+          }
           console.error('Error adding course:', error);
         }
       );
@@ -65,6 +68,9 @@ export class AddEditCourseComponent implements OnInit {
             console.log('Course updated successfully');
           },
           (error: any) => {
+            if (error.status == 200) {
+              window.location.reload();
+            }
             console.error('Error updating course:', error);
           }
         );

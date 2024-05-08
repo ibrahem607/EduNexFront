@@ -47,6 +47,9 @@ export class LessonDialogComponent {
           window.location.reload();
         },
         (error) => {
+          if (error.status == 200) {
+            window.location.reload();
+          }
           console.error(`Failed to update lecture with ID ${lectureId} in course ${courseId}:`, error);
         }
       );
@@ -64,6 +67,9 @@ export class LessonDialogComponent {
           window.location.reload();
         },
         (error) => {
+          if (error.status == 200) {
+            window.location.reload();
+          }
           console.error(`Failed to add new lecture to course ${courseId}:`, error);
         }
       );

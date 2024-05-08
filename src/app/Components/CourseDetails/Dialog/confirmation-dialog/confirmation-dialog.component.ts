@@ -49,7 +49,6 @@ export class ConfirmationDialogComponent {
         window.location.reload();
       },
       (error) => {
-        console.log(error.status)
         if (error.status == 200) {
           window.location.reload();
         }
@@ -70,6 +69,9 @@ export class ConfirmationDialogComponent {
         window.location.reload();
       },
       (error) => {
+        if (error.status == 200) {
+          window.location.reload();
+        }
         console.error(`Failed to remove lesson content with ID ${contentId}:`, error);
       }
     );
@@ -84,6 +86,9 @@ export class ConfirmationDialogComponent {
         window.location.reload();
       },
       (error) => {
+        if (error.status == 200) {
+          window.location.reload();
+        }
         console.error(`Failed to delete lesson with ID ${courseId} and its content:`, error);
       }
     );

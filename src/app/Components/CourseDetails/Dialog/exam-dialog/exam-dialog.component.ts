@@ -116,6 +116,9 @@ export class ExamDialogComponent {
         });
       },
       (error) => {
+        if (error.status == 200) {
+          window.location.reload();
+        }
         console.error('Error occurred while creating exam:', error);
 
       }

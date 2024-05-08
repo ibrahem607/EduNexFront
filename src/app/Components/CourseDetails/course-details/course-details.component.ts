@@ -7,6 +7,9 @@ import { ContentDialogComponent } from '../Dialog/content-dialog/content-dialog.
 import { ConfirmationDialogComponent } from '../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { ExamDialogComponent } from '../Dialog/exam-dialog/exam-dialog.component';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { ExamService } from 'src/app/Services/Exam/exam.service';
+import { durationCalculation } from '../../Exam/Student/student-exam/student-exam.component';
 
 @Component({
   selector: 'app-course-details',
@@ -29,13 +32,20 @@ export class CourseDetailsComponent implements OnInit {
     { label: 'عن المعلم', selected: false },
   ];
 
-  constructor(private activatedRoute: ActivatedRoute, private courseData: CoursesService, public dialog: MatDialog, private router: Router) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private courseData: CoursesService,
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private router: Router
+  ) {
     this.courseID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-    this.role = 'teacher';
   }
 
   ngOnInit(): void {
     this.getCourseById();
+    this.role = this.authService.getUserRole();
+    // this.userId = this.authService.getUserId();
   }
 
   getCourseById() {
@@ -57,10 +67,6 @@ export class CourseDetailsComponent implements OnInit {
     });
   }
 
-  isTeacher(): boolean {
-    return this.role === 'teacher';
-  }
-
   toggleOption(index: number) {
     this.options.forEach((option, i) => {
       option.selected = i === index;
@@ -75,7 +81,7 @@ export class CourseDetailsComponent implements OnInit {
       panelClass: 'dialog-container',
       autoFocus: false,
       data: {
-        header:'اضافه حصة',
+        header: 'اضافه حصة',
         confirmButtonText: 'أضف الحصة',
         courseId: this.course?.id,
         name: this.course?.teacherName,
@@ -90,7 +96,7 @@ export class CourseDetailsComponent implements OnInit {
       panelClass: 'dialog-container',
       autoFocus: false,
       data: {
-        header:'تعديل الحصة',
+        header: 'تعديل الحصة',
         confirmButtonText: 'تعديل الأسم',
         courseId: this.course?.id,
         name: this.course?.teacherName,

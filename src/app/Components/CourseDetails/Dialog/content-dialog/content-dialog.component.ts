@@ -53,6 +53,9 @@ export class ContentDialogComponent {
           window.location.reload();
         },
         (error) => {
+          if (error.status == 200) {
+            window.location.reload();
+          }
           console.error(`Failed to update attachment with ID ${contentId}:`, error);
         }
       );
@@ -63,6 +66,9 @@ export class ContentDialogComponent {
           window.location.reload();
         },
         (error) => {
+          if (error.status == 200) {
+            window.location.reload();
+          }
           console.error(`Failed to update video with ID ${contentId}:`, error);
         }
       );
@@ -104,6 +110,9 @@ export class ContentDialogComponent {
         window.location.reload();
       },
       (error: any) => {
+        if (error.status == 200) {
+          window.location.reload();
+        }
         console.error(`Failed to add new ${this.data.contentType}:`, error);
       }
     );

@@ -71,7 +71,9 @@ export class StudentExamComponent implements OnInit {
         this.getExamById(this.examId);
       },
       (error) => {
-        console.error('Error occurred while starting exam:', error);
+        if (error.status !== 200) {
+          console.error('Error occurred while starting exam:', error);
+        }
       }
     );
   }
@@ -88,8 +90,8 @@ export class StudentExamComponent implements OnInit {
   getStartData(id: number, student: any) {
     this.examData.getDurationExam(id, student).subscribe(startData => {
       this.startData = startData;
-      console.log(startData)
-      this.duration = this.exam.duration - this.durationCalculation();
+      // console.log(startData)
+      this.duration = this.exam.duration - durationCalculation(this.startData.startTime);
     });
   }
 
@@ -97,17 +99,6 @@ export class StudentExamComponent implements OnInit {
     this.lectureData.getLectureById(this.courseId, id, this.userId).subscribe(lecture => {
       this.lecture = lecture;
     });
-  }
-
-  durationCalculation() {
-    const currentDateTime = new Date();
-    const startDateTimeString = this.startData.startTime;
-
-    const startDateTime = new Date(startDateTimeString);
-
-    const timeDifferenceInMills = currentDateTime.getTime() - startDateTime.getTime();
-
-    return Math.floor(timeDifferenceInMills / (1000 * 60));
   }
 
   buildFormControls() {
@@ -243,7 +234,9 @@ export class StudentExamComponent implements OnInit {
         console.log('Exam submitted successfully:', response);
       },
       (error) => {
-        console.error('Error occurred while submitting exam:', error);
+        if (error.status !== 200) {
+          console.error('Error occurred while submitting exam:', error);
+        }
       }
     );
 
@@ -253,4 +246,15 @@ export class StudentExamComponent implements OnInit {
     };
     this.router.navigate(['/course', this.courseId, 'lesson', this.lectureId, 'result'], navigationExtras);
   }
+}
+
+export const durationCalculation = (startTime: number): number => {
+  const currentDateTime = new Date();
+  const startDateTimeString = startTime;
+
+  const startDateTime = new Date(startDateTimeString);
+
+  const timeDifferenceInMills = currentDateTime.getTime() - startDateTime.getTime();
+
+  return Math.floor(timeDifferenceInMills / (1000 * 60));
 }
