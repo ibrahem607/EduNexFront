@@ -1,5 +1,6 @@
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AttachmentsService } from 'src/app/Services/Attachments/attachments.service';
 import { VideosService } from 'src/app/Services/Videos/videos.service';
 
@@ -19,7 +20,8 @@ export class ContentDialogComponent {
     public dialogRef: MatDialogRef<ContentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private attachmentData: AttachmentsService,
-    private videoData: VideosService
+    private videoData: VideosService,
+    private router: Router,
   ) { }
 
   onNoClick(): void {
@@ -50,11 +52,11 @@ export class ContentDialogComponent {
       this.attachmentData.editAttachment(this.data.courseId, lectureId, updatedContent, contentId).subscribe(
         () => {
           console.log(`Attachment with ID ${contentId} updated successfully`);
-          window.location.reload();
+          this.reloadCurrentRoute();
         },
         (error) => {
           if (error.status == 200) {
-            window.location.reload();
+            this.reloadCurrentRoute();
           }
           console.error(`Failed to update attachment with ID ${contentId}:`, error);
         }
@@ -63,11 +65,11 @@ export class ContentDialogComponent {
       this.videoData.editVideo(this.data.courseId, lectureId, updatedContent, contentId).subscribe(
         () => {
           console.log(`Video with ID ${contentId} updated successfully`);
-          window.location.reload();
+          this.reloadCurrentRoute();
         },
         (error) => {
           if (error.status == 200) {
-            window.location.reload();
+            this.reloadCurrentRoute();
           }
           console.error(`Failed to update video with ID ${contentId}:`, error);
         }
@@ -107,14 +109,21 @@ export class ContentDialogComponent {
     addMethod(this.data.courseId, lectureId, formData).subscribe(
       () => {
         console.log(`New ${this.data.contentType} added successfully`);
-        window.location.reload();
+        this.reloadCurrentRoute();
       },
       (error: any) => {
         if (error.status == 200) {
-          window.location.reload();
+          this.reloadCurrentRoute();
         }
         console.error(`Failed to add new ${this.data.contentType}:`, error);
       }
     );
+  }
+
+  reloadCurrentRoute(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

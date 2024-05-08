@@ -19,9 +19,9 @@ import { CoursesService } from 'src/app/Services/Courses/courses.service';
 export class RecentCoursesComponent implements OnInit {
   courses: ICourse[] = [];
   filteredCourses: ICourse[] = [];
-  subjectName: string[] = [];
+  courseType: string[] = [];
 
-  options: { subjectName: string; selected: boolean; }[] = [];
+  options: { courseType: string; selected: boolean; }[] = [];
 
   currentIndex = 0;
   cardsToShow = 18;
@@ -40,8 +40,8 @@ export class RecentCoursesComponent implements OnInit {
     const selectedOption = this.options.find(option => option.selected);
 
     if (selectedOption) {
-      const selectedSubjectName = selectedOption.subjectName;
-      this.filteredCourses = this.courses.filter(course => course.subjectName === selectedSubjectName);
+      const selectedCourseType = selectedOption.courseType;
+      this.filteredCourses = this.courses.filter(course => course.courseType === selectedCourseType);
     }
   }
 
@@ -56,8 +56,8 @@ export class RecentCoursesComponent implements OnInit {
     this.getAll();
 
     this.courseData.getAllCourses().subscribe(courses => {
-      this.subjectName = [...new Set(courses.map(course => course.subjectName))];
-      this.options = this.subjectName.map((subject, index) => ({ subjectName: subject, selected: index === 0 }));
+      this.courseType = [...new Set(courses.map(course => course.courseType))];
+      this.options = this.courseType.map((subject, index) => ({ courseType: subject, selected: index === 0 }));
 
       this.toggleOption(0);
     });

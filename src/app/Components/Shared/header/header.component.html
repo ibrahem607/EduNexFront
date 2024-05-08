@@ -19,7 +19,7 @@
       <button mat-button routerLink="/Parent" routerLinkActive="active">ولي الأمر</button>
     </div>
     <hr>
-    <div *ngIf="isLogin" class="flex gap-2">
+    <div *ngIf="userData" class="flex gap-2">
       <button mat-button routerLink="/login" style="border-radius: 20rem;">
         <div class="flex">
           <i class="fa-regular fa-circle-user"></i>
@@ -71,7 +71,7 @@
             </div>
           </label>
 
-          <button *ngIf="isLogin" mat-button routerLink="/login" class="disk" style="border-radius: 20rem;">
+          <button *ngIf="!userData" mat-button routerLink="/login" class="disk" style="border-radius: 20rem;">
             <div class="flex">
               <i class="fa-regular fa-circle-user"></i>
               &#160;
@@ -79,7 +79,7 @@
             </div>
           </button>
 
-          <button *ngIf="isLogin" mat-button routerLink="/signup" class="custom-button disk btn-gradient">طالب
+          <button *ngIf="!userData" mat-button routerLink="/signup" class="custom-button disk btn-gradient">طالب
             جديد</button>
 
           <button mat-icon-button aria-label="Toggle Right Sidebar" class="menu-btn toggle-btn"
@@ -87,7 +87,7 @@
             <mat-icon>menu</mat-icon>
           </button>
 
-          <div *ngIf="!isLogin" class="nav-item dropdown" matDropdown>
+          <div *ngIf="userData" class="nav-item dropdown" matDropdown>
             <button class="nav-link dropdown-toggle rounded-5س" [matMenuTriggerFor]="menu">
               <img src="https://via.placeholder.com/40" alt="profile" class="rounded-5 profile" width="40" height="40">
               {{userData.firstName}} {{userData.lastName}}
@@ -99,7 +99,7 @@
                 <i class="fa-regular fa-circle-user px-2"></i>
                 الملف الشخصي
               </button>
-              <button mat-menu-item class="text-danger" style="direction: rtl;">
+              <button mat-menu-item class="text-danger" style="direction: rtl;" (click)="openSignOutDialog()">
                 <i class="fa fa-sign-out-alt px-2"></i>
                 تسجيل الخروج
               </button>

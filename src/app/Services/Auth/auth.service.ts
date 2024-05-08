@@ -23,13 +23,13 @@ export class AuthService {
   currentUserId: string = 'UserId';
   currentUserRole: string = 'UserRole';
   IsLogin: any = new BehaviorSubject(null);
+  IsUser!: boolean;
 
   constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     if (localStorage.getItem(this.tokenKey) !== null) {
       this.saveCurrentUserId()
     }
   }
-
 
   signUp(data: IUserUpdateFormData): Observable<any> {
     return this.httpClient.post(`${this.baseUrl}/api/Student/register/student`, data).pipe(
@@ -38,12 +38,11 @@ export class AuthService {
         return response;
       }),
       catchError(error => {
-        // If an error occurs, handle it here
-        // You can log the error or perform any other error handling tasks
         console.error('Error during sign up:', error);
         this.snackBar.open(`${error.error.Email[0]}`, 'Close', {
-          duration: 5000,
-          verticalPosition: 'bottom',
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
         });
 
         // Return an observable that emits the error
@@ -59,15 +58,15 @@ export class AuthService {
         if (response && response.token) {
           // Save token
 
-
           localStorage.setItem(this.tokenKey, response.token);
           this.saveCurrentUserId()
 
           this.snackBar.open('  تم تسجيل الدخول بنجاح ', 'Close', {
             duration: 2000,
             verticalPosition: 'top',
-            panelClass: ['green-snackbar']
+            panelClass: 'snackbar-success'
           });
+
           if (localStorage.getItem(this.currentUserRole) == "Teacher") {
             if (response.message == "pending" || response.message == ("Rejected")) {
               this.router.navigate(['/teacherprofile']);
@@ -86,8 +85,9 @@ export class AuthService {
       catchError(error => {
 
         this.snackBar.open(`خطأ في عنوان البريد او كلمة السر`, 'Close', {
-          duration: 5000,
+          duration: 2000,
           verticalPosition: 'top',
+          horizontalPosition: 'center',
           panelClass: ['custom-snackbar'],
         });
 
@@ -106,14 +106,14 @@ export class AuthService {
       catchError(error => {
         console.error('Error during sign up:', error);
         this.snackBar.open(`${error.error.Email[0]}`, 'Close', {
-          duration: 5000,
-          verticalPosition: 'bottom',
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
         });
         return throwError(error);
       })
     );
   }
-
 
   getStudentData(id: any): Observable<any> {
     return this.httpClient.get(`${this.baseUrl}/api/Student/GetStudentById/${id}`)
@@ -160,5 +160,9 @@ export class AuthService {
     } else {
       console.log('No token found.');
     }
+  }
+
+  logOut(): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseUrl}/api/Auth/logout`, null);
   }
 }

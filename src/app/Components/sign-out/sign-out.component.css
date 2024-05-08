@@ -1,0 +1,5 @@
+::ng-deep .mat-mdc-dialog-surface {
+  background-color: var(--bg) !important;
+  box-shadow: var(--border) 0px 0px 0px 1px !important;
+  border-radius: 10px !important;
+}

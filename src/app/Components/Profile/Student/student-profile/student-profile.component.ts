@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SignOutComponent } from '../../sign-out/sign-out.component';
+import { SignOutComponent } from '../../../sign-out/sign-out.component';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 
@@ -33,7 +33,7 @@ export class StudentProfileComponent implements OnInit {
     { label: 'تسجيل الخروج', icon: 'sign-out-alt', selected: false }
   ];
 
-  constructor(private dialog: MatDialog, private studentData: AuthService) { }
+  constructor(private dialog: MatDialog, private studentData: AuthService, private authService: AuthService) { }
 
   ngOnInit() {
     this.getStudentData(this.studentData.getUserId());
@@ -71,5 +71,12 @@ export class StudentProfileComponent implements OnInit {
       if (result === 'logout') {
       }
     });
+  }
+
+  logOut(): any {
+    this.authService.removeToken();
+    this.authService.removeUserId();
+    this.authService.removeUserRole();
+    this.authService.logOut();
   }
 }

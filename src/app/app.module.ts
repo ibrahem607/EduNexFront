@@ -74,9 +74,9 @@ import { StudentProfileComponent } from './Components/Profile/Student/student-pr
 import { StudentCourseComponent } from './Components/Profile/Student/student-course/student-course.component';
 import { ProfileBudgetComponent } from './Components/Profile/Student/profile-budget/profile-budget.component';
 import { StudentShippingCodesComponent } from './Components/Profile/Student/student-shipping-codes/student-shipping-codes.component';
-import { ChangePasswordComponent } from './Components/Profile/Student/change-password/change-password.component';
+import { ChangePasswordComponent } from './Components/Profile/change-password/change-password.component';
 import { StudentSettingsComponent } from './Components/Profile/Student/student-settings/student-settings.component';
-import { SignOutComponent } from './Components/Profile/sign-out/sign-out.component';
+import { SignOutComponent } from './Components/sign-out/sign-out.component';
 import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
 import { TeacherProfileComponent } from './Components/Profile/Teacher/teacher-profile/teacher-profile.component';
 import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
@@ -102,6 +102,8 @@ import { ImageUploaderComponent } from './Components/Shared/image-uploader/image
 import { PendingProfileComponent } from './Components/Profile/Teacher/pending-profile/pending-profile.component';
 import { StudentSignUpFormComponent } from './Components/SignUp/Student/student-sign-up-form/student-sign-up-form.component';
 import { TeacherSignUpFormComponent } from './Components/SignUp/Teacher/teacher-sign-up-form/teacher-sign-up-form.component';
+import { StudentSettingsFormComponent } from './Components/Profile/Student/student-settings-form/student-settings-form.component';
+import { TeacherSettingsFormComponent } from './Components/Profile/Teacher/teacher-settings-form/teacher-settings-form.component';
 
 @NgModule({
   declarations: [
@@ -164,7 +166,9 @@ import { TeacherSignUpFormComponent } from './Components/SignUp/Teacher/teacher-
     ImageUploaderComponent,
     TeacherSignUpPageComponent,
     StudentSignUpFormComponent,
-    TeacherSignUpFormComponent
+    TeacherSignUpFormComponent,
+    StudentSettingsFormComponent,
+    TeacherSettingsFormComponent
   ],
   imports: [
     BrowserModule,

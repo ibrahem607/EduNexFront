@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -11,8 +11,7 @@ import { passwordMatched } from 'src/app/Validator/CrossfiledValidation';
   templateUrl: './student-sign-up-form.component.html',
   styleUrls: ['./student-sign-up-form.component.css']
 })
-export class StudentSignUpFormComponent implements OnInit, OnChanges {
-  @Input() student: any = null;
+export class StudentSignUpFormComponent implements OnInit {
   isInputFocused: boolean = false;
   signupForm!: FormGroup;
   errorMeg: string = '';
@@ -39,13 +38,6 @@ export class StudentSignUpFormComponent implements OnInit, OnChanges {
     }, { validators: passwordMatched });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['student'] && changes['student'].currentValue) {
-      console.log(this.student);
-      this.setFormValues(changes['student'].currentValue);
-    }
-  }
-
   get password() {
     return this.signupForm.get('password')
   }
@@ -57,6 +49,7 @@ export class StudentSignUpFormComponent implements OnInit, OnChanges {
   get fullName() {
     return this.signupForm.get('fullName')
   }
+
   get lastName() {
     return this.signupForm.get('lastName')
   }
@@ -79,6 +72,7 @@ export class StudentSignUpFormComponent implements OnInit, OnChanges {
   get sex() {
     return this.signupForm.get('sex')
   }
+
   get education() {
     return this.signupForm.get('education')
   }
@@ -94,6 +88,7 @@ export class StudentSignUpFormComponent implements OnInit, OnChanges {
   get confirmPassword() {
     return this.signupForm.get('confirmPassword')
   }
+
   get rebot() {
     return this.signupForm.get('rebot')
   }
@@ -114,25 +109,6 @@ export class StudentSignUpFormComponent implements OnInit, OnChanges {
     }
 
     return null;
-  }
-
-  setFormValues(student: any) {
-    this.signupForm.patchValue({
-      fullName: `${student.firstName} ${student.lastName}`,
-      studentEmail: student.email,
-      studentPhoneNumber: student.s,
-      fatherPhoneNumber: student.parentPhoneNumber,
-      religion: student.religion,
-      birthday: new Date(student.birthday),
-      sex: student.gender,
-      governorate: student.governorate,
-      education: student.levelName,
-      address: student.address,
-      password: '',
-      confirmPassword: '',
-      rebot: false,
-      rebot2: false
-    });
   }
 
   onSubmit() {
@@ -165,8 +141,10 @@ export class StudentSignUpFormComponent implements OnInit, OnChanges {
               //go to login
               this.router.navigate(['/login'])
               this._snackBar.open('تم انشاء الحساب بنجاح', 'Close', {
-                duration: 5000,
+                duration: 2000,
                 verticalPosition: 'top',
+                horizontalPosition: 'center',
+                panelClass: 'snackbar-success'
               });
             }
           },
@@ -180,7 +158,6 @@ export class StudentSignUpFormComponent implements OnInit, OnChanges {
       Object.keys(this.signupForm.controls).forEach(controlName => {
         this.signupForm.get(controlName)?.markAsTouched();
       });
-
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SignOutComponent } from '../../sign-out/sign-out.component';
+import { SignOutComponent } from '../../../sign-out/sign-out.component';
 import { trigger, style, transition, animate } from '@angular/animations';
 @Component({
   selector: 'app-teacher-profile',

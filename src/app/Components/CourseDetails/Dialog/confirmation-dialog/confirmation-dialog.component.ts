@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AttachmentsService } from 'src/app/Services/Attachments/attachments.service';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
@@ -21,7 +22,8 @@ export class ConfirmationDialogComponent {
     private courseData: CoursesService,
     private attachmentData: AttachmentsService,
     private videoData: VideosService,
-    private userData: AuthService
+    private userData: AuthService,
+    private router: Router,
   ) {
     this.userId = this.userData.getUserId();
   }
@@ -46,14 +48,13 @@ export class ConfirmationDialogComponent {
     this.lectureData.deleteLectureById(courseId, lectureId, this.userId).subscribe(
       () => {
         console.log(`Lesson with ID ${lectureId} and its content deleted successfully`);
-        window.location.reload();
+        this.reloadCurrentRoute();
       },
       (error) => {
         if (error.status == 200) {
-          window.location.reload();
+          this.reloadCurrentRoute();
         }
         console.error(`Failed to delete lesson with ID ${lectureId} and its content:`, error);
-
       }
     );
     this.dialogRef.close(false);
@@ -66,11 +67,11 @@ export class ConfirmationDialogComponent {
     methodToDelete.call(this.videoData || this.attachmentData, courseId, lectureId, contentId).subscribe(
       () => {
         console.log(`Lesson content with ID ${contentId} removed successfully`);
-        window.location.reload();
+        this.reloadCurrentRoute();
       },
       (error) => {
         if (error.status == 200) {
-          window.location.reload();
+          this.reloadCurrentRoute();
         }
         console.error(`Failed to remove lesson content with ID ${contentId}:`, error);
       }
@@ -83,15 +84,22 @@ export class ConfirmationDialogComponent {
     this.courseData.deleteCourseById(courseId).subscribe(
       () => {
         console.log(`Lesson with ID ${courseId} and its content deleted successfully`);
-        window.location.reload();
+        this.reloadCurrentRoute();
       },
       (error) => {
         if (error.status == 200) {
-          window.location.reload();
+          this.reloadCurrentRoute();
         }
         console.error(`Failed to delete lesson with ID ${courseId} and its content:`, error);
       }
     );
     this.dialogRef.close(false);
+  }
+
+  reloadCurrentRoute(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

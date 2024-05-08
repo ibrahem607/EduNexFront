@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 
@@ -7,23 +7,11 @@ import { AuthService } from 'src/app/Services/Auth/auth.service';
   templateUrl: './student-settings.component.html',
   styleUrls: ['./student-settings.component.css']
 })
-export class StudentSettingsComponent implements OnInit {
+export class StudentSettingsComponent {
   isInputFocused: boolean = false;
   signupForm!: FormGroup;
-  student!: any;
 
   constructor(private studentData: AuthService) { }
-
-  ngOnInit() {
-    this.getStudentData(this.studentData.getUserId());
-  }
-
-  getStudentData(studentId: string) {
-    this.studentData.getStudentData(studentId).subscribe(student => {
-      this.student = student;
-      console.log(student);
-    });
-  }
 
   onSubmit() {
     if (this.signupForm.valid) {

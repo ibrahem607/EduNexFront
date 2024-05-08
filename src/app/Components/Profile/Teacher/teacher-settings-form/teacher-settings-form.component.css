@@ -1,15 +1,9 @@
-section.container > div {
-  border-radius: 10px;
-  box-shadow: var(--border) 0px 1px 3px 0px, var(--border) 0px 0px 0px 1px;
-  background-color: var(--bg);
+.form-floating{
+  max-width: 744px;
 }
 
 label {
   font-size: 18px;
-}
-
-mat-form-field mat-label {
-  color: var(--bgHeader);
 }
 
 button {
@@ -22,8 +16,13 @@ button {
 p {
   margin: 0 !important;
 }
+
 p a:hover {
   text-decoration: underline !important;
+}
+
+mat-form-field{
+  width: 100%;
 }
 
 /* Change the border color */
@@ -38,6 +37,10 @@ p a:hover {
   .mdc-notched-outline__trailing {
   border-color: var(--bgHeader) !important;
   transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
 }
 
 /* Change the border width */
@@ -97,15 +100,30 @@ p a:hover {
   border-color: var(--wave2) !important;
 }
 
+::ng-deep
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled)
+  .mdc-list-item__primary-text,
+::ng-deep .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after {
+  color: var(--wave3) !important;
+}
+
+mat-form-field mat-label {
+  color: var(--bgHeader);
+}
+
+mat-error {
+  color: red !important;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  background-color: var(--bg) !important;
+  box-shadow: var(--border) 0px 0px 0px 1px !important;
+}
+
 ::ng-deep .mdc-snackbar__surface,
 ::ng-deep .mat-mdc-snack-bar-label {
   background-color: brown !important;
   border-radius: 10px !important;
-}
-
-::ng-deep .snackbar-success .mdc-snackbar__surface,
-::ng-deep .snackbar-success .mat-mdc-snack-bar-label {
-  background-color: green !important;
 }
 
 ::ng-deep .mat-mdc-snack-bar-actions .mdc-button__label,

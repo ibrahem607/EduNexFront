@@ -12,9 +12,9 @@ import { ITeacherAuth } from 'src/app/Model/iteacherAuth';
   styleUrls: ['./teacher-sign-up-form.component.css']
 })
 export class TeacherSignUpFormComponent {
-  @Input() teacher?: any = null;
   isInputFocused: boolean = false;
   signupForm!: FormGroup;
+  errorMeg: string = '';
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private _snackBar: MatSnackBar) { }
 
@@ -53,9 +53,11 @@ export class TeacherSignUpFormComponent {
   get teacherEmail() {
     return this.signupForm.get('teacherEmail')
   }
+
   get fullName() {
     return this.signupForm.get('fullName')
   }
+
   get teacherPhoneNumber() {
     return this.signupForm.get('teacherPhoneNumber')
   }
@@ -63,9 +65,11 @@ export class TeacherSignUpFormComponent {
   get FacebookAccount() {
     return this.signupForm.get('FacebookAccount')
   }
+
   get birthday() {
     return this.signupForm.get('birthday')
   }
+
   get sex() {
     return this.signupForm.get('sex')
   }
@@ -73,6 +77,7 @@ export class TeacherSignUpFormComponent {
   get governorate() {
     return this.signupForm.get('governorate')
   }
+
   get address() {
     return this.signupForm.get('address')
   }
@@ -85,8 +90,6 @@ export class TeacherSignUpFormComponent {
     return this.signupForm.get('lastName')
   }
 
-
-  errorMeg: string = '';
   onSubmit() {
     this.authService.removeToken();
     if (this.signupForm.valid) {
@@ -99,7 +102,8 @@ export class TeacherSignUpFormComponent {
         facebookAccount: this.signupForm.value.FacebookAccount,
         dateOfBirth: this.signupForm.value.birthday,
         gender: this.signupForm.value.sex,
-        address: this.signupForm.value.governorate,
+        address: this.signupForm.value.address,
+        city: this.signupForm.value.governorate,
         nationalId: "Not in form",
         password: this.signupForm.value.password,
         confirmPassword: this.signupForm.value.confirmPassword,
@@ -113,8 +117,10 @@ export class TeacherSignUpFormComponent {
             // Go to login
             this.router.navigate(['/login']);
             this._snackBar.open('تم انشاء الحساب بنجاح', 'Close', {
-              duration: 5000,
+              duration: 2000,
               verticalPosition: 'top',
+              horizontalPosition: 'center',
+              panelClass: 'snackbar-success'
             });
           }
         },

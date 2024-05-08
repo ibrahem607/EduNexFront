@@ -10,4 +10,5 @@ export interface ITeacherAuth {
   nationalId: string;
   password: string;
   confirmPassword: string;
+  city:string;
 }

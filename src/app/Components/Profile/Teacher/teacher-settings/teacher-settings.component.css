@@ -4,14 +4,8 @@
   background-color: var(--bg);
 }
 
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
   .form-container {
     margin-top: calc(100px + 1rem);
   }
-}
-
-@media (min-width: 1300px) {
-  .form-container {
-    width: 70%;
-  }
-}
+} */

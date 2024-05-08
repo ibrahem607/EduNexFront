@@ -6,7 +6,7 @@
     <div class="custom-checkbox-container flex gap-3 my-3  flex-wrap">
       <button mat-button *ngFor="let option of options; let i = index" class="custom-checkbox"
         [class.checked]="option.selected" (click)="toggleOption(i)">
-        <span>{{ option.subjectName }}</span>
+        <span>{{ option.courseType}}</span>
       </button>
     </div>
   </div>

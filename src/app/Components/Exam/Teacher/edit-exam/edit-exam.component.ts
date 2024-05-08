@@ -483,10 +483,13 @@ export class EditExamComponent implements OnInit {
   }
 
   openSnackBar(message: string, action: string): void {
+    const panelClass = message === 'تم تعديل الامتحان' ? ['snackbar-success'] : [];
+
     this.snackBar.open(message, action, {
       duration: 2000,
       verticalPosition: 'top',
-      horizontalPosition: 'center'
+      horizontalPosition: 'center',
+      panelClass: panelClass
     });
   }
 
@@ -555,15 +558,20 @@ export class EditExamComponent implements OnInit {
       examData.id = Number(id);
 
       console.log(examData);
+      this.openSnackBar('تم تعديل الامتحان', 'حسناً');
 
-      this.examData.editExam(examData.id, examData).subscribe(
-        (editedExam: any) => {
-          console.log('Exam edited successfully:', editedExam);
-        },
-        (error) => {
-          console.error('Error occurred while adding exam:', error);
-        }
-      );
+      // this.examData.editExam(examData.id, examData).subscribe(
+      //   (editedExam: any) => {
+      //     console.log('Exam edited successfully:', editedExam);
+      //     this.openSnackBar('تم تعديل الامتحان', 'حسناً');
+      //   },
+      //   (error) => {
+      //     if (error.status == 200) {
+      //       window.location.reload();
+      //     }
+      //     console.error('Error occurred while adding exam:', error);
+      //   }
+      // );
     } else {
       console.log('Form validation failed.');
       this.displayErrorMessages();

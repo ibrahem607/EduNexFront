@@ -1,7 +1,7 @@
 <form class="form-floating" action="" method="" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col">
-      <mat-form-field appearance="outline" style="width: 100% !important;">
+      <mat-form-field appearance="outline">
         <mat-label>الأسم </mat-label>
         <input matInput type="text" name="fullName" formControlName="fullName" id="fullName" placeholder="اسم المعلم"
           aria-label=" اسم المعلم">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="col">
-      <mat-form-field appearance="outline" style="width: 100% !important;">
+      <mat-form-field appearance="outline">
         <mat-label>اسم العائلة</mat-label>
         <input matInput type="text" name="lastName" formControlName="lastName" id="lastName" placeholder="اسم العائلة"
           aria-label=" اسم المعلم">
@@ -27,42 +27,29 @@
     </div>
   </div>
 
-  <div class="row">
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>عنوان البريد الإلكتروني</mat-label>
-      <input matInput type="email" name="teacherEmail" formControlName="teacherEmail" id="teacherEmail"
-        placeholder="البريد الإلكتروني" aria-label="عنوان البريد الإلكتروني" required>
-      <mat-icon matSuffix class="fa-solid fa-envelope"></mat-icon>
-      <mat-error *ngIf="teacherEmail?.touched && teacherEmail?.invalid">
-        <span *ngIf="teacherEmail?.errors?.['pattern']" class="text-danger">البريد الإلكتروني غير صالح</span>
-        <span *ngIf="teacherEmail?.errors?.['required']" class="text-danger">البريد الإلكتروني مطلوب</span>
-      </mat-error>
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>رقم تليفون المدرس</mat-label>
+    <input matInput type="text" name="teacherPhoneNumber" formControlName="teacherPhoneNumber" id="teacherPhoneNumber"
+      placeholder="رقم الموبايل" aria-label="رقم تليفون المدرس">
+    <mat-icon matSuffix class="fa-solid fa-mobile-screen-button"></mat-icon>
+    <mat-error *ngIf="teacherPhoneNumber?.touched && teacherPhoneNumber?.invalid">
+      <span *ngIf="teacherPhoneNumber?.errors?.['pattern']" class="text-danger">رقم الهاتف يجب أن يكون من 11 رقم
+        يبدأ بـ 010 أو 011 أو 012 أو 015</span>
+      <span *ngIf="teacherPhoneNumber?.errors?.['required']" class="text-danger">رقم الهاتف مطلوب</span>
+    </mat-error>
+  </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>رقم تليفون المدرس</mat-label>
-      <input matInput type="text" name="teacherPhoneNumber" formControlName="teacherPhoneNumber" id="teacherPhoneNumber"
-        placeholder="رقم الموبايل" aria-label="رقم تليفون المدرس">
-      <mat-icon matSuffix class="fa-solid fa-mobile-screen-button"></mat-icon>
-      <mat-error *ngIf="teacherPhoneNumber?.touched && teacherPhoneNumber?.invalid">
-        <span *ngIf="teacherPhoneNumber?.errors?.['pattern']" class="text-danger">رقم الهاتف يجب أن يكون من 11 رقم
-          يبدأ بـ 010 أو 011 أو 012 أو 015</span>
-        <span *ngIf="teacherPhoneNumber?.errors?.['required']" class="text-danger">رقم الهاتف مطلوب</span>
-      </mat-error>
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label> عنوان الفيسبوك</mat-label>
+    <input matInput type="text" name="FacebookAccount" formControlName="FacebookAccount" id="FacebookAccount"
+      placeholder=" عنوان الفيسبوك" aria-label="رقم تليفون المدرس">
+    <mat-icon matSuffix class="fa-solid fa-mobile-screen-button"></mat-icon>
+    <mat-error *ngIf="FacebookAccount?.touched && FacebookAccount?.invalid">
+      <span *ngIf="FacebookAccount?.errors?.['required']" class="text-danger"> عنوان الفيسبوك مطلوب</span>
+    </mat-error>
+  </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label> عنوان الفيسبوك</mat-label>
-      <input matInput type="text" name="FacebookAccount" formControlName="FacebookAccount" id="FacebookAccount"
-        placeholder=" عنوان الفيسبوك" aria-label="رقم تليفون المدرس">
-      <mat-icon matSuffix class="fa-solid fa-mobile-screen-button"></mat-icon>
-      <mat-error *ngIf="FacebookAccount?.touched && FacebookAccount?.invalid">
-        <span *ngIf="FacebookAccount?.errors?.['required']" class="text-danger"> عنوان الفيسبوك مطلوب</span>
-      </mat-error>
-    </mat-form-field>
-  </div>
-
-  <mat-form-field appearance="outline" style="width: 100%;">
+  <mat-form-field appearance="outline">
     <mat-label>تاريخ الميلاد</mat-label>
     <input matInput [matDatepicker]="picker" formControlName="birthday" placeholder="تاريخ الميلاد"
       aria-label="تاريخ الميلاد" required>
@@ -73,7 +60,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" style="width: 100%;">
+  <mat-form-field appearance="outline">
     <mat-label>الجنس</mat-label>
     <mat-select formControlName="sex" placeholder="اختر الجنس" aria-label="الجنس" required>
       <mat-option value="" disabled selected hidden>اختر الجنس</mat-option>
@@ -84,8 +71,7 @@
     <mat-error *ngIf="sex?.touched && sex?.invalid"> يجب تحديد الجنس</mat-error>
   </mat-form-field>
 
-
-  <mat-form-field appearance="outline" style="width: 100%;">
+  <mat-form-field appearance="outline">
     <mat-label>المحافظة</mat-label>
     <mat-select formControlName="governorate" placeholder="اختر المحافظة" aria-label="المحافظة" required
       [ngClass]="{'is-invalid': isInputFocused}" id="Governorate" name="Governorate">
@@ -120,7 +106,7 @@
     <mat-error *ngIf="governorate?.touched && governorate?.invalid">يجب تحديد المحافظة</mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" style="width: 100%;">
+  <mat-form-field appearance="outline">
     <mat-label>العنوان التفصيلي</mat-label>
     <input matInput name="address" formControlName="address" placeholder="العنوان التفصيلي"
       aria-label="العنوان التفصيلي" required>
@@ -128,39 +114,8 @@
     <mat-error *ngIf="address?.touched && address?.errors?.['required']">العنوان مطلوب</mat-error>
   </mat-form-field>
 
-  <div class="row">
-    <div class="col">
-      <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>كلمة السر</mat-label>
-        <input matInput type="password" name="password" formControlName="password" placeholder="كلمة السر"
-          aria-label="كلمة السر" required>
-        <mat-icon matSuffix class="fa-solid fa-lock"></mat-icon>
-        <mat-error *ngIf="isPasswordInvalid()">
-          <span *ngIf="password?.errors?.['required']" class="text-danger">كلمة المرور مطلوبة</span>
-          <span *ngIf="password?.errors?.['minlength']" class="text-danger">كلمة المرور يجب أن تكون أكثر من 8
-            أحرف</span>
-          <span *ngIf="password?.errors?.['weakPassword']" class="text-danger">كلمة المرور ضعيفة. يجب أن تحتوي على
-            حرف كبير وحرف صغير ورقم ورمز خاص.</span>
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col">
-      <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>تأكيد كلمة السر</mat-label>
-        <input matInput type="password" name="confirmPassword" formControlName="confirmPassword"
-          placeholder="تأكيد كلمة السر" aria-label="تأكيد كلمة السر" required>
-        <mat-icon matSuffix class="fa-solid fa-lock"></mat-icon>
-        <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('unMatchedPassword')">
-          <span class="text-danger">كلمة المرور غير متطابقة</span>
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <!-- <span *ngIf="password?.errors?.['required']" class="text-danger"> خطأ عنوان البريد أو كلمة المرور غير صحيحة </span> -->
-  </div>
 
   <div class="d-grid gap-3 text-center my-5">
-    <button class="rounded-5 custom-button" type="submit">{{'إنشاء حساب' }}</button>
-    <p>يوجد لديك حساب بالفعل؟ <a [routerLink]="['/login']" class="ms-1 text-second text-decoration-none"
-        style="color: orange">ادخل إلى حسابك الآن</a></p>
+    <button class="rounded-5 custom-button" type="submit">{{'حفظ' }}</button>
   </div>
 </form>

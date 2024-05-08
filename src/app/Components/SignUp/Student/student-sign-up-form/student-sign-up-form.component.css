@@ -106,3 +106,19 @@ mat-form-field mat-label {
 mat-error {
   color: red !important;
 }
+
+::ng-deep .mdc-snackbar__surface,
+::ng-deep .mat-mdc-snack-bar-label {
+  background-color: brown !important;
+  border-radius: 10px !important;
+}
+
+::ng-deep .snackbar-success .mdc-snackbar__surface,
+::ng-deep .snackbar-success .mat-mdc-snack-bar-label {
+  background-color: green !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-actions .mdc-button__label,
+::ng-deep .mat-mdc-snack-bar-label {
+  color: white !important;
+}

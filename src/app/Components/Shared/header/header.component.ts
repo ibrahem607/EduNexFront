@@ -6,6 +6,8 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { TeacherService } from 'src/app/Services/Auth/teacher.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { SignOutComponent } from '../../sign-out/sign-out.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +27,6 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
     ]),
   ]
 })
-
 export class HeaderComponent implements OnInit, AfterViewInit {
   theme = new FormControl(false);
   @HostBinding('class') className = '';
@@ -36,29 +37,29 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   darkClass = 'theme-dark';
   lightClass = 'theme-light';
   isShowing: boolean = false;
-  isLogin: boolean = true;
   userData: any = "";
   hideHeader: boolean = false;
   role!: string;
-  constructor(private renderer: Renderer2, public loader: LoadingBarService, private authService: AuthService, private techServices: TeacherService, private router: Router) { }
+  isLogin: boolean;
+
+  constructor(private renderer: Renderer2, private dialog: MatDialog, public loader: LoadingBarService, private authService: AuthService, private techServices: TeacherService, private router: Router) {
+    this.isLogin = localStorage.getItem('auth_token') ? true: false
+  }
 
   toggleRightSidenav() {
     this.isShowing = !this.isShowing;
   }
 
   ngOnInit(): void {
-    this.role = this.authService.getUserRole();
-
     this.authService.IsLogin.subscribe({
       next: () => {
         if (this.authService.IsLogin.getValue() !== null) {
-          this.isLogin = false;
           if (this.authService.getUserRole() == "Student") {
             this.authService.getStudentData(this.authService.getUserId()).subscribe({
               next: (data => {
                 console.log(data)
                 this.userData = data;
-
+                this.role = this.authService.getUserRole();
               })
             })
           } else if (this.authService.getUserRole() == "Teacher") {
@@ -66,12 +67,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
               next: (data => {
                 console.log(data)
                 this.userData = data;
-
+                this.role = this.authService.getUserRole();
               })
             })
           }
-        } else {
-          this.isLogin = true;
         }
       }
     })
@@ -137,7 +136,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   // Move marker to the button with the 'active' class
-  MarkerActiveDetect(){
+  MarkerActiveDetect() {
     setTimeout(() => {
       const activeButton = document.querySelector('.nav-items button.active') as HTMLElement;
       if (activeButton) {
@@ -157,11 +156,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     });
   }
 
-  Logout(): any {
-    this.authService.removeToken();
-    this.authService.removeUserId();
-    this.authService.removeUserRole();
-    this.isLogin = true;
-    this.userData = " ";
+  openSignOutDialog(): void {
+    const dialogRef = this.dialog.open(SignOutComponent, {
+      data: {
+        message: 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
+        confirmButtonText: 'تسجيل الخروج'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'logout') {
+      }
+    });
   }
 }
