@@ -17,8 +17,6 @@ import { Token } from '@angular/compiler';
   providedIn: 'root'
 })
 export class AuthService {
-
-
   baseUrl: string = 'http://localhost:5293';
   tokenKey: string = 'auth_token';
   teacherId: any = '';

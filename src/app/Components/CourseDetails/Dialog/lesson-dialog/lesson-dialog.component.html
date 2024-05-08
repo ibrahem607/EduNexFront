@@ -3,8 +3,9 @@
     <div></div>
     <button mat-icon-button (click)="onNoClick()" style="color: red;"> <mat-icon>close</mat-icon></button>
   </div>
-  <div class="flex flex-column justify-content-center" dir="ltr">
-    <h3>مرحباً <span>أ.</span> {{ data.name }}</h3>
+  <div class="flex flex-column justify-content-center" dir="rtl">
+    <!-- <h3>مرحباً <span>أ.</span> {{ data.name }}</h3> -->
+    <h3>{{data.header}}</h3>
     <mat-form-field appearance="outline">
       <mat-label>أسم الحصة</mat-label>
       <input matInput [(ngModel)]="lectureTitle" [ngModel]="data.initialLectureTitle"

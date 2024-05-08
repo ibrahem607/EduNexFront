@@ -25,8 +25,11 @@
 
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>نوع الكورس</mat-label>
-      <input matInput formControlName="courseType" id="courseType" placeholder="نوع الكورس" required>
-      <mat-icon matSuffix>category</mat-icon>
+      <mat-select formControlName="courseType" placeholder="نوع الكورس" required>
+        <mat-option value="practical">عملي</mat-option>
+        <mat-option value="literary">ادبي</mat-option>
+        <mat-option value="general">عام</mat-option>
+      </mat-select>
       <mat-error *ngIf="courseForm.get('courseType')?.errors?.['required']">نوع الكورس مطلوب</mat-error>
     </mat-form-field>
   </div>
@@ -49,8 +52,11 @@
 
   <mat-form-field appearance="outline" class="w-100">
     <mat-label>المستوى</mat-label>
-    <input matInput formControlName="levelName" id="levelName" placeholder="المستوى" required>
-    <mat-icon matSuffix>star</mat-icon>
+    <mat-select formControlName="levelName" placeholder="المستوى" required>
+      <mat-option value="level one">الصف الأول الثانوي</mat-option>
+      <mat-option value="level two">الصف الثاني الثانوي</mat-option>
+      <mat-option value="level three">الصف الثالث الثانوي</mat-option>
+    </mat-select>
     <mat-error *ngIf="courseForm.get('levelName')?.errors?.['required']">المستوى مطلوب</mat-error>
   </mat-form-field>
 

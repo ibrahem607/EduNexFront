@@ -75,6 +75,7 @@ export class CourseDetailsComponent implements OnInit {
       panelClass: 'dialog-container',
       autoFocus: false,
       data: {
+        header:'اضافه حصة',
         confirmButtonText: 'أضف الحصة',
         courseId: this.course?.id,
         name: this.course?.teacherName,
@@ -89,6 +90,7 @@ export class CourseDetailsComponent implements OnInit {
       panelClass: 'dialog-container',
       autoFocus: false,
       data: {
+        header:'تعديل الحصة',
         confirmButtonText: 'تعديل الأسم',
         courseId: this.course?.id,
         name: this.course?.teacherName,

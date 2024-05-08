@@ -1,23 +1,23 @@
 export interface IExamResult {
-  SubmitResult: string;
-  ExamName: string;
-  ExamType: string;
-  ExamGrade: number;
-  StudentGrade: number;
-  StudentAnswersWithCorrectAnswers: Question[];
+  submitResult: string;
+  examName: string;
+  examType: string;
+  examGrade: number;
+  studentGrade: number;
+  studentAnswersWithCorrectAnswers: Question[];
 }
 
 export interface Question {
-  QuestionId: number;
-  QuestionHeader: string;
-  QuestionType: string;
-  AnswerChoices: AnswerChoices[];
-  StudentAnswerIds: (number | string)[];
-  CorrectAnswerIds: (number | string)[];
-  IsCorrect: boolean;
+  questionId: number;
+  questionHeader: string;
+  questionType: string;
+  answerChoices: AnswerChoices[];
+  studentAnswerIds: number[];
+  correctAnswerIds: number[];
+  isCorrect: boolean;
 }
 
 export interface AnswerChoices {
-  AnswerId: number;
-  AnswerHeader: string;
+  answerId: number;
+  answerHeader: string;
 }

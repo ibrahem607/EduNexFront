@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 
 @Component({
@@ -10,12 +11,16 @@ import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 export class LessonDialogComponent {
   lectureTitle!: string;
   price!: number;
+  userId: string;
 
   constructor(
     public dialogRef: MatDialogRef<LessonDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private lectureData: LecturesService
-  ) { }
+    private lectureData: LecturesService,
+    private userData: AuthService,
+  ) {
+    this.userId = this.userData.getUserId();
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -36,7 +41,7 @@ export class LessonDialogComponent {
         courseId: courseId
       };
 
-      this.lectureData.editLecture(courseId, lectureId, updatedLecture).subscribe(
+      this.lectureData.editLecture(courseId, lectureId, updatedLecture, this.userId).subscribe(
         () => {
           console.log(`Lecture with ID ${lectureId} in course ${courseId} updated successfully.`);
           window.location.reload();
@@ -53,7 +58,7 @@ export class LessonDialogComponent {
         courseId: courseId
       };
 
-      this.lectureData.addLecture(courseId, newLecture).subscribe(
+      this.lectureData.addLecture(courseId, newLecture, this.userId).subscribe(
         () => {
           console.log(`New lecture added to course ${courseId} successfully.`);
           window.location.reload();
@@ -64,4 +69,5 @@ export class LessonDialogComponent {
       );
     }
   }
+
 }

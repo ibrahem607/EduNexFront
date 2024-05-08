@@ -19,6 +19,7 @@ mat-sidenav {
   right: 0;
   border-top-left-radius: 10px !important;
   border-bottom-left-radius: 10px !important;
+  min-width: 230px;
 }
 
 mat-toolbar {
@@ -176,6 +177,7 @@ mat-toolbar button {
 .toggle-button {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .fa-circle-user {
   font-size: 1.25rem;
 }
@@ -193,14 +195,32 @@ mat-sidenav button.custom-button {
   padding-top: 5rem;
   width: 20rem;
 }
+
+.profile {
+  border: 1px solid var(--border);
+  padding: 1px;
+  box-shadow: var(--wave2) 0px 0px 0px 3px inset;
+  transition: 0.3s;
+}
+
+.profile:hover {
+  box-shadow: var(--wave1) 0px 0px 0px 3px inset;
+}
+
+/* .dropdown-toggle::after {
+  display: none;
+} */
+
 mat-sidenav button {
   border-radius: 0.5rem;
   font-weight: 500;
 }
+
 .side-btns button {
   width: 100%;
   text-align: right;
 }
+
 hr {
   border: 0;
   height: 1px;

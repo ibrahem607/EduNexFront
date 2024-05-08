@@ -1,6 +1,6 @@
 <form id="editForm" name="editForm" [formGroup]="editForm">
   <mat-form-field appearance="fill">
-    <mat-label>الصوره</mat-label>
+    <mat-label>الصورة</mat-label>
     <div class="fileUploadContainer" [ngStyle]="{'margin-top' : editForm.get('photo')!.value ? '5px' :  '20px'}">
       <ng-container *ngIf="editForm.get('photo')!.value">
         <img [src]="editForm.get('photo')!.value" />

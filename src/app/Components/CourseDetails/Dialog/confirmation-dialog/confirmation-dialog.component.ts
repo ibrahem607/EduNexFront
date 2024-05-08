@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ICourse } from 'src/app/Model/icourse';
 import { AttachmentsService } from 'src/app/Services/Attachments/attachments.service';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
 import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 import { VideosService } from 'src/app/Services/Videos/videos.service';
@@ -12,14 +12,19 @@ import { VideosService } from 'src/app/Services/Videos/videos.service';
   styleUrls: ['./confirmation-dialog.component.css']
 })
 export class ConfirmationDialogComponent {
+  userId: string;
+
   constructor(
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private lectureData: LecturesService,
     private courseData: CoursesService,
     private attachmentData: AttachmentsService,
-    private videoData: VideosService
-  ) { }
+    private videoData: VideosService,
+    private userData: AuthService
+  ) {
+    this.userId = this.userData.getUserId();
+  }
 
   onNoClick(): void {
     this.dialogRef.close(false);
@@ -38,12 +43,16 @@ export class ConfirmationDialogComponent {
 
   deleteLecture(lectureId: number): void {
     const courseId = this.data.courseId;
-    this.lectureData.deleteLectureById(courseId, lectureId).subscribe(
+    this.lectureData.deleteLectureById(courseId, lectureId, this.userId).subscribe(
       () => {
         console.log(`Lesson with ID ${lectureId} and its content deleted successfully`);
         window.location.reload();
       },
       (error) => {
+        console.log(error.status)
+        if (error.status == 200) {
+          window.location.reload();
+        }
         console.error(`Failed to delete lesson with ID ${lectureId} and its content:`, error);
 
       }

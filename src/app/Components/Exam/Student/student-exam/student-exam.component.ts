@@ -28,6 +28,7 @@ export class StudentExamComponent implements OnInit {
   skippedQuestions: boolean[] = [];
   duration!: number;
   startData!: any;
+  userId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,9 +36,11 @@ export class StudentExamComponent implements OnInit {
     private lectureData: LecturesService,
     private studentData: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private userData: AuthService
   ) {
     this.form = this.fb.group({});
+    this.userId = this.userData.getUserId();
   }
 
   ngOnInit(): void {
@@ -83,14 +86,15 @@ export class StudentExamComponent implements OnInit {
   }
 
   getStartData(id: number, student: any) {
-    this.examData.getInfoExam(id, student).subscribe(startData => {
+    this.examData.getDurationExam(id, student).subscribe(startData => {
       this.startData = startData;
+      console.log(startData)
       this.duration = this.exam.duration - this.durationCalculation();
     });
   }
 
   getLectureById(id: number) {
-    this.lectureData.getLectureById(this.courseId, id).subscribe(lecture => {
+    this.lectureData.getLectureById(this.courseId, id, this.userId).subscribe(lecture => {
       this.lecture = lecture;
     });
   }

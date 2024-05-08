@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ILecture, IVideo, IAttachment } from 'src/app/Model/icourse';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 
 @Component({
@@ -14,19 +15,22 @@ export class LectureComponent implements OnInit {
   contentIndex: number = 0;
   panelOpenState = false;
   selected?: boolean;
+  userId: string;
 
   videoOptions: { label: string; selected: boolean; videoUrl: string; }[] = [];
   fileOptions: { label: string; pdfUrl: string; }[] = [];
   selectedVideoUrl: string = '';
 
-  constructor(private route: ActivatedRoute, private lectureService: LecturesService) { }
+  constructor(private route: ActivatedRoute, private lectureService: LecturesService, private userData: AuthService) {
+    this.userId = this.userData.getUserId();
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.courseId = params['courseId'];
       const lectureId = params['lectureId'];
 
-      this.lectureService.getLectureById(this.courseId, lectureId).subscribe(lecture => {
+      this.lectureService.getLectureById(this.courseId, lectureId, this.userId).subscribe(lecture => {
         this.lecture = lecture;
         console.log(this.lecture)
         this.initOptions();

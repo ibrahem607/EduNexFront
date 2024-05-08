@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -24,5 +24,16 @@ export class AppComponent implements OnInit {
     // document.addEventListener('contextmenu', function (event) {
     //   event.preventDefault();
     // });
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    if (event.ctrlKey && event.shiftKey && event.key === 'C') {
+      event.preventDefault();
+    }
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    this.onKeyDown(event);
   }
 }

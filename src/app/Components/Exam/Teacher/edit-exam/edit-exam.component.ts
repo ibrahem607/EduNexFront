@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { convertDateFormat, convertTimeFormat } from 'src/app/Components/Exam/DateTimeFormat';
 import { ILecture } from 'src/app/Model/icourse';
 import { IExam } from 'src/app/Model/iexam';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ExamService } from 'src/app/Services/Exam/exam.service';
 import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 import { isAnyValueMissing, isDurationValid, isStartDateBeforeEndDate, isStartDateInFuture } from 'src/app/Validator/exam-validators';
@@ -26,10 +27,12 @@ export class EditExamComponent implements OnInit {
   selectedValue: number = 10;
   courseTitle!: string;
   questionsControls!: FormArray;
-
+  userId: string;
   formSubmitted: boolean = false;
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private examData: ExamService, private lectureData: LecturesService, private snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private examData: ExamService, private lectureData: LecturesService, private snackBar: MatSnackBar, private userData: AuthService) {
+    this.userId = this.userData.getUserId();
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -73,7 +76,7 @@ export class EditExamComponent implements OnInit {
   }
 
   getLectureId(courseId: number, lectureId: number) {
-    this.lectureData.getLectureById(courseId, lectureId).subscribe(lecture => {
+    this.lectureData.getLectureById(courseId, lectureId, this.userId).subscribe(lecture => {
       this.lecture = lecture;
       // console.log(this.lecture)
     });

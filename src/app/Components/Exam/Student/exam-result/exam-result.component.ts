@@ -11,11 +11,9 @@ import { ExamService } from 'src/app/Services/Exam/exam.service';
 })
 export class ExamResultComponent implements OnInit {
   result!: IExamResult;
-  examId: number;
+  examId!: number;
 
-  constructor(private examData: ExamService, private route: ActivatedRoute, private studentData: AuthService) {
-    this.examId = 0;
-  }
+  constructor(private examData: ExamService, private route: ActivatedRoute, private studentData: AuthService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -25,23 +23,49 @@ export class ExamResultComponent implements OnInit {
   }
 
   getExamResult(examId: number) {
-    this.examData.getExamResult(examId, this.studentData.getUserId()).subscribe(result => {
+    this.examData.getSubmissionExam(examId, this.studentData.getUserId()).subscribe(result => {
       this.result = result;
       console.log(this.result);
     });
   }
 
   getAnswerChoices(answerChoices: AnswerChoices[]): string[] {
-    return answerChoices.map(choice => choice.AnswerHeader);
+    return answerChoices.map(choice => choice.answerHeader);
   }
 
   getStudentAnswers(studentAnswerIds: number[], answerChoices: AnswerChoices[]): string {
-    const selectedAnswers = studentAnswerIds.map(id => answerChoices[id - 1].AnswerHeader);
+    const selectedAnswers: string[] = [];
+
+    for (const studentAnswerId of studentAnswerIds) {
+      const choices = answerChoices.filter(choice => choice.answerId === studentAnswerId);
+
+      if (choices.length > 0) {
+        for (const choice of choices) {
+          selectedAnswers.push(choice.answerHeader);
+        }
+      } else {
+        selectedAnswers.push(`No answer found for ID ${studentAnswerId}`);
+      }
+    }
+
     return selectedAnswers.join(', ');
   }
 
   getCorrectAnswers(correctAnswerIds: number[], answerChoices: AnswerChoices[]): string {
-    const correctAnswers = correctAnswerIds.map(id => answerChoices[id - 1].AnswerHeader);
+    const correctAnswers: string[] = [];
+
+    for (const correctAnswerId of correctAnswerIds) {
+      const choices = answerChoices.filter(choice => choice.answerId === correctAnswerId);
+
+      if (choices.length > 0) {
+        for (const choice of choices) {
+          correctAnswers.push(choice.answerHeader);
+        }
+      } else {
+        correctAnswers.push(`No answer found for ID ${correctAnswerId}`);
+      }
+    }
+
     return correctAnswers.join(', ');
   }
 

@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDrawer } from '@angular/material/sidenav';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -26,7 +26,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
   ]
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   theme = new FormControl(false);
   @HostBinding('class') className = '';
   @ViewChild('sidenav') sidenav!: MatDrawer;
@@ -39,13 +39,15 @@ export class HeaderComponent implements OnInit {
   isLogin: boolean = true;
   userData: any = "";
   hideHeader: boolean = false;
-  constructor(private renderer: Renderer2, public loader: LoadingBarService, private authService: AuthService, private techServices: TeacherService) { }
+  role!: string;
+  constructor(private renderer: Renderer2, public loader: LoadingBarService, private authService: AuthService, private techServices: TeacherService, private router: Router) { }
 
   toggleRightSidenav() {
     this.isShowing = !this.isShowing;
   }
 
   ngOnInit(): void {
+    this.role = this.authService.getUserRole();
 
     this.authService.IsLogin.subscribe({
       next: () => {
@@ -91,19 +93,12 @@ export class HeaderComponent implements OnInit {
       });
     }
 
-    // Move marker to the button with the 'active' class
-    setTimeout(() => {
-      const activeButton = document.querySelector('.nav-items button.active') as HTMLElement;
-      if (activeButton) {
-        this.moveMarker(activeButton);
-      }
-    });
+    this.MarkerActiveDetect();
 
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.hideHeader = this.activatedRoute.firstChild?.snapshot.routeConfig?.path === 'notfound';
-    //   }
-    // });
+    // Call MarkerActiveDetect() on window resize
+    window.addEventListener('resize', () => {
+      this.MarkerActiveDetect();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -131,15 +126,35 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  moveMarker(target: EventTarget | null): void {
+  moveMarker(target: HTMLElement | null): void {
     const marker = document.getElementById('marker');
-    if (marker && target instanceof HTMLElement) {
+    if (marker && target) {
       const rect = target.getBoundingClientRect();
       const offsetX = rect.left + window.pageXOffset;
-      const targetWidth = target.offsetWidth;
-      marker.style.width = targetWidth + 'px';
+      marker.style.width = target.offsetWidth + 'px'; // Set marker width to target width
       marker.style.left = offsetX + 'px';
     }
+  }
+
+  // Move marker to the button with the 'active' class
+  MarkerActiveDetect(){
+    setTimeout(() => {
+      const activeButton = document.querySelector('.nav-items button.active') as HTMLElement;
+      if (activeButton) {
+        this.moveMarker(activeButton);
+      }
+    });
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        setTimeout(() => {
+          const activeButton = document.querySelector('.nav-items button.active') as HTMLElement;
+          if (activeButton) {
+            this.moveMarker(activeButton);
+          }
+        });
+      }
+    });
   }
 
   Logout(): any {
