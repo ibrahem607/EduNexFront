@@ -1,7 +1,11 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SignOutComponent } from '../../../sign-out/sign-out.component';
 import { trigger, style, transition, animate } from '@angular/animations';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { TeachersService } from 'src/app/Services/Teachers/teachers.service';
 @Component({
   selector: 'app-teacher-profile',
   templateUrl: './teacher-profile.component.html',
@@ -19,6 +23,7 @@ export class TeacherProfileComponent {
   activeSection: string = '';
   selectedOptionIndex: number = 0;
   leavingAnimationInProgress: boolean = false;
+  teacher!: any;
 
   options = [
     { label: 'الرئيسية', icon: 'home', selected: true },
@@ -27,7 +32,36 @@ export class TeacherProfileComponent {
     { label: 'تسجيل الخروج', icon: 'sign-out-alt', selected: false }
   ];
 
-  constructor(private dialog: MatDialog, private renderer: Renderer2) { }
+  constructor(
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private authService: AuthService,
+    private teacherService: TeachersService,
+  ) {
+    this.getTeacherData(this.authService.getUserId());
+  }
+
+  getTeacherData(teacherId: string) {
+    this.teacherService.getTeacherById(teacherId).subscribe(teacher => {
+      this.teacher = teacher;
+      if (teacher.status !== "Approved") {
+        this.closePage();
+      }
+    },
+      error => {
+        if (error.status === 404 || error.status === 403) {
+          this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً');
+
+          setTimeout(() => {
+            window.history.back();
+            window.history.replaceState(null, '', this.router.url);
+          }, 2000);
+        } else {
+          console.error('Error fetching teacher:', error);
+        }
+      });
+  }
 
   setActiveSection(index: number): void {
     if (index === 3) {
@@ -54,6 +88,25 @@ export class TeacherProfileComponent {
       if (result === 'logout') {
       }
     });
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
+  }
+
+  closePage() {
+    this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً');
+
+    this.goBackAndRemoveCurrentRoute();
+  }
+
+  goBackAndRemoveCurrentRoute(): void {
+    const newUrl = `/teacher/pending/${this.authService.getUserId()}`;
+    this.router.navigateByUrl(newUrl);
   }
 }
 

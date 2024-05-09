@@ -5,7 +5,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { TeacherService } from 'src/app/Services/Auth/teacher.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { SignOutComponent } from '../../sign-out/sign-out.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -42,8 +42,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   role!: string;
   isLogin: boolean;
 
-  constructor(private renderer: Renderer2, private dialog: MatDialog, public loader: LoadingBarService, private authService: AuthService, private techServices: TeacherService, private router: Router) {
-    this.isLogin = localStorage.getItem('auth_token') ? true: false
+  constructor(
+    private renderer: Renderer2,
+    private dialog: MatDialog,
+    public loader: LoadingBarService,
+    private authService: AuthService,
+    private techServices: TeacherService,
+    private router: Router
+  ) {
+    this.isLogin = localStorage.getItem('auth_token') ? true : false
   }
 
   toggleRightSidenav() {
@@ -57,7 +64,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           if (this.authService.getUserRole() == "Student") {
             this.authService.getStudentData(this.authService.getUserId()).subscribe({
               next: (data => {
-                console.log(data)
                 this.userData = data;
                 this.role = this.authService.getUserRole();
               })
@@ -65,7 +71,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           } else if (this.authService.getUserRole() == "Teacher") {
             this.techServices.getTeacherById(this.authService.getUserId()).subscribe({
               next: (data => {
-                console.log(data)
                 this.userData = data;
                 this.role = this.authService.getUserRole();
               })
@@ -74,6 +79,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         }
       }
     })
+
+    console.log(this.userData)
 
     const savedTheme = localStorage.getItem('themePreference');
     const currentTheme = savedTheme === 'dark';

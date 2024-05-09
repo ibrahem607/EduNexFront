@@ -26,6 +26,7 @@ export class ExamResultComponent implements OnInit {
     this.examData.getSubmissionExam(examId, this.studentData.getUserId()).subscribe(result => {
       this.result = result;
       console.log(this.result);
+      this.reloadCurrentRoute();
     });
   }
 

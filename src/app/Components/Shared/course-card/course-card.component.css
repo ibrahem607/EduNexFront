@@ -40,6 +40,14 @@
   border: 2px solid var(--border2);
   z-index: 1;
 }
+
+.thumbnail{
+  max-width: 325px;
+  max-height: 225px;
+  width: auto;
+  height: auto
+}
+
 .name {
   font-size: 16px;
   font-weight: bold;

@@ -33,14 +33,14 @@ export class StudentProfileComponent implements OnInit {
     { label: 'تسجيل الخروج', icon: 'sign-out-alt', selected: false }
   ];
 
-  constructor(private dialog: MatDialog, private studentData: AuthService, private authService: AuthService) { }
+  constructor(private dialog: MatDialog, private authService: AuthService) { }
 
   ngOnInit() {
-    this.getStudentData(this.studentData.getUserId());
+    this.getStudentData(this.authService.getUserId());
   }
 
   getStudentData(studentId: string) {
-    this.studentData.getStudentData(studentId).subscribe(student => {
+    this.authService.getStudentData(studentId).subscribe(student => {
       this.student = student;
       console.log(student);
     });

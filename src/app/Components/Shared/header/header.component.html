@@ -94,7 +94,7 @@
             </button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item
-                [routerLink]="role === 'Student' ? ['/student/profile', userData.id] : ['/teacher/profile', userData.id]"
+                [routerLink]="role === 'Student' ? ['/student/profile', userData.id] : userData.status === 'Approved' ? ['/teacher/profile', userData.id] : ['/teacher/pending', userData.id]"
                 style="direction: rtl;">
                 <i class="fa-regular fa-circle-user px-2"></i>
                 الملف الشخصي

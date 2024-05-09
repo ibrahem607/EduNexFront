@@ -178,8 +178,8 @@ export class StudentExamComponent implements OnInit {
     this.updateQuestionButtonClasses(this.selectedQuestionIndex - 1, 'solved', 'skipped');
   }
 
-  getSelectedAnswersIdsAndIndex(questionId: number): number[] {
-    const selectedAnswersIdsAndIndex: number[] = [];
+  getSelectedAnswersIdsAndIndex(questionId: number): { answerIds: number[], questionIndex: number }[] {
+    const selectedAnswersIdsAndIndex: { answerIds: number[], questionIndex: number }[] = [];
     const question = this.exam.questions.find(q => q.id === questionId);
 
     if (question) {
@@ -188,13 +188,30 @@ export class StudentExamComponent implements OnInit {
 
       controlKeys.forEach(key => {
         const questionIndex = parseInt(key.split('_')[1]);
+
         if (questionIndex !== -1 && questionIndex < this.exam.questions.length) {
           const questionFormGroup = formControls[key] as FormGroup;
-          const answerControl = questionFormGroup.get('answer_' + questionIndex);
-          if (answerControl && answerControl.value !== null) {
-            const answerId = question.answers.find(answer => answer.header === answerControl.value)?.id;
-            if (answerId !== undefined) {
-              selectedAnswersIdsAndIndex.push(answerId, questionIndex);
+
+          if (question.type === 'MultipleChoice') {
+            // Get all selected checkboxes for this question
+            const selectedCheckboxes = Object.keys(questionFormGroup.controls)
+              .filter(controlKey => questionFormGroup.get(controlKey)?.value === true);
+
+            // Extract answer ids from the selected checkboxes
+            const answerIds = selectedCheckboxes.map(controlKey => {
+              const answerIndex = parseInt(controlKey.split('_')[2]);
+              return question.answers[answerIndex].id;
+            });
+
+            selectedAnswersIdsAndIndex.push({ answerIds, questionIndex });
+          } else {
+            // For single choice or true/false, only one answer can be selected
+            const answerControl = questionFormGroup.get('answer_' + questionIndex);
+            if (answerControl && answerControl.value !== null) {
+              const answerId = question.answers.find(answer => answer.header === answerControl.value)?.id;
+              if (answerId !== undefined) {
+                selectedAnswersIdsAndIndex.push({ answerIds: [answerId], questionIndex });
+              }
             }
           }
         }
@@ -204,30 +221,31 @@ export class StudentExamComponent implements OnInit {
     return selectedAnswersIdsAndIndex;
   }
 
-  compareSelectedAnswers(questionId: number): number[] {
-    const selectedAnswersIdsAndIndex = this.getSelectedAnswersIdsAndIndex(questionId);
-
-    // Extract the selected answer IDs from the array
-    const selectedAnswersIds = selectedAnswersIdsAndIndex.filter((value, index) => index % 2 === 0);
-
-    return selectedAnswersIds;
-  }
-
   formattedExam() {
     const formattedExam: any = {
       studentId: this.studentId,
       answers: []
     };
 
+    const selectedAnswersMap = new Map<number, number[]>();
+
     this.exam.questions.forEach(question => {
-      const selectedAnswersIds = this.compareSelectedAnswers(question.id);
-      formattedExam.answers.push({
-        questionId: question.id,
-        selectedAnswersIds: selectedAnswersIds
+      const selectedAnswers = this.getSelectedAnswersIdsAndIndex(question.id);
+
+      selectedAnswers.forEach(selectedAnswer => {
+        const existingAnswers = selectedAnswersMap.get(selectedAnswer.questionIndex) || [];
+        existingAnswers.push(...selectedAnswer.answerIds);
+        selectedAnswersMap.set(selectedAnswer.questionIndex, existingAnswers);
       });
     });
 
-    // console.log('Submitted Exam:', formattedExam);
+    selectedAnswersMap.forEach((selectedAnswerIds, questionIndex) => {
+      formattedExam.answers.push({
+        questionId: this.exam.questions[questionIndex].id,
+        selectedAnswersIds: selectedAnswerIds
+      });
+    });
+
     return formattedExam;
   }
 
