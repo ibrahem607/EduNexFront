@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AnswerChoices, IExamResult } from 'src/app/Model/iexam-result';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ExamService } from 'src/app/Services/Exam/exam.service';
@@ -13,7 +13,7 @@ export class ExamResultComponent implements OnInit {
   result!: IExamResult;
   examId!: number;
 
-  constructor(private examData: ExamService, private route: ActivatedRoute, private studentData: AuthService) { }
+  constructor(private examData: ExamService, private route: ActivatedRoute, private studentData: AuthService ,private router:Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -79,5 +79,12 @@ export class ExamResultComponent implements OnInit {
 
   isCorrectChoice(choice: string, correctAnswerIds: number[]): boolean {
     return correctAnswerIds.includes(parseInt(choice, 10));
+  }
+
+  reloadCurrentRoute(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

@@ -39,7 +39,6 @@ export class SignOutComponent {
         console.error('Logout failed:', error);
       }
     );
-    // console.log(this.authService.isLogin());
   }
 
   reloadCurrentRoute(): void {

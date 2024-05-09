@@ -267,3 +267,18 @@ hr {
     display: none;
   }
 }
+
+
+
+
+
+::ng-deep .mat-mdc-dialog-surface,
+::ng-deep .mat-mdc-menu-panel {
+  background-color: var(--bg) !important;
+  box-shadow: var(--border) 0px 0px 0px 1px !important;
+  border-radius: 10px !important;
+}
+
+::ng-deep .cdk-overlay-pane {
+  margin-top: 0.5rem !important;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ILecture, IVideo, IAttachment } from 'src/app/Model/icourse';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
@@ -25,10 +26,13 @@ export class LectureComponent implements OnInit {
   fileOptions: { label: string; pdfUrl: string; }[] = [];
   selectedVideoUrl: string = '';
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     private lectureService: LecturesService,
     private userData: AuthService,
-    private courseData: CoursesService
+    private courseData: CoursesService,
+    private snackBar: MatSnackBar,
+    private router: Router,
   ) {
     this.userId = this.userData.getUserId();
   }
@@ -39,11 +43,18 @@ export class LectureComponent implements OnInit {
       //  = params['lectureId'];
       const lectureId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
 
-      this.lectureService.getLectureById(this.courseId, lectureId, this.userId).subscribe(lecture => {
-        this.lecture = lecture;
-        // console.log(this.lecture)
-        this.initOptions();
-      });
+      this.lectureService.getLectureById(this.courseId, lectureId, this.userId).subscribe(
+        lecture => {
+          this.lecture = lecture;
+        },
+        error => {
+          if (error.status === 404 || error.status === 403) {
+            this.closePage();
+          } else {
+            console.error('Error fetching lecture:', error);
+          }
+        }
+      );
     });
   }
 
@@ -85,4 +96,24 @@ export class LectureComponent implements OnInit {
     return this.role === 'Student' && this.isEnrolled;
   }
 
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
+  }
+
+  closePage() {
+    this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً');
+
+    setTimeout(() => {
+      this.goBackAndRemoveCurrentRoute();
+    }, 2000);
+  }
+
+  goBackAndRemoveCurrentRoute(): void {
+    window.history.back();
+    window.history.replaceState(null, '', this.router.url);
+  }
 }

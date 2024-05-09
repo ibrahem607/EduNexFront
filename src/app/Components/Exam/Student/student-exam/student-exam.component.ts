@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ILecture } from 'src/app/Model/icourse';
 import { IExam, IQuestion } from 'src/app/Model/iexam';
@@ -37,7 +38,8 @@ export class StudentExamComponent implements OnInit {
     private studentData: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private userData: AuthService
+    private userData: AuthService,
+    private snackBar: MatSnackBar,
   ) {
     this.form = this.fb.group({});
     this.userId = this.userData.getUserId();
@@ -73,6 +75,9 @@ export class StudentExamComponent implements OnInit {
       (error) => {
         if (error.status !== 200) {
           console.error('Error occurred while starting exam:', error);
+          if (error.status === 404 || error.status === 403 || error.status === 400) {
+            this.closePage();
+          }
         }
       }
     );
@@ -88,11 +93,12 @@ export class StudentExamComponent implements OnInit {
   }
 
   getStartData(id: number, student: any) {
-    this.examData.getDurationExam(id, student).subscribe(startData => {
-      this.startData = startData;
-      // console.log(startData)
-      this.duration = this.exam.duration - durationCalculation(this.startData.startTime);
-    });
+    this.examData.getDurationExam(id, student).subscribe(
+      startData => {
+        this.startData = startData;
+        this.duration = this.exam.duration - durationCalculation(this.startData.startTime);
+      },
+    );
   }
 
   getLectureById(id: number) {
@@ -245,6 +251,27 @@ export class StudentExamComponent implements OnInit {
       replaceUrl: true
     };
     this.router.navigate(['/course', this.courseId, 'lesson', this.lectureId, 'result'], navigationExtras);
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
+  }
+
+  closePage() {
+    this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً');
+
+    setTimeout(() => {
+      this.goBackAndRemoveCurrentRoute();
+    }, 2000);
+  }
+
+  goBackAndRemoveCurrentRoute(): void {
+    window.history.back();
+    window.history.replaceState(null, '', this.router.url);
   }
 }
 

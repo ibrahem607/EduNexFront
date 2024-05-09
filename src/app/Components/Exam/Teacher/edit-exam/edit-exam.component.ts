@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { convertDateFormat, convertTimeFormat } from 'src/app/Components/Exam/DateTimeFormat';
 import { ILecture } from 'src/app/Model/icourse';
 import { IExam } from 'src/app/Model/iexam';
@@ -30,7 +30,15 @@ export class EditExamComponent implements OnInit {
   userId: string;
   formSubmitted: boolean = false;
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private examData: ExamService, private lectureData: LecturesService, private snackBar: MatSnackBar, private userData: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private examData: ExamService,
+    private lectureData: LecturesService,
+    private snackBar: MatSnackBar,
+    private userData: AuthService,
+    private router: Router,
+  ) {
     this.userId = this.userData.getUserId();
   }
 
@@ -47,39 +55,40 @@ export class EditExamComponent implements OnInit {
       this.activeQuestions.push(false);
     }
 
-    this.getLectureId(Number(this.activatedRoute.snapshot.paramMap.get('courseId')), Number(this.activatedRoute.snapshot.paramMap.get('lessonId')));
     this.activatedRoute.queryParams.subscribe(params => {
       this.getExamById(params['examId']);
     });
 
-    // this.questionsControls.valueChanges.subscribe(() => {
-    //   if (this.exam.questions.length !== this.questionsControls.length) {
-    //     const diff = this.exam.questions.length - this.questionsControls.length;
-    //     if (diff > 0) {
-    //       // If the length of exam.questions is greater, it means questions were added
-    //       // You might want to handle this scenario differently, like adding questions instead of removing them
-    //     } else if (diff < 0) {
-    //       // If the length of exam.questions is smaller, it means questions were removed
-    //       const removedIndex = this.questionsControls.length - 1; // Get the index of the last question in the form
-    //       this.removeQuestion(removedIndex);
-    //     }
-    //   }
-    // });
+    this.getLectureId(Number(this.activatedRoute.snapshot.paramMap.get('courseId')), Number(this.activatedRoute.snapshot.paramMap.get('lessonId')));
   }
 
   getExamById(id: number) {
-    this.examData.getExamById(id).subscribe(exam => {
-      // console.log('Received exam object:', exam);
-      this.exam = exam;
-      this.getExamDate(exam);
-    });
+    this.examData.getExamById(id).subscribe(
+      exam => {
+        this.exam = exam;
+        this.getExamDate(exam);
+      },
+      error => {
+        if (error.status === 404 || error.status === 403) {
+          this.closePage();
+        } else {
+          console.error('Error fetching Exam:', error);
+        }
+      });
   }
 
   getLectureId(courseId: number, lectureId: number) {
-    this.lectureData.getLectureById(courseId, lectureId, this.userId).subscribe(lecture => {
-      this.lecture = lecture;
-      // console.log(this.lecture)
-    });
+    this.lectureData.getLectureById(courseId, lectureId, this.userId).subscribe(
+      lecture => {
+        this.lecture = lecture;
+      },
+      error => {
+        if (error.status === 404 || error.status === 403) {
+          this.closePage();
+        } else {
+          console.error('Error fetching Exam:', error);
+        }
+      });
   }
 
   initForm(): void {
@@ -483,7 +492,7 @@ export class EditExamComponent implements OnInit {
   }
 
   openSnackBar(message: string, action: string): void {
-    const panelClass = message === 'تم تعديل الامتحان' ? ['snackbar-success'] : [];
+    const panelClass = message === 'تم حفظ الامتحان' ? ['snackbar-success'] : [];
 
     this.snackBar.open(message, action, {
       duration: 2000,
@@ -491,6 +500,19 @@ export class EditExamComponent implements OnInit {
       horizontalPosition: 'center',
       panelClass: panelClass
     });
+  }
+
+  closePage() {
+    this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً');
+
+    setTimeout(() => {
+      this.goBackAndRemoveCurrentRoute();
+    }, 2000);
+  }
+
+  goBackAndRemoveCurrentRoute(): void {
+    window.history.back();
+    window.history.replaceState(null, '', this.router.url);
   }
 
   onSaveClicked(): void {
@@ -558,12 +580,12 @@ export class EditExamComponent implements OnInit {
       examData.id = Number(id);
 
       console.log(examData);
-      this.openSnackBar('تم تعديل الامتحان', 'حسناً');
+      this.openSnackBar('تم حفظ الامتحان', 'حسناً');
 
       this.examData.editExam(examData.id, examData).subscribe(
         (editedExam: any) => {
           console.log('Exam edited successfully:', editedExam);
-          this.openSnackBar('تم تعديل الامتحان', 'حسناً');
+          this.openSnackBar('تم حفظ الامتحان', 'حسناً');
         },
         (error) => {
           if (error.status == 200) {

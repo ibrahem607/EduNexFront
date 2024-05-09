@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'src/app/Components/CourseDetails/Dialog/confirmation-dialog/confirmation-dialog.component';
 import { AddEditCourseComponent } from '../add-edit-course/add-edit-course.component';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
 
 @Component({
   selector: 'app-teacher-course',
@@ -12,7 +13,7 @@ export class TeacherCourseComponent {
   displayedColumns: string[] = ['CourseName', 'Price', 'PurchaseTimes', 'Actions'];
   dataSource = ELEMENT_DATA;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private authData: AuthService) { }
 
   openDeleteCourseConfirmationDialog(courseID: number): void {
     this.dialog.open(ConfirmationDialogComponent, {

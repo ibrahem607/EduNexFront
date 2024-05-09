@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ICourse } from 'src/app/Model/icourse';
@@ -24,12 +24,16 @@ export class CoursesService {
     return this.httpClient.delete<void>(`${this.URL}/api/Courses/${courseId}`);
   }
 
-  addCourse(courseData: ICourse): Observable<ICourse> {
-    return this.httpClient.post<ICourse>(`${this.URL}/api/Courses`, courseData);
+  addCourse(courseData: FormData): Observable<ICourse> {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    return this.httpClient.post<ICourse>(`${this.URL}/api/Courses`, courseData, { headers });
   }
 
-  editCourse(courseId: number, updatedCourse: ICourse): Observable<void> {
-    return this.httpClient.put<void>(`${this.URL}/api/Courses/${courseId}`, updatedCourse);
+  editCourse(courseId: number, updatedCourse: FormData): Observable<void> {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    return this.httpClient.put<void>(`${this.URL}/api/Courses/${courseId}`, updatedCourse, { headers });
   }
 
   getCoursesEnrolledByStudent(studentId: string): Observable<ICourse[]> {

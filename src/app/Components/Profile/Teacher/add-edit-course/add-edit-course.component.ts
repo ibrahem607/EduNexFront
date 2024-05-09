@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar
 import { ActivatedRoute } from '@angular/router';
 import { ICourse } from 'src/app/Model/icourse';
+import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
 
 @Component({
@@ -14,22 +15,23 @@ import { CoursesService } from 'src/app/Services/Courses/courses.service';
 export class AddEditCourseComponent implements OnInit {
   courseForm: FormGroup;
   courseId: number | null = null;
+  userId!: string;
 
   constructor(
     public dialogRef: MatDialogRef<AddEditCourseComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private courseData: CoursesService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {
+    this.userId = this.authService.getUserId();
+    // console.log( this.userId)
     this.courseForm = this.fb.group({
       courseName: ['', Validators.required],
       thumbnail: [null, Validators.required],
-      courseType: ['', Validators.required],
       price: ['', Validators.required],
-      subjectName: ['', Validators.required],
-      teacherName: ['ahmed', Validators.required],
-      levelName: ['', Validators.required],
+      subjectId: ['', Validators.required],
     });
   }
 
@@ -37,45 +39,61 @@ export class AddEditCourseComponent implements OnInit {
     this.courseId = this.data.courseId;
   }
 
-  getCourseData(): ICourse {
-    const formData = this.courseForm.value as ICourse;
-    if (this.courseId !== null) {
-      formData.id = this.courseId;
+  getCourseData(): any {
+    const formData = this.courseForm.value;
+    const courseData: any = {
+      CourseName: formData.courseName,
+      Thumbnail: formData.thumbnail,
+      Price: formData.price,
+      SubjectId: formData.subjectId,
+      TeacherId: this.userId
+    };
+
+    if (this.courseId) {
+      courseData.id = this.courseId;
     }
-    return formData;
+
+    return courseData;
   }
 
-  addCourse(courseData: ICourse): void {
-    this.courseData.addCourse(courseData)
-      .subscribe(
-        (newCourse: ICourse) => {
-          console.log('Course added:', newCourse);
+  addCourse(courseData: any): void {
+    const formData = new FormData();
+    formData.append('CourseName', courseData.CourseName);
+    formData.append('Thumbnail', courseData.Thumbnail);
+    formData.append('Price', courseData.Price);
+    formData.append('SubjectId', courseData.SubjectId);
+    formData.append('TeacherId', courseData.TeacherId);
+
+    this.courseData.addCourse(formData).subscribe(
+      (newCourse: ICourse) => {
+        console.log('Course added:', newCourse);
+      },
+      (error: any) => {
+        console.error('Error adding course:', error);
+      }
+    );
+  }
+
+
+  updateCourse(courseData: any): void {
+    const formData = new FormData();
+    formData.append('CourseName', courseData.CourseName);
+    formData.append('Thumbnail', courseData.Thumbnail);
+    formData.append('Price', courseData.Price);
+    formData.append('SubjectId', courseData.SubjectId);
+    formData.append('TeacherId', courseData.TeacherId);
+
+    this.courseId &&
+      this.courseData.editCourse(this.courseId, formData).subscribe(
+        () => {
+          console.log('Course updated successfully');
         },
         (error: any) => {
-          if (error.status == 200) {
-            window.location.reload();
-          }
-          console.error('Error adding course:', error);
+          console.error('Error updating course:', error);
         }
       );
   }
 
-  updateCourse(courseData: ICourse): void {
-    if (this.courseId !== null) {
-      this.courseData.editCourse(this.courseId, courseData)
-        .subscribe(
-          () => {
-            console.log('Course updated successfully');
-          },
-          (error: any) => {
-            if (error.status == 200) {
-              window.location.reload();
-            }
-            console.error('Error updating course:', error);
-          }
-        );
-    }
-  }
 
   onFileSelected(file: File) {
     if (file) {
@@ -92,12 +110,12 @@ export class AddEditCourseComponent implements OnInit {
   }
 
   onYesClick(): void {
-    console.log(this.courseForm)
+
     if (this.courseForm.valid) {
       const formData = this.getCourseData();
-      console.log(this.courseId)
+      // console.log(formData)
       if (this.courseId !== null) {
-        this.updateCourse(formData);
+        this.addCourse(formData);
       } else {
         this.addCourse(formData);
       }
