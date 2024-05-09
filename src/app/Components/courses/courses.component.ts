@@ -100,7 +100,7 @@ export class CoursesComponent implements OnInit {
   }
 
   filterByPriceRange(maxPrice: any) {
-    console.log(maxPrice.endValueIndicatorText)
+    // console.log(maxPrice.endValueIndicatorText)
     this.filteredCourses = this.courses.filter(course => course.price <= maxPrice.endValueIndicatorText);
     this.updateFilteredPaginatedCourses();
   }

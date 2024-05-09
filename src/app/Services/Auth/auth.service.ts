@@ -162,6 +162,10 @@ export class AuthService {
     }
   }
 
+  changePassword(userId: string, passwords: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseUrl}/api/Auth/change-password/${userId}`, passwords);
+  }
+
   logOut(): Observable<void> {
     return this.httpClient.post<void>(`${this.baseUrl}/api/Auth/logout`, null);
   }

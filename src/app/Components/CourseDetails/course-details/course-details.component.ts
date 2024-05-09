@@ -25,7 +25,9 @@ export class CourseDetailsComponent implements OnInit {
   lectureContact: { [key: number]: (IVideo | IAttachment)[] } = {};
   video!: IVideo;
   attachment!: IAttachment;
-  role: string = '';
+  role!: string;
+  userId: string;
+  isEnrolled!: boolean;
 
   options = [
     { label: 'محتوي الكورس', selected: true },
@@ -36,22 +38,26 @@ export class CourseDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private courseData: CoursesService,
     private authService: AuthService,
-    public dialog: MatDialog,
-    private router: Router
+    public dialog: MatDialog
   ) {
     this.courseID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.userId = this.authService.getUserId();
   }
 
   ngOnInit(): void {
     this.getCourseById();
     this.role = this.authService.getUserRole();
+
+    if (this.role == 'Student') {
+      this.checkEnrollment();
+    }
     // this.userId = this.authService.getUserId();
   }
 
   getCourseById() {
     this.courseData.getCourseById(this.courseID).subscribe(course => {
       this.course = course;
-      console.log(course);
+      // console.log(course);
       if (this.course?.lectureList) {
         this.course.lectureList.forEach((lecture: ILecture) => {
           let lectureContents: (IVideo | IAttachment)[] = [];
@@ -64,6 +70,13 @@ export class CourseDetailsComponent implements OnInit {
           this.lectureContact[lecture.id] = lectureContents;
         });
       }
+    });
+  }
+
+  checkEnrollment() {
+    this.courseData.checkEnrollment(this.courseID, this.userId).subscribe(isEnrolled => {
+      // console.log(isEnrolled);
+      this.isEnrolled = isEnrolled;
     });
   }
 
@@ -211,17 +224,19 @@ export class CourseDetailsComponent implements OnInit {
     });
   }
 
-  passLesson(lecture: any): void {
-    const queryParams = { courseId: this.course?.id, lectureId: lecture.id };
-
-    this.router.navigate(['/lesson', lecture.id], { queryParams: queryParams });
-  }
-
   getContentTitle(content: IVideo | IAttachment): string {
     if ('videoTitle' in content) {
       return (content as IVideo).videoTitle;
     } else {
       return (content as IAttachment).attachmentTitle;
     }
+  }
+
+  isStudentAllowed() {
+    return this.role === 'Student' && this.isEnrolled;
+  }
+
+  isTeacherAllowed() {
+    return this.role === 'Teacher' && this.course?.teacherId == this.userId
   }
 }

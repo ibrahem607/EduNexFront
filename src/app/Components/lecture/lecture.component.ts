@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ILecture, IVideo, IAttachment } from 'src/app/Model/icourse';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { CoursesService } from 'src/app/Services/Courses/courses.service';
 import { LecturesService } from 'src/app/Services/Lectures/lectures.service';
 
 @Component({
@@ -16,25 +17,40 @@ export class LectureComponent implements OnInit {
   panelOpenState = false;
   selected?: boolean;
   userId: string;
+  role!: string;
+  isEnrolled!: boolean;
+
 
   videoOptions: { label: string; selected: boolean; videoUrl: string; }[] = [];
   fileOptions: { label: string; pdfUrl: string; }[] = [];
   selectedVideoUrl: string = '';
 
-  constructor(private route: ActivatedRoute, private lectureService: LecturesService, private userData: AuthService) {
+  constructor(private activatedRoute: ActivatedRoute,
+    private lectureService: LecturesService,
+    private userData: AuthService,
+    private courseData: CoursesService
+  ) {
     this.userId = this.userData.getUserId();
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe(params => {
       this.courseId = params['courseId'];
-      const lectureId = params['lectureId'];
+      //  = params['lectureId'];
+      const lectureId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
 
       this.lectureService.getLectureById(this.courseId, lectureId, this.userId).subscribe(lecture => {
         this.lecture = lecture;
-        console.log(this.lecture)
+        // console.log(this.lecture)
         this.initOptions();
       });
+    });
+  }
+
+  checkEnrollment() {
+    this.courseData.checkEnrollment(this.courseId, this.userId).subscribe(isEnrolled => {
+      // console.log(isEnrolled);
+      this.isEnrolled = isEnrolled;
     });
   }
 
@@ -64,4 +80,9 @@ export class LectureComponent implements OnInit {
     });
     this.selectedVideoUrl = this.videoOptions[index].videoUrl;
   }
+
+  isStudentAllowed() {
+    return this.role === 'Student' && this.isEnrolled;
+  }
+
 }

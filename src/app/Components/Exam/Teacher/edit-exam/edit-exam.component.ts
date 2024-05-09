@@ -560,18 +560,18 @@ export class EditExamComponent implements OnInit {
       console.log(examData);
       this.openSnackBar('تم تعديل الامتحان', 'حسناً');
 
-      // this.examData.editExam(examData.id, examData).subscribe(
-      //   (editedExam: any) => {
-      //     console.log('Exam edited successfully:', editedExam);
-      //     this.openSnackBar('تم تعديل الامتحان', 'حسناً');
-      //   },
-      //   (error) => {
-      //     if (error.status == 200) {
-      //       window.location.reload();
-      //     }
-      //     console.error('Error occurred while adding exam:', error);
-      //   }
-      // );
+      this.examData.editExam(examData.id, examData).subscribe(
+        (editedExam: any) => {
+          console.log('Exam edited successfully:', editedExam);
+          this.openSnackBar('تم تعديل الامتحان', 'حسناً');
+        },
+        (error) => {
+          if (error.status == 200) {
+            window.location.reload();
+          }
+          console.error('Error occurred while adding exam:', error);
+        }
+      );
     } else {
       console.log('Form validation failed.');
       this.displayErrorMessages();

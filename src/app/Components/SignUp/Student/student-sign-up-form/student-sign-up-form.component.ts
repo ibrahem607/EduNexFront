@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,7 +17,7 @@ export class StudentSignUpFormComponent implements OnInit {
   signupForm!: FormGroup;
   errorMeg: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private datePipe: DatePipe, private router: Router, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.signupForm = this.fb.group({
@@ -111,7 +112,13 @@ export class StudentSignUpFormComponent implements OnInit {
     return null;
   }
 
+  dateFilter = (date: Date | null): boolean => {
+    const currentDate = new Date();
+    return date ? date <= currentDate : true;
+  }
+
   onSubmit() {
+    const formattedDateOfBirth = this.datePipe.transform(this.signupForm.value.birthday, 'yyyy-MM-dd');
 
     if (this.signupForm.valid) {
 
@@ -119,7 +126,7 @@ export class StudentSignUpFormComponent implements OnInit {
         City: this.signupForm.value.governorate,
         address: this.signupForm.value.address,
         confirmPassword: this.signupForm.value.confirmPassword,
-        dateOfBirth: this.signupForm.value.birthday,
+        dateOfBirth: `${formattedDateOfBirth}`,
         Email: this.signupForm.value.studentEmail,
         FirstName: this.signupForm.value.fullName,
         gender: this.signupForm.value.sex,

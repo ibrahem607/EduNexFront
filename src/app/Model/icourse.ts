@@ -6,6 +6,8 @@ export interface ICourse {
   price: number,
   subjectName: string,
   teacherName: string,
+  teacherId: string,
+  aboutTeacher:string,
   profilePhoto: string,
   levelName: string,
   lectureList?: ILecture[]

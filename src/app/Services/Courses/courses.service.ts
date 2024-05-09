@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ICourse } from 'src/app/Model/icourse';
@@ -30,5 +30,22 @@ export class CoursesService {
 
   editCourse(courseId: number, updatedCourse: ICourse): Observable<void> {
     return this.httpClient.put<void>(`${this.URL}/api/Courses/${courseId}`, updatedCourse);
+  }
+
+  getCoursesEnrolledByStudent(studentId: string): Observable<ICourse[]> {
+    const params = new HttpParams().set('studentId', studentId);
+    return this.httpClient.get<ICourse[]>(`${this.URL}/api/Courses/GetCoursesEnrolledByStudent`, { params });
+  }
+
+  checkEnrollment(courseId: number, studentId: string): Observable<boolean> {
+    const params = new HttpParams().set('studentId', studentId).set('courseId', courseId);
+    return this.httpClient.get<boolean>(
+      `${this.URL}/api/Courses/checkenrollment`,
+      { params }
+    );
+  }
+
+  courseEnroll(studentCourse: any): Observable<ICourse> {
+    return this.httpClient.post<ICourse>(`${this.URL}/api/Courses/enroll`, studentCourse);
   }
 }

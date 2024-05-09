@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
@@ -57,7 +57,7 @@ import { ScrollToTopButtonComponent } from './Components/Shared/scroll-to-top-bu
 import { CourseDetailsComponent } from './Components/CourseDetails/course-details/course-details.component';
 import { CourseDetailsHeaderComponent } from './Components/CourseDetails/course-details-header/course-details-header.component';
 import { CourseDetailsCardComponent } from './Components/CourseDetails/course-details-card/course-details-card.component';
-import { SubscriptionDialogComponent } from './Components/CourseDetails/Dialog/subscription-dialog/subscription-dialog.component';
+
 import { LessonDialogComponent } from './Components/CourseDetails/Dialog/lesson-dialog/lesson-dialog.component';
 import { ContentDialogComponent } from './Components/CourseDetails/Dialog/content-dialog/content-dialog.component';
 import { ConfirmationDialogComponent } from './Components/CourseDetails/Dialog/confirmation-dialog/confirmation-dialog.component';
@@ -89,6 +89,14 @@ import { TeacherCourseComponent } from './Components/Profile/Teacher/teacher-cou
 import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-course/add-edit-course.component';
 import { TeacherSettingsComponent } from './Components/Profile/Teacher/teacher-settings/teacher-settings.component';
 import { LectureComponent } from './Components/lecture/lecture.component';
+import { AdminDashComponent } from './Components/admin-dash/admin-dash.component';
+import { ImageUploaderComponent } from './Components/Shared/image-uploader/image-uploader.component';
+import { PendingProfileComponent } from './Components/Profile/Teacher/pending-profile/pending-profile.component';
+import { StudentSignUpFormComponent } from './Components/SignUp/Student/student-sign-up-form/student-sign-up-form.component';
+import { TeacherSignUpFormComponent } from './Components/SignUp/Teacher/teacher-sign-up-form/teacher-sign-up-form.component';
+import { StudentSettingsFormComponent } from './Components/Profile/Student/student-settings-form/student-settings-form.component';
+import { TeacherSettingsFormComponent } from './Components/Profile/Teacher/teacher-settings-form/teacher-settings-form.component';
+import { EnrollDialogComponent } from './Components/CourseDetails/Dialog/enroll-dialog/enroll-dialog.component';
 
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
@@ -97,13 +105,7 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { OverlayContainer } from '@angular/cdk/overlay';
 // import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
 // import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
-import { AdminDashComponent } from './Components/admin-dash/admin-dash.component';
-import { ImageUploaderComponent } from './Components/Shared/image-uploader/image-uploader.component';
-import { PendingProfileComponent } from './Components/Profile/Teacher/pending-profile/pending-profile.component';
-import { StudentSignUpFormComponent } from './Components/SignUp/Student/student-sign-up-form/student-sign-up-form.component';
-import { TeacherSignUpFormComponent } from './Components/SignUp/Teacher/teacher-sign-up-form/teacher-sign-up-form.component';
-import { StudentSettingsFormComponent } from './Components/Profile/Student/student-settings-form/student-settings-form.component';
-import { TeacherSettingsFormComponent } from './Components/Profile/Teacher/teacher-settings-form/teacher-settings-form.component';
+
 
 @NgModule({
   declarations: [
@@ -131,7 +133,7 @@ import { TeacherSettingsFormComponent } from './Components/Profile/Teacher/teach
     CourseDetailsComponent,
     CourseDetailsHeaderComponent,
     CourseDetailsCardComponent,
-    SubscriptionDialogComponent,
+    EnrollDialogComponent,
     LessonDialogComponent,
     ContentDialogComponent,
     ConfirmationDialogComponent,
@@ -209,6 +211,7 @@ import { TeacherSettingsFormComponent } from './Components/Profile/Teacher/teach
   ],
   providers: [
     OverlayContainer,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

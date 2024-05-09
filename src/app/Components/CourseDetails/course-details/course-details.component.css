@@ -67,10 +67,14 @@ section {
   text-justify: inter-word;
 }
 
-.teacher img {
+.teacher .image-panel {
   border-radius: 50%;
-  height: 225px;
-  width: 225px;
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .custom-expansion-panel button {
@@ -248,7 +252,8 @@ mat-error {
   color: red !important;
 }
 
-::ng-deep .mat-mdc-dialog-surface {
+::ng-deep .mat-mdc-dialog-surface,
+::ng-deep .mat-mdc-menu-panel {
   background-color: var(--bg) !important;
   box-shadow: var(--border) 0px 0px 0px 1px !important;
   border-radius: 10px !important;

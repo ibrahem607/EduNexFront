@@ -106,14 +106,14 @@ export class StudentExamComponent implements OnInit {
     this.exam.questions.forEach((question, i) => {
       const questionControls: { [key: string]: any } = {};
       question.answers.forEach((answer, j) => {
-        if (question.type === 'multipleChoice') {
+        if (question.type === 'MultipleChoice') {
           questionControls['answer_' + i + '_' + j] = new FormControl(false);
         } else {
           questionControls['answer_' + i] = new FormControl(null);
         }
       });
       formControls['question_' + i] = new FormGroup(questionControls);
-      if (question.type === 'multipleChoice') {
+      if (question.type === 'MultipleChoice') {
         formControls['question_' + i].setValidators(atLeastOneCheckboxChecked());
       } else {
         formControls['question_' + i].setValidators(atLeastOneRadioButtonChecked());

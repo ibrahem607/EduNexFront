@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { passwordMatched } from 'src/app/Validator/CrossfiledValidation';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ITeacherAuth } from 'src/app/Model/iteacherAuth';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-teacher-sign-up-form',
@@ -16,14 +17,14 @@ export class TeacherSignUpFormComponent {
   signupForm!: FormGroup;
   errorMeg: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private datePipe: DatePipe, private router: Router, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.signupForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.pattern('^(?!\d).{4,}$')]],
       lastName: ['', Validators.required],
       teacherPhoneNumber: ['', [Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
-      birthday: ['', Validators.required],
+      birthday: [null, Validators.required],
       sex: ['', Validators.required],
       governorate: ['', Validators.required],
       address: ['', Validators.required],
@@ -43,13 +44,11 @@ export class TeacherSignUpFormComponent {
 
     return null;
   }
+
   get password() {
     return this.signupForm.get('password')
   }
-  //check password is invalid
-  isPasswordInvalid() {
-    return this.password?.invalid && (this.password?.dirty || this.password?.touched);
-  }
+
   get teacherEmail() {
     return this.signupForm.get('teacherEmail')
   }
@@ -90,17 +89,28 @@ export class TeacherSignUpFormComponent {
     return this.signupForm.get('lastName')
   }
 
-  onSubmit() {
-    this.authService.removeToken();
-    if (this.signupForm.valid) {
+  isPasswordInvalid() {
+    return this.password?.invalid && (this.password?.dirty || this.password?.touched);
+  }
 
+  dateFilter = (date: Date | null): boolean => {
+    const currentDate = new Date();
+    return date ? date <= currentDate : true;
+  }
+
+  onSubmit() {
+    const formattedDateOfBirth = this.datePipe.transform(this.signupForm.value.birthday, 'yyyy-MM-dd');
+
+    this.authService.removeToken();
+
+    if (this.signupForm.valid) {
       const teacherData: ITeacherAuth = {
         firstName: this.signupForm.value.fullName,
         lastName: this.signupForm.value.lastName,
         email: this.signupForm.value.teacherEmail,
         phoneNumber: this.signupForm.value.teacherPhoneNumber,
         facebookAccount: this.signupForm.value.FacebookAccount,
-        dateOfBirth: this.signupForm.value.birthday,
+        dateOfBirth: `${formattedDateOfBirth}`,
         gender: this.signupForm.value.sex,
         address: this.signupForm.value.address,
         city: this.signupForm.value.governorate,

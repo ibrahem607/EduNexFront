@@ -11,5 +11,6 @@ export interface ITeacher {
   aboutMe: string,
   accountNote: string,
   age: string,
-  subject: string
+  subject: string,
+  status:string,
 }
