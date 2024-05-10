@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar'; // Import MatSnackBarVerticalPosition
 import { Router } from '@angular/router';
 import { AttachmentsService } from 'src/app/Services/Attachments/attachments.service';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
@@ -24,6 +25,7 @@ export class ConfirmationDialogComponent {
     private videoData: VideosService,
     private userData: AuthService,
     private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.userId = this.userData.getUserId();
   }
@@ -53,8 +55,11 @@ export class ConfirmationDialogComponent {
       (error) => {
         if (error.status == 200) {
           this.reloadCurrentRoute();
+        } else if (error.status === 500) {
+          this.openSnackBar('لايمكن حذف حصه تحتوي علي امتحانات', 'حسنًا');
+        } else {
+          console.error(`Failed to delete lesson with ID ${lectureId} and its content:`, error);
         }
-        console.error(`Failed to delete lesson with ID ${lectureId} and its content:`, error);
       }
     );
     this.dialogRef.close(false);
@@ -100,6 +105,14 @@ export class ConfirmationDialogComponent {
     const currentUrl = this.router.url;
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([currentUrl]);
+    });
+  }
+
+  openSnackBar(message: string, action: string,): void {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
     });
   }
 }

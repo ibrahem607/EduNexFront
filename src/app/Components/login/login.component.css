@@ -8,10 +8,6 @@ label {
   font-size: 18px;
 }
 
-mat-form-field mat-label {
-  color: var(--bgHeader);
-}
-
 button {
   height: 55px !important;
   font-size: 18px;
@@ -26,3 +22,4 @@ p {
 p a:hover {
   text-decoration: underline !important;
 }
+

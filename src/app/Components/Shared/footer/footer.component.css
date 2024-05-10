@@ -157,16 +157,9 @@ ul {
   border-color: var(--wave2) !important;
 }
 
-mat-form-field mat-label {
-  color: var(--bgHeader);
-}
-
-mat-error {
-  color: red !important;
-}
-
 ::ng-deep .mat-mdc-dialog-surface,
-::ng-deep .mat-mdc-menu-panel {
+::ng-deep .mat-mdc-menu-panel,
+::ng-deep .mat-mdc-select-panel.ng-trigger {
   background-color: var(--bg) !important;
   box-shadow: var(--border) 0px 0px 0px 1px !important;
   border-radius: 10px !important;
@@ -174,6 +167,10 @@ mat-error {
 
 ::ng-deep .cdk-overlay-pane {
   margin-top: 0.5rem !important;
+}
+
+::ng-deep .cdk-overlay-pane {
+  direction: rtl !important;
 }
 
 ::ng-deep .mdc-snackbar__surface,
@@ -190,4 +187,19 @@ mat-error {
 ::ng-deep .mat-mdc-snack-bar-actions .mdc-button__label,
 ::ng-deep .mat-mdc-snack-bar-label {
   color: white !important;
+}
+
+::ng-deep
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled)
+  .mdc-list-item__primary-text,
+::ng-deep .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after {
+  color: #4bb543 !important;
+}
+
+::ng-deep mat-label {
+  color: var(--bgHeader) !important;
+}
+
+::ng-depp mat-error {
+  color: red !important;
 }

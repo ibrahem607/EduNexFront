@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICourse } from 'src/app/Model/icourse';
 import { ITeacher } from 'src/app/Model/iteacher';
@@ -10,32 +10,38 @@ import { TeachersService } from 'src/app/Services/Teachers/teachers.service';
   templateUrl: './teacher-details.component.html',
   styleUrls: ['./teacher-details.component.css']
 })
-export class TeacherDetailsComponent {
+export class TeacherDetailsComponent implements OnInit {
   teacher!: ITeacher;
-  teacherID: string;
+  teacherID!: string;
   courses: ICourse[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private teacherData: TeachersService, private courseData: CoursesService) {
-    this.teacherID = this.activatedRoute.snapshot.paramMap.get('id') ?? '';
-  }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private teacherData: TeachersService,
+    private courseData: CoursesService
+  ) { }
 
   ngOnInit(): void {
-    this.getTeacherById();
+    this.activatedRoute.params.subscribe(params => {
+      this.teacherID = params['id'];
+      this.getTeacherById(this.teacherID);
+    });
   }
 
-  getTeacherById() {
-    this.teacherData.getTeacherById(this.teacherID).subscribe(teacher => {
+  getTeacherById(teacherID: string) {
+    this.teacherData.getTeacherById(teacherID).subscribe(teacher => {
       this.teacher = teacher;
-      console.log(teacher)
       if (teacher) {
-        this.getAllCoursesForTeacher(teacher.name);
+        this.getAllCoursesForTeacher(teacherID);
       }
     });
   }
 
-  getAllCoursesForTeacher(teacherName: string) {
+  getAllCoursesForTeacher(teacherId: string) {
     this.courseData.getAllCourses().subscribe(courses => {
-      this.courses = courses.filter(course => course.teacherName === teacherName);
+      this.courses = courses.filter(course => {
+        console.log(course.teacherId)
+        course.teacherId === teacherId});
     });
   }
 }

@@ -63,7 +63,8 @@ export class AuthService {
 
           this.snackBar.open('  تم تسجيل الدخول بنجاح ', 'Close', {
             duration: 2000,
-            verticalPosition: 'top',
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
             panelClass: 'snackbar-success'
           });
 

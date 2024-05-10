@@ -133,6 +133,7 @@ section {
     flex-wrap: wrap;
     justify-content: end;
   }
+
   .custom-checkbox-container.teacherCheckbox {
     width: 100%;
   }
@@ -149,16 +150,20 @@ section {
     width: 100%;
     flex-grow: 1;
   }
+
   .card-container {
     margin-inline: auto;
   }
+
   section {
     flex-wrap: nowrap;
     flex-direction: column;
   }
+
   .teacher {
     flex-direction: column;
   }
+
   .teacher img {
     margin-top: 3rem;
     margin-bottom: 0rem;

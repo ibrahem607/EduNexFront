@@ -52,4 +52,12 @@ export class CoursesService {
   courseEnroll(studentCourse: any): Observable<ICourse> {
     return this.httpClient.post<ICourse>(`${this.URL}/api/Courses/enroll`, studentCourse);
   }
+
+  getCountStudents(courseId: number): Observable<number> {
+    return this.httpClient.get<number>(`${this.URL}/api/Courses/CountStudents?courseId=${courseId}`);
+  }
+
+  getCountLectures(courseId: number): Observable<number> {
+    return this.httpClient.get<number>(`${this.URL}/api/Courses/CountLectures?courseId=${courseId}`);
+  }
 }

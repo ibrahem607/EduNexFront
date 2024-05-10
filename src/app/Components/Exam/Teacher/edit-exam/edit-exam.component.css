@@ -145,6 +145,14 @@ form.container {
   gap: 2rem;
 }
 
+mat-form-field mat-label {
+  color: var(--bgHeader);
+}
+
+mat-error {
+  color: red !important;
+}
+
 @media (min-width: 992px) {
   .column {
     flex-direction: column;
@@ -154,25 +162,26 @@ form.container {
   .column {
     justify-content: center;
   }
+
   form.container {
     flex-direction: column;
   }
+
+
   .section-header {
     align-items: center;
   }
 }
 @media (max-width: 480px) {
-  /* .column {
-    flex-wrap: wrap;
-  }
- */
   .column-mobile {
     flex-direction: column;
   }
+
   .answer {
     align-items: center !important;
     gap: 1rem;
   }
+
   .truefalse {
     margin-bottom: 2rem;
   }

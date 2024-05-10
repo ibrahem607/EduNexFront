@@ -492,13 +492,18 @@ export class EditExamComponent implements OnInit {
   }
 
   openSnackBar(message: string, action: string): void {
-    const panelClass = message === 'تم حفظ الامتحان' ? ['snackbar-success'] : [];
+    let verticalPosition: 'top' | 'bottom' = 'bottom';
+    let horizontalPosition: 'start' | 'center' | 'end' | 'left' | 'right' = 'center';
+
+    if (message === 'غير متاح او لا يمكن الوصول') {
+      verticalPosition = 'top';
+      horizontalPosition = 'center';
+    }
 
     this.snackBar.open(message, action, {
       duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
-      panelClass: panelClass
+      verticalPosition: verticalPosition,
+      horizontalPosition: horizontalPosition,
     });
   }
 

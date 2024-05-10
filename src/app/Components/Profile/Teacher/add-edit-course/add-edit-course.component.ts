@@ -74,7 +74,6 @@ export class AddEditCourseComponent implements OnInit {
     );
   }
 
-
   updateCourse(courseData: any): void {
     const formData = new FormData();
     formData.append('CourseName', courseData.CourseName);
@@ -94,7 +93,6 @@ export class AddEditCourseComponent implements OnInit {
       );
   }
 
-
   onFileSelected(file: File) {
     if (file) {
       this.courseForm.patchValue({ thumbnail: file });
@@ -110,15 +108,17 @@ export class AddEditCourseComponent implements OnInit {
   }
 
   onYesClick(): void {
-
     if (this.courseForm.valid) {
       const formData = this.getCourseData();
       // console.log(formData)
+
       if (this.courseId !== null) {
         this.addCourse(formData);
       } else {
         this.addCourse(formData);
       }
+
+      this.dialogRef.close(false);
     } else {
       if (this.courseForm.get('thumbnail')?.errors?.['required']) {
         this.showSnackBar('صوره الكورس مطلوبة');

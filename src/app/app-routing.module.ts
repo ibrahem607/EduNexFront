@@ -24,6 +24,7 @@ import { LectureComponent } from './Components/lecture/lecture.component';
 
 const routes: Routes = [
   { path: "home", component: MainComponent },
+  { path: "", component: MainComponent },
   { path: "teacherSignup", component: TeacherSignUpPageComponent },
   { path: "course/:courseId/lesson/:lessonId/create", component: EditExamComponent },
   { path: "course/:courseId/lesson/:lessonId/view", component: StudentExamComponent },
@@ -43,7 +44,6 @@ const routes: Routes = [
   { path: "error", component: MainComponent },
   { path: "lesson/:id", component: LectureComponent },
   { path: "login", component: LoginComponent },
-  { path: "", component: LoginComponent },
   { path: "notfound", component: NotFoundComponent },
   { path: "**", redirectTo: "notfound" },
 ];

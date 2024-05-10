@@ -128,8 +128,8 @@ export class TeacherSignUpFormComponent {
             this.router.navigate(['/login']);
             this._snackBar.open('تم انشاء الحساب بنجاح', 'Close', {
               duration: 2000,
-              verticalPosition: 'top',
-              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+              horizontalPosition: 'right',
               panelClass: 'snackbar-success'
             });
           }

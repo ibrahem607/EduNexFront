@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnswerChoices, IExamResult } from 'src/app/Model/iexam-result';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
@@ -13,7 +13,13 @@ export class ExamResultComponent implements OnInit {
   result!: IExamResult;
   examId!: number;
 
-  constructor(private examData: ExamService, private route: ActivatedRoute, private studentData: AuthService ,private router:Router) { }
+  constructor(
+    private examData: ExamService,
+    private route: ActivatedRoute,
+    private studentData: AuthService,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -25,8 +31,7 @@ export class ExamResultComponent implements OnInit {
   getExamResult(examId: number) {
     this.examData.getSubmissionExam(examId, this.studentData.getUserId()).subscribe(result => {
       this.result = result;
-      console.log(this.result);
-      this.reloadCurrentRoute();
+      this.cdRef.detectChanges();
     });
   }
 
@@ -80,12 +85,5 @@ export class ExamResultComponent implements OnInit {
 
   isCorrectChoice(choice: string, correctAnswerIds: number[]): boolean {
     return correctAnswerIds.includes(parseInt(choice, 10));
-  }
-
-  reloadCurrentRoute(): void {
-    const currentUrl = this.router.url;
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([currentUrl]);
-    });
   }
 }

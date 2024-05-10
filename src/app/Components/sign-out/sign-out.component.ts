@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
@@ -14,6 +14,7 @@ export class SignOutComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private authService: AuthService,
     private router: Router,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   onNoClick(): void {
@@ -33,18 +34,12 @@ export class SignOutComponent {
     this.authService.logOut().subscribe(
       () => {
         console.log('Logout successful');
-        this.reloadCurrentRoute();
+        this.router.navigate(['/']);
+        this.cdRef.detectChanges();
       },
       error => {
         console.error('Logout failed:', error);
       }
     );
-  }
-
-  reloadCurrentRoute(): void {
-    const currentUrl = this.router.url;
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([currentUrl]);
-    });
   }
 }

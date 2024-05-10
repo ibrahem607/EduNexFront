@@ -76,19 +76,19 @@ export class TeacherProfileComponent {
     }
   }
 
-  openSignOutDialog(): void {
-    const dialogRef = this.dialog.open(SignOutComponent, {
-      data: {
-        message: 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
-        confirmButtonText: 'تسجيل الخروج'
-      }
-    });
+    openSignOutDialog(): void {
+      const dialogRef = this.dialog.open(SignOutComponent, {
+        data: {
+          message: 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
+          confirmButtonText: 'تسجيل الخروج'
+        }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'logout') {
-      }
-    });
-  }
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'logout') {
+        }
+      });
+    }
 
   openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {

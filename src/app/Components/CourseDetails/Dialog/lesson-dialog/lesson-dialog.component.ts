@@ -19,7 +19,7 @@ export class LessonDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private lectureData: LecturesService,
     private userData: AuthService,
-    private router: Router,
+    private router: Router
   ) {
     this.userId = this.userData.getUserId();
   }

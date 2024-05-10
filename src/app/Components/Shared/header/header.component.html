@@ -71,7 +71,7 @@
             </div>
           </label>
 
-          <button *ngIf="!userData" mat-button routerLink="/login" class="disk" style="border-radius: 20rem;">
+          <button *ngIf="!(userData && userExist())" mat-button routerLink="/login" class="disk" style="border-radius: 20rem;">
             <div class="flex">
               <i class="fa-regular fa-circle-user"></i>
               &#160;
@@ -79,7 +79,8 @@
             </div>
           </button>
 
-          <button *ngIf="!userData" mat-button routerLink="/signup" class="custom-button disk btn-gradient">طالب
+          <button *ngIf="!(userData && userExist())" mat-button routerLink="/signup"
+            class="custom-button disk btn-gradient">طالب
             جديد</button>
 
           <button mat-icon-button aria-label="Toggle Right Sidebar" class="menu-btn toggle-btn"
@@ -87,8 +88,8 @@
             <mat-icon>menu</mat-icon>
           </button>
 
-          <div *ngIf="userData" class="nav-item dropdown" matDropdown>
-            <button class="nav-link dropdown-toggle rounded-5س" [matMenuTriggerFor]="menu">
+          <div *ngIf="userData && userExist()" class="nav-item dropdown" matDropdown>
+            <button class="nav-link dropdown-toggle rounded-5" [matMenuTriggerFor]="menu">
               <img src="https://via.placeholder.com/40" alt="profile" class="rounded-5 profile" width="40" height="40">
               {{userData.firstName}} {{userData.lastName}}
             </button>

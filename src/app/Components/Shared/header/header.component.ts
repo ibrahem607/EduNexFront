@@ -163,7 +163,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openSignOutDialog(): void {
+  public openSignOutDialog(): void {
     const dialogRef = this.dialog.open(SignOutComponent, {
       data: {
         message: 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
@@ -172,8 +172,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'logout') {
+      if (result) {
+        this.userData = null;
       }
     });
+  }
+  userExist(){
+    return localStorage.getItem('UserId');
   }
 }

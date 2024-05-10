@@ -33,7 +33,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { AppComponent } from './app.component';;
+import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/login/login.component';
 import { HeaderComponent } from './Components/Shared/header/header.component';
 import { CoursesComponent } from './Components/courses/courses.component';
@@ -103,9 +103,6 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-// import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
-// import { CustomCloudNavbarComponent } from './Components/Shared/custom-cloud-navbar/custom-cloud-navbar.component';
-
 
 @NgModule({
   declarations: [
@@ -213,6 +210,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     OverlayContainer,
     DatePipe
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

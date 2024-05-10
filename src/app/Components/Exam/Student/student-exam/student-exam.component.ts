@@ -274,8 +274,8 @@ export class StudentExamComponent implements OnInit {
   openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {
       duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
     });
   }
 
