@@ -203,3 +203,7 @@ ul {
 ::ng-depp mat-error {
   color: red !important;
 }
+
+::ng-deep .mat-mdc-card {
+  border-radius: 10px !important;
+}

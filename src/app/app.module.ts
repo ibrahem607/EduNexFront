@@ -103,6 +103,8 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { ParentsComponent } from './Components/parents/parents.component';
+import { AboutPlatformComponent } from './Components/about-platform/about-platform.component';
 
 @NgModule({
   declarations: [
@@ -167,7 +169,9 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     StudentSignUpFormComponent,
     TeacherSignUpFormComponent,
     StudentSettingsFormComponent,
-    TeacherSettingsFormComponent
+    TeacherSettingsFormComponent,
+    ParentsComponent,
+    AboutPlatformComponent
   ],
   imports: [
     BrowserModule,

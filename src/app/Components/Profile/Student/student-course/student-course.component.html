@@ -1,4 +1,4 @@
-<div class="overflow-x">
+<div class="overflow-x" *ngIf="course">
   <div class="table-container">
     <table mat-table [dataSource]="course" class="mat-elevation-z8">
       <!-- Course Column -->
@@ -17,4 +17,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
+</div>
+
+<div *ngIf="!course" class="spinner flex justify-content-center">
+  <mat-spinner></mat-spinner>
 </div>

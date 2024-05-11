@@ -1,0 +1,92 @@
+<div class="container d-flex justify-content-center">
+  <div class="flex-grow-1">
+    <div class="form-container flex justify-content-center" *ngIf="!studentData">
+      <form [formGroup]="changePasswordForm" dir="rtl"
+        class="flex flex-wrap flex-column justify-content-center gap-4 col-lg-10 p-4" (ngSubmit)="onSubmit()">
+
+        <h3 class="text-second text-center">
+          متابعه ولي الأمر
+        </h3>
+
+        <h5 class="text-second text-center">
+          تقدر تتابع مستوي ابنائك بكل سهوله بمجرد ان تدخل الرقم القومي
+        </h5>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>الرقم القومي للطالب</mat-label>
+          <input matInput type="number" name="studentNationalId" formControlName="studentNationalId"
+            id="studentNationalId" placeholder="الرقم القومي" aria-label="الرقم القومي للطالب">
+          <mat-icon matSuffix class="fa-solid fa-mobile-screen-button"></mat-icon>
+          <mat-error *ngIf="studentNationalId?.touched && studentNationalId?.invalid">
+            <span *ngIf="studentNationalId?.errors?.['required']" class="text-danger">الرقم القومي مطلوب</span>
+            <span *ngIf="studentNationalId?.errors?.['pattern']" class="text-danger">الرقم القومي غير صحيح</span>
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-button type="submit" class="custom-button">
+          <span *ngIf="!loading">متابعة الطالب</span>
+          <span *ngIf="loading"><mat-spinner diameter="20"></mat-spinner></span>
+        </button>
+      </form>
+    </div>
+
+    <div class="tables-container flex justify-content-start flex-column" *ngIf="studentData">
+      <div class="col-lg-10">
+        <h3 class="text-center">{{studentData.studentName}}</h3>
+        <div class="custom-checkbox-container d-flex flex-wrap gap-2 my-3">
+          <button mat-button *ngFor="let opt of options; let i = index" class="custom-checkbox"
+            [class.checked]="opt.selected" (click)="toggleOption(i)">
+            <span>{{ opt.label }}</span>
+          </button>
+        </div>
+        <!-- Student Courses Table -->
+        <div *ngIf="options[0].selected" class="overflow-x">
+          <mat-table [dataSource]="studentData.studentCourses">
+            <!-- Course Name Column -->
+            <ng-container matColumnDef="course">
+              <mat-header-cell *matHeaderCellDef>الكورس</mat-header-cell>
+              <mat-cell *matCellDef="let course">
+                <img [src]="course.courseThumbnail" class="courseThumbnail" alt="courseThumbnail">
+                {{ course.courseName }}
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="['course']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['course'];"></mat-row>
+          </mat-table>
+        </div>
+        <!-- Student Exams Table -->
+        <div *ngIf="options[1].selected" class="overflow-x">
+          <mat-table [dataSource]="studentData.studentExams">
+            <!-- Exam Id Column -->
+            <ng-container matColumnDef="examId">
+              <mat-header-cell *matHeaderCellDef>رقم الامتحان</mat-header-cell>
+              <mat-cell *matCellDef="let exam">{{ exam.examId }}</mat-cell>
+            </ng-container>
+
+            <!-- Start Time Column -->
+            <ng-container matColumnDef="startTime">
+              <mat-header-cell *matHeaderCellDef>وقت البدء</mat-header-cell>
+              <mat-cell *matCellDef="let exam">{{ exam.startTime | date: 'yyyy-MM-dd'}}</mat-cell>
+            </ng-container>
+
+            <!-- End Time Column -->
+            <ng-container matColumnDef="endTime">
+              <mat-header-cell *matHeaderCellDef>وقت الانتهاء</mat-header-cell>
+              <mat-cell *matCellDef="let exam">{{ exam.endTime | date: 'yyyy-MM-dd'}}</mat-cell>
+            </ng-container>
+
+            <!-- Score Column -->
+            <ng-container matColumnDef="score">
+              <mat-header-cell *matHeaderCellDef>النتيجة</mat-header-cell>
+              <mat-cell *matCellDef="let exam">{{ exam.score }}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="['examId', 'startTime', 'endTime', 'score']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['examId', 'startTime', 'endTime', 'score'];"></mat-row>
+          </mat-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

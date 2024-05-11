@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICourse } from 'src/app/Model/icourse';
+import { ICourse, ISubject } from 'src/app/Model/icourse';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +59,13 @@ export class CoursesService {
 
   getCountLectures(courseId: number): Observable<number> {
     return this.httpClient.get<number>(`${this.URL}/api/Courses/CountLectures?courseId=${courseId}`);
+  }
+
+  getAllTeacherCourses(teacherId: string): Observable<ICourse[]> {
+    return this.httpClient.get<ICourse[]>(`${this.URL}/api/Courses/GetTeacherCourses?teacherId=${teacherId}`);
+  }
+
+  getAllSubjects(): Observable<ISubject[]> {
+    return this.httpClient.get<ISubject[]>(`${this.URL}/api/Courses/get-All-Subject`);
   }
 }

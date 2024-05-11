@@ -21,6 +21,8 @@ import { PendingProfileComponent } from './Components/Profile/Teacher/pending-pr
 import { EditExamComponent } from './Components/Exam/Teacher/edit-exam/edit-exam.component';
 import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-course/add-edit-course.component';
 import { LectureComponent } from './Components/lecture/lecture.component';
+import { ParentsComponent } from './Components/parents/parents.component';
+import { AboutPlatformComponent } from './Components/about-platform/about-platform.component';
 
 const routes: Routes = [
   { path: "home", component: MainComponent },
@@ -40,7 +42,8 @@ const routes: Routes = [
   { path: "teacher/:id", component: TeacherDetailsComponent },
   { path: "lesson/:id", component: LectureComponent },
   { path: "adminDash", component: AdminDashComponent },
-  { path: "home", component: MainComponent },
+  { path: "parents", component: ParentsComponent },
+  { path: "about", component: AboutPlatformComponent },
   { path: "error", component: MainComponent },
   { path: "lesson/:id", component: LectureComponent },
   { path: "login", component: LoginComponent },

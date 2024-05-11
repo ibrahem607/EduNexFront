@@ -1,15 +1,15 @@
-<form class="form-floating" action="" method="" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+<form class="form-floating" action="" method="" [formGroup]="updateStudentForm" (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col">
       <mat-form-field appearance="outline">
         <mat-label>الأسم </mat-label>
-        <input matInput type="text" name="fullName" formControlName="fullName" id="fullName" placeholder="اسم الطالب"
+        <input matInput type="text" name="firstName" formControlName="firstName" id="firstName" placeholder="اسم الطالب"
           aria-label=" اسم الطالب">
         <mat-icon matSuffix class="fa-regular fa-user"></mat-icon>
-        <mat-error *ngIf="fullName?.touched && fullName?.invalid">
-          <span *ngIf="fullName?.errors?.['pattern']" class="text-danger">الأسم يجب أن يكون 4 حروف على الأقل ولا
+        <mat-error *ngIf="firstName?.touched && firstName?.invalid">
+          <span *ngIf="firstName?.errors?.['pattern']" class="text-danger">الأسم يجب أن يكون 4 حروف على الأقل ولا
             يحتوي على أرقام</span>
-          <span *ngIf="fullName?.errors?.['required']" class="text-danger">الأسم مطلوب</span>
+          <span *ngIf="firstName?.errors?.['required']" class="text-danger">الأسم مطلوب</span>
         </mat-error>
       </mat-form-field>
     </div>
@@ -30,13 +30,13 @@
     <div class="col">
       <mat-form-field appearance="outline">
         <mat-label>رقم تليفون الطالب</mat-label>
-        <input matInput type="text" name="studentPhoneNumber" formControlName="studentPhoneNumber"
-          id="studentPhoneNumber" placeholder="رقم الموبايل" aria-label="رقم تليفون الطالب">
+        <input matInput type="text" name="phoneNumber" formControlName="phoneNumber"
+          id="phoneNumber" placeholder="رقم الموبايل" aria-label="رقم تليفون الطالب">
         <mat-icon matSuffix class="fa-solid fa-mobile-screen-button"></mat-icon>
-        <mat-error *ngIf="studentPhoneNumber?.touched && studentPhoneNumber?.invalid">
-          <span *ngIf="studentPhoneNumber?.errors?.['pattern']" class="text-danger">رقم الهاتف يجب أن يكون من 11 رقم
+        <mat-error *ngIf="phoneNumber?.touched && phoneNumber?.invalid">
+          <span *ngIf="phoneNumber?.errors?.['pattern']" class="text-danger">رقم الهاتف يجب أن يكون من 11 رقم
             يبدأ بـ 010 أو 011 أو 012 أو 015</span>
-          <span *ngIf="studentPhoneNumber?.errors?.['required']" class="text-danger">رقم الهاتف مطلوب</span>
+          <span *ngIf="phoneNumber?.errors?.['required']" class="text-danger">رقم الهاتف مطلوب</span>
         </mat-error>
       </mat-form-field>
     </div>
@@ -44,13 +44,13 @@
     <div class="col">
       <mat-form-field appearance="outline">
         <mat-label>رقم تليفون ولي الأمر</mat-label>
-        <input matInput type="text" name="fatherPhoneNumber" formControlName="fatherPhoneNumber" id="fatherPhoneNumber"
+        <input matInput type="text" name="parentPhoneNumber" formControlName="parentPhoneNumber" id="parentPhoneNumber"
           placeholder="رقم الموبايل" aria-label="رقم تليفون ولي الأمر">
         <mat-icon matSuffix class="fa-solid fa-mobile-screen-button"></mat-icon>
-        <mat-error *ngIf="fatherPhoneNumber?.touched && fatherPhoneNumber?.invalid">
-          <span *ngIf="fatherPhoneNumber?.errors?.['pattern']" class="text-danger">رقم الهاتف يجب أن يكون من 11 رقم
+        <mat-error *ngIf="parentPhoneNumber?.touched && parentPhoneNumber?.invalid">
+          <span *ngIf="parentPhoneNumber?.errors?.['pattern']" class="text-danger">رقم الهاتف يجب أن يكون من 11 رقم
             يبدأ بـ 010 أو 011 أو 012 أو 015</span>
-          <span *ngIf="fatherPhoneNumber?.errors?.['required']" class="text-danger">رقم الهاتف مطلوب</span>
+          <span *ngIf="parentPhoneNumber?.errors?.['required']" class="text-danger">رقم الهاتف مطلوب</span>
         </mat-error>
       </mat-form-field>
     </div>
@@ -73,11 +73,11 @@
     <div class="col">
       <mat-form-field appearance="outline">
         <mat-label>تاريخ الميلاد</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="birthday" placeholder="تاريخ الميلاد"
+        <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="تاريخ الميلاد"
           aria-label="تاريخ الميلاد" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="signupForm.get('birthday')?.touched && signupForm.get('birthday')?.errors?.['required']">تاريخ
+        <mat-error *ngIf="updateStudentForm.get('birthDate')?.touched && updateStudentForm.get('birthDate')?.errors?.['required']">تاريخ
           الميلاد مطلوب</mat-error>
       </mat-form-field>
     </div>
@@ -86,20 +86,20 @@
   <div class="col">
     <mat-form-field appearance="outline">
       <mat-label>الجنس</mat-label>
-      <mat-select formControlName="sex" placeholder="اختر الجنس" aria-label="الجنس" required>
+      <mat-select formControlName="gender" placeholder="اختر الجنس" aria-label="الجنس" required>
         <mat-option value="" disabled selected hidden>اختر الجنس</mat-option>
         <mat-option value="Male">ذكر</mat-option>
         <mat-option value="Female">أنثى</mat-option>
       </mat-select>
       <mat-icon matSuffix class="fa-solid fa-mars-and-venus"></mat-icon>
-      <mat-error *ngIf="sex?.touched && sex?.invalid"> يجب تحديد الجنس</mat-error>
+      <mat-error *ngIf="gender?.touched && gender?.invalid"> يجب تحديد الجنس</mat-error>
     </mat-form-field>
   </div>
 
   <mat-form-field appearance="outline">
     <mat-label>المحافظة</mat-label>
-    <mat-select formControlName="governorate" placeholder="اختر المحافظة" aria-label="المحافظة" required
-      [ngClass]="{'is-invalid': isInputFocused}" id="Governorate" name="Governorate">
+    <mat-select formControlName="city" placeholder="اختر المحافظة" aria-label="المحافظة" required
+      [ngClass]="{'is-invalid': isInputFocused}" id="city" name="city">
       <mat-option value="" disabled selected hidden>اختر المحافظة</mat-option>
       <mat-option value="cairo">القاهرة</mat-option>
       <mat-option value="qalyubia">القليوبية</mat-option>
@@ -128,20 +128,20 @@
       <mat-option value="south_sinai">جنوب سيناء</mat-option>
     </mat-select>
     <mat-icon matSuffix class="fa-solid fa-location-dot"></mat-icon>
-    <mat-error *ngIf="governorate?.touched && governorate?.invalid">يجب تحديد المحافظة</mat-error>
+    <mat-error *ngIf="city?.touched && city?.invalid">يجب تحديد المحافظة</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>المرحلة التعليمية</mat-label>
-    <mat-select formControlName="education" placeholder="اختر المرحلة التعليمية" aria-label="المرحلة التعليمية" required
-      id="education" name="education">
+    <mat-select formControlName="levelId" placeholder="اختر المرحلة التعليمية" aria-label="المرحلة التعليمية" required
+      id="levelId" name="levelId">
       <mat-option value="" disabled selected hidden>اختر المرحلة التعليمية</mat-option>
       <mat-option value="1">الصف الأول الثانوي</mat-option>
       <mat-option value="2">الصف الثاني الثانوي</mat-option>
       <mat-option value="3">الصف الثالث الثانوي</mat-option>
     </mat-select>
     <mat-icon matSuffix class="fa-solid fa-user-graduate"></mat-icon>
-    <mat-error *ngIf="education?.touched && education?.invalid">يجب تحديد المرحلة التعليمية</mat-error>
+    <mat-error *ngIf="levelId?.touched && levelId?.invalid">يجب تحديد المرحلة التعليمية</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">

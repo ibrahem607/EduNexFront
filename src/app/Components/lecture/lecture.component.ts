@@ -46,6 +46,7 @@ export class LectureComponent implements OnInit {
       this.lectureService.getLectureById(this.courseId, lectureId, this.userId).subscribe(
         lecture => {
           this.lecture = lecture;
+          this.initOptions();
         },
         error => {
           if (error.status === 404 || error.status === 403) {

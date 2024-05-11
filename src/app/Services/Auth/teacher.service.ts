@@ -55,8 +55,10 @@ export class TeacherService {
   }
 
   updateTeacherProfile(id: string, data: any): Observable<any> {
-    const url = `${this.baseUrl}/api/Teacher/${id}`;
-    console.log(`${url} and Data: ${data}`)
-    return this.httpClient.put(url, data);
+    return this.httpClient.put(`${this.baseUrl}/api/Teacher/${id}`, data);
+  }
+
+  editTeacher(id: string, data: any): Observable<any> {
+    return this.httpClient.put(`${this.baseUrl}/api/Teacher/AllTeacherData/${id}`, data);
   }
 }

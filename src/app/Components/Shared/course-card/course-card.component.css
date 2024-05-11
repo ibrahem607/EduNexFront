@@ -11,10 +11,6 @@
 .example-card:hover {
   transform: rotateY(-5deg) rotateX(10deg);
   cursor: pointer;
-  -webkit-transform: rotateY(-5deg) rotateX(10deg);
-  -moz-transform: rotateY(-5deg) rotateX(10deg);
-  -ms-transform: rotateY(-5deg) rotateX(10deg);
-  -o-transform: rotateY(-5deg) rotateX(10deg);
 }
 
 .top-bottom-container {
@@ -41,11 +37,11 @@
   z-index: 1;
 }
 
-.thumbnail{
-  max-width: 325px;
-  max-height: 225px;
-  width: auto;
-  height: auto
+.thumbnail {
+  width: 325px;
+  height: 225px;
+  /* width: auto;
+  height: auto */
 }
 
 .name {
@@ -100,6 +96,6 @@
   flex-wrap: wrap;
 }
 
-a{
-  all:unset
+a {
+  all: unset;
 }

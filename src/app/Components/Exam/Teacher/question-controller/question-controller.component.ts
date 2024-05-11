@@ -29,6 +29,7 @@ export class QuestionControllerComponent implements OnInit {
     const questionsArray = this.examForm?.get('questions') as FormArray | null;
     if (questionsArray && questionsArray.controls.length < 12) {
       this.addQuestionClicked.emit();
+      this.sendIndexToParent(questionsArray.controls.length -1)
     }
   }
 

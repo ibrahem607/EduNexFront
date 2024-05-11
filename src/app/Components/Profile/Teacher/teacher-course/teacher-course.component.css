@@ -8,7 +8,7 @@ table,
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
+  flex-grow: 1;
 }
 
 .overflow-x {
@@ -19,7 +19,7 @@ table {
 }
 
 .table-container {
-  width: 100%;
+  flex-grow: 1;
 }
 
 tr td:first-of-type,
@@ -53,6 +53,25 @@ th {
 .buttons ::ng-deep .mat-icon {
   overflow: unset !important;
   width: 17px !important;
+}
+
+tr th:first-child,
+tr td:first-child {
+  text-align: start;
+}
+
+.course-thumbnail {
+  width: 65px;
+  height: 65px;
+  border-radius: 20rem;
+}
+
+.spinner {
+  min-height: 90dvh;
+}
+
+.spinner ::ng-deep circle {
+  stroke: var(--wave2);
 }
 
 @media (min-width: 992px) {

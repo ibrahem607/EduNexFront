@@ -26,13 +26,9 @@
   width: 150px;
 }
 
-.thumbnail{
+.thumbnail {
   width: 325px;
   height: 225px;
-}
-
-::ng-deep .mat-mdc-card {
-  border-radius: 10px !important;
 }
 
 @media (max-width: 990px) {

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,25 +11,29 @@ import { AuthService } from 'src/app/Services/Auth/auth.service';
 })
 export class StudentSettingsFormComponent {
   isInputFocused: boolean = false;
-  signupForm!: FormGroup;
+  updateStudentForm!: FormGroup;
   errorMeg: string = '';
 
-  constructor(private fb: FormBuilder, private studentData: AuthService, private _snackBar: MatSnackBar) { }
+  constructor(
+    private fb: FormBuilder,
+    private studentData: AuthService,
+    private _snackBar: MatSnackBar,
+    private datePipe: DatePipe
+  ) { }
 
   ngOnInit() {
-    this.signupForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.pattern('^(?!\d).{4,}$')]],
+    this.updateStudentForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.pattern('^(?!\d).{4,}$')]],
       lastName: ['', Validators.required],
-      studentPhoneNumber: ['', [Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
-      fatherPhoneNumber: ['', [Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
+      parentPhoneNumber: ['', [Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
       religion: ['', Validators.required],
-      birthday: ['', Validators.required],
-      sex: ['', Validators.required],
-      governorate: ['', Validators.required],
-      education: ['', Validators.required],
+      birthDate: ['', Validators.required],
+      gender: ['', Validators.required],
+      city: ['', Validators.required],
+      levelId: ['', Validators.required],
       address: ['', Validators.required],
     });
-
 
     this.getStudentData(this.studentData.getUserId());
   }
@@ -41,63 +46,91 @@ export class StudentSettingsFormComponent {
   }
 
   get password() {
-    return this.signupForm.get('password')
+    return this.updateStudentForm.get('password')
   }
 
-  get fullName() {
-    return this.signupForm.get('fullName')
+  get firstName() {
+    return this.updateStudentForm.get('firstName')
   }
   get lastName() {
-    return this.signupForm.get('lastName')
+    return this.updateStudentForm.get('lastName')
   }
 
-  get studentPhoneNumber() {
-    return this.signupForm.get('studentPhoneNumber')
+  get phoneNumber() {
+    return this.updateStudentForm.get('phoneNumber')
   }
 
-  get fatherPhoneNumber() {
-    return this.signupForm.get('fatherPhoneNumber')
+  get parentPhoneNumber() {
+    return this.updateStudentForm.get('parentPhoneNumber')
   }
   get religion() {
-    return this.signupForm.get('religion')
+    return this.updateStudentForm.get('religion')
   }
 
-  get birthday() {
-    return this.signupForm.get('birthday')
+  get dateOfBirth() {
+    return this.updateStudentForm.get('dateOfBirth')
   }
 
-  get sex() {
-    return this.signupForm.get('sex')
+  get gender() {
+    return this.updateStudentForm.get('gender')
   }
-  get education() {
-    return this.signupForm.get('education')
+  get levelId() {
+    return this.updateStudentForm.get('levelId')
   }
 
-  get governorate() {
-    return this.signupForm.get('governorate')
+  get city() {
+    return this.updateStudentForm.get('city')
   }
 
   get address() {
-    return this.signupForm.get('address')
+    return this.updateStudentForm.get('address')
   }
 
   setFormValues(student: any) {
-    console.log(this.signupForm)
-    this.signupForm.patchValue({
-      fullName: student.firstName,
+    console.log(this.updateStudentForm)
+    this.updateStudentForm.patchValue({
+      firstName: student.firstName,
       lastName: student.lastName,
-      studentPhoneNumber: student.phoneNumber,
-      fatherPhoneNumber: student.parentPhoneNumber,
-      birthday: student.dateOfBirth,
+      phoneNumber: student.phoneNumber,
+      parentPhoneNumber: student.parentPhoneNumber,
+      birthDate: student.dateOfBirth,
       religion: student.religion,
-      sex: student.gender,
-      governorate: student.city,
+      gender: student.gender,
+      city: student.city,
       address: student.address,
-      education: student.levelId.toString(),
+      levelId: student.levelId.toString(),
+    });
+  }
+
+  onUpdate(id: string) {
+    const formData = this.updateStudentForm.value;
+    const formattedDateOfBirth = this.datePipe.transform(this.updateStudentForm.value.birthDate, 'yyyy-MM-dd');
+    formData.birthDate = formattedDateOfBirth;
+
+    this.studentData.editStudent(id, formData).subscribe(
+      (response) => {
+        console.log(response);
+        this.openSnackBar('تم تحديث البيانات', 'حسناَ');
+      },
+      (error) => {
+        if(error.status == 200){
+          this.openSnackBar('تم تحديث البيانات', 'حسناَ');
+        }
+        console.error(error);
+      }
+    );
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
+      panelClass: 'snackbar-success'
     });
   }
 
   onSubmit() {
-
+    this.onUpdate(this.studentData.getUserId());
   }
 }

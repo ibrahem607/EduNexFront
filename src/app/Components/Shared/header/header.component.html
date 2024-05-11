@@ -16,7 +16,7 @@
       <button mat-button routerLink="/teachers" routerLinkActive="active">المدرسين</button>
       <button mat-button routerLink="/about" routerLinkActive="active">عن المنصة</button>
       <!-- <button mat-button routerLink="/exams">امتحانات عامة</button> -->
-      <button mat-button routerLink="/Parent" routerLinkActive="active">ولي الأمر</button>
+      <button mat-button routerLink="/parents" routerLinkActive="active">ولي الأمر</button>
     </div>
     <hr>
     <div *ngIf="userData" class="flex gap-2">
@@ -50,7 +50,7 @@
             (click)="moveMarker(button4)">عن
             المنصة</button>
           <!-- <button  routerLink="/exams">امتحانات عامة</button> -->
-          <button #button5 routerLink="/Parent" class="unset-button" routerLinkActive="active"
+          <button #button5 routerLink="/parents" class="unset-button" routerLinkActive="active"
             (click)="moveMarker(button5)">ولي
             الأمر</button>
           <div id="marker"></div>
@@ -71,7 +71,8 @@
             </div>
           </label>
 
-          <button *ngIf="!(userData && userExist())" mat-button routerLink="/login" class="disk" style="border-radius: 20rem;">
+          <button *ngIf="!(userData && userExist())" mat-button routerLink="/login" class="disk"
+            style="border-radius: 20rem;">
             <div class="flex">
               <i class="fa-regular fa-circle-user"></i>
               &#160;
@@ -89,9 +90,10 @@
           </button>
 
           <div *ngIf="userData && userExist()" class="nav-item dropdown" matDropdown>
-            <button class="nav-link dropdown-toggle rounded-5" [matMenuTriggerFor]="menu">
-              <img src="https://via.placeholder.com/40" alt="profile" class="rounded-5 profile" width="40" height="40">
-              {{userData.firstName}} {{userData.lastName}}
+            <button mat-button class="nav-link dropdown-toggle rounded-5 py-4" [matMenuTriggerFor]="menu">
+              <img src="https://via.placeholder.com/40" alt="profile" class="rounded-5 profile" width="40" height="40"
+                *ngIf="role === 'Teacher'">
+              <span class="mx-1"> {{userData.firstName}} {{userData.lastName}}</span>
             </button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item

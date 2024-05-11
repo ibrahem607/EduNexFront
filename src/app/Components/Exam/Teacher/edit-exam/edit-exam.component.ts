@@ -494,16 +494,28 @@ export class EditExamComponent implements OnInit {
   openSnackBar(message: string, action: string): void {
     let verticalPosition: 'top' | 'bottom' = 'bottom';
     let horizontalPosition: 'start' | 'center' | 'end' | 'left' | 'right' = 'center';
+    let panelClass: string[] = [];
 
+    // Determine position based on message
     if (message === 'غير متاح او لا يمكن الوصول') {
       verticalPosition = 'top';
       horizontalPosition = 'center';
+    } else {
+      verticalPosition = 'bottom';
+      horizontalPosition = 'right';
     }
 
+    // Determine panel class based on message
+    if (message === 'تم حفظ الامتحان') {
+      panelClass.push('snackbar-success');
+    }
+
+    // Open Snackbar with specified configuration
     this.snackBar.open(message, action, {
       duration: 2000,
       verticalPosition: verticalPosition,
       horizontalPosition: horizontalPosition,
+      panelClass: panelClass
     });
   }
 
@@ -525,7 +537,6 @@ export class EditExamComponent implements OnInit {
     this.formSubmitted = true;
 
     if (this.examForm.valid) {
-      //this.removeQuestion(0);this.removeQuestion(1);this.removeQuestion(2);this.removeQuestion(4);this.removeQuestion(3);this.removeQuestion(5);this.removeQuestion(6);this.removeQuestion(7);this.removeQuestion(8);this.removeQuestion(9);
       console.log('Form submitted successfully!');
 
       const startDate = convertDateFormat(this.examForm.value.startDate);

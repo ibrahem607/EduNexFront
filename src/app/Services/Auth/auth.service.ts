@@ -170,4 +170,8 @@ export class AuthService {
   logOut(): Observable<void> {
     return this.httpClient.post<void>(`${this.baseUrl}/api/Auth/logout`, null);
   }
+
+  editStudent(id: string, student: any): Observable<any> {
+    return this.httpClient.put(`${this.baseUrl}/api/Student/Student/${id}`, student);
+  }
 }

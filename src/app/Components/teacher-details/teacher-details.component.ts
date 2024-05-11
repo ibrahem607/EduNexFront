@@ -40,8 +40,8 @@ export class TeacherDetailsComponent implements OnInit {
   getAllCoursesForTeacher(teacherId: string) {
     this.courseData.getAllCourses().subscribe(courses => {
       this.courses = courses.filter(course => {
-        console.log(course.teacherId)
-        course.teacherId === teacherId});
+        return course.teacherId === teacherId;
+      });
     });
   }
 }

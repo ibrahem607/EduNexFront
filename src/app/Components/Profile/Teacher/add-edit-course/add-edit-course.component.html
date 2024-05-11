@@ -1,9 +1,8 @@
 <form [formGroup]="courseForm" class="container p-4 pb-5" (ngSubmit)="onYesClick()" dir="rtl">
 
-
   <div class="d-flex flex-row flex-md-column justify-content-between">
     <div class="d-flex align-items-start justify-content-between close">
-      <button mat-icon-button (click)="onNoClick()" style="color: red;">
+      <button mat-icon-button type="button" (click)="onNoClick()" style="color: red;">
         <mat-icon>close</mat-icon>
       </button>
       <div></div>
@@ -11,7 +10,7 @@
 
     <div class="flex gap-2 mx-auto">
       <app-image-uploader (imageSelected)="onFileSelected($event)" (imageDeleted)="onImageDeleted()"
-        (formSubmitted)="onYesClick()"></app-image-uploader>
+        (formSubmitted)="onYesClick()" [thumbnail]="courseForm.get('thumbnail')?.value"></app-image-uploader>
     </div>
   </div>
 
@@ -31,14 +30,16 @@
     </mat-form-field>
   </div>
 
-  <div class="flex flex-md-row flex-column justify-content-between gap-3">
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>اسم المادة</mat-label>
-      <input matInput formControlName="subjectId" id="subjectId" placeholder="اسم المادة" required>
-      <mat-icon matSuffix>subject</mat-icon>
-      <mat-error *ngIf="courseForm.get('subjectId')?.errors?.['required']">اسم المادة مطلوب</mat-error>
-    </mat-form-field>
-  </div>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>اسم المادة</mat-label>
+    <mat-select formControlName="subjectId" id="subjectId" placeholder="اسم المادة" required>
+      <mat-option *ngFor="let subject of subjects" [value]="subject.id">
+        {{ subject.subjectName }}
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix>subject</mat-icon>
+    <mat-error *ngIf="courseForm.get('subjectId')?.errors?.['required']">اسم المادة مطلوب</mat-error>
+  </mat-form-field>
 
   <div class="flex justify-content-center">
     <button mat-raised-button class="custom-button" type="submit">{{ data.confirmButtonText }}</button>

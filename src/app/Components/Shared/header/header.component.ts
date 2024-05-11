@@ -80,7 +80,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       }
     })
 
-    console.log(this.userData)
+    // console.log(this.userData)
 
     const savedTheme = localStorage.getItem('themePreference');
     const currentTheme = savedTheme === 'dark';

@@ -74,6 +74,14 @@ th {
   color: var(--wave6);
 }
 
+.spinner {
+  min-height: 90dvh;
+}
+
+.spinner ::ng-deep circle {
+  stroke: var(--wave2);
+}
+
 @media (min-width: 992px) {
   .overflow-x {
     margin-top: calc(100px + 1rem);

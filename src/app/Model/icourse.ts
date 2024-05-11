@@ -5,6 +5,7 @@ export interface ICourse {
   courseType: string,
   price: number,
   subjectName: string,
+  subjectId:number,
   teacherName: string,
   teacherId: string,
   aboutTeacher:string,
@@ -34,4 +35,9 @@ export interface IAttachment {
   id?: number,
   attachmentTitle: string,
   attachmentPath: string
+}
+
+export interface ISubject {
+  id?: number,
+  subjectName: string,
 }

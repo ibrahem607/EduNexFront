@@ -9,7 +9,7 @@ export class CustomPaginationComponent implements OnChanges {
   @Output() pageChanged: EventEmitter<number> = new EventEmitter();
   @Output() lengthChanged: EventEmitter<number> = new EventEmitter();
   @Input() length!: number;
-  @Input() itemsPerPage: number = 5;
+  @Input() itemsPerPage: number = 6;
   currentPage: number = 1;
   totalPages!: number;
 
@@ -20,7 +20,7 @@ export class CustomPaginationComponent implements OnChanges {
   }
 
   calculateTotalPages(): void {
-    this.totalPages = Math.ceil((this.length - 1) / this.itemsPerPage);
+    this.totalPages = Math.ceil((this.length) / this.itemsPerPage);
   }
 
   goToPage(page: number): void {

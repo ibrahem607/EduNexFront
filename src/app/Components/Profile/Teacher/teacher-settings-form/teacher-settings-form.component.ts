@@ -1,7 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { TeacherService } from 'src/app/Services/Auth/teacher.service';
 
@@ -12,21 +12,27 @@ import { TeacherService } from 'src/app/Services/Auth/teacher.service';
 })
 export class TeacherSettingsFormComponent {
   isInputFocused: boolean = false;
-  signupForm!: FormGroup;
+  updateTeacherForm!: FormGroup;
   errorMeg: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private teacherData: TeacherService, private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private teacherData: TeacherService,
+    private _snackBar: MatSnackBar,
+    private datePipe: DatePipe
+  ) { }
 
   ngOnInit() {
-    this.signupForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.pattern('^(?!\d).{4,}$')]],
+    this.updateTeacherForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.pattern('^(?!\d).{4,}$')]],
       lastName: ['', Validators.required],
-      teacherPhoneNumber: ['', [Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
-      birthday: ['', Validators.required],
-      sex: ['', Validators.required],
-      governorate: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^(010|015|011|012)\\d{8}$')]],
+      dateOfBirth: ['', Validators.required],
+      gender: ['', Validators.required],
+      city: ['', Validators.required],
       address: ['', Validators.required],
-      FacebookAccount: ['', Validators.required],
+      facebookAccount: ['', Validators.required],
     });
 
     this.getTeacherData(this.authService.getUserId());
@@ -34,62 +40,90 @@ export class TeacherSettingsFormComponent {
 
   getTeacherData(teacherId: string) {
     this.teacherData.getTeacherById(teacherId).subscribe(teacher => {
-      console.log(teacher);
       this.setFormValues(teacher)
     });
   }
 
-  get fullName() {
-    return this.signupForm.get('fullName')
+  get firstName() {
+    return this.updateTeacherForm.get('firstName')
   }
 
-  get teacherPhoneNumber() {
-    return this.signupForm.get('teacherPhoneNumber')
+  get phoneNumber() {
+    return this.updateTeacherForm.get('phoneNumber')
   }
 
-  get FacebookAccount() {
-    return this.signupForm.get('FacebookAccount')
+  get facebookAccount() {
+    return this.updateTeacherForm.get('facebookAccount')
   }
 
-  get birthday() {
-    return this.signupForm.get('birthday')
+  get dateOfBirth() {
+    return this.updateTeacherForm.get('dateOfBirth')
   }
-  get sex() {
-    return this.signupForm.get('sex')
+  get gender() {
+    return this.updateTeacherForm.get('gender')
   }
 
-  get governorate() {
-    return this.signupForm.get('governorate')
+  get city() {
+    return this.updateTeacherForm.get('city')
   }
 
   get address() {
-    return this.signupForm.get('address')
+    return this.updateTeacherForm.get('address')
   }
 
   get confirmPassword() {
-    return this.signupForm.get('confirmPassword')
+    return this.updateTeacherForm.get('confirmPassword')
   }
 
   get lastName() {
-    return this.signupForm.get('lastName')
+    return this.updateTeacherForm.get('lastName')
   }
 
   setFormValues(teacher: any) {
-    console.log(this.signupForm)
-    this.signupForm.patchValue({
-      fullName: teacher.firstName,
+    this.updateTeacherForm.patchValue({
+      firstName: teacher.firstName,
       lastName: teacher.lastName,
-      teacherPhoneNumber: teacher.phoneNumber,
-      birthday: teacher.dateOfBirth,
+      phoneNumber: teacher.phoneNumber,
+      dateOfBirth: teacher.dateOfBirth,
       religion: teacher.religion,
-      sex: teacher.gender,
-      governorate: teacher.city,
+      gender: teacher.gender,
+      city: teacher.city,
       address: teacher.address,
-      FacebookAccount:teacher.facebookAccount
+      facebookAccount: teacher.facebookAccount
+    });
+  }
 
+  onUpdate(id: string) {
+    const formData = this.updateTeacherForm.value;
+    const formattedDateOfBirth = this.datePipe.transform(this.updateTeacherForm.value.dateOfBirth, 'yyyy-MM-dd');
+    formData.dateOfBirth = formattedDateOfBirth;
+
+    console.log(formData);
+
+    this.teacherData.editTeacher(id, formData).subscribe(
+      (response) => {
+        console.log(response);
+        this.openSnackBar('تم تحديث البيانات', 'حسناَ');
+      },
+      (error) => {
+        if (error.status == 200) {
+          this.openSnackBar('تم تحديث البيانات', 'حسناَ');
+        }
+        console.error(error);
+      }
+    );
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
+      panelClass: 'snackbar-success'
     });
   }
 
   onSubmit() {
+    this.onUpdate(this.authService.getUserId())
   }
 }

@@ -20,7 +20,7 @@ export class EnrollDialogComponent {
     private courseData: CoursesService,
     private authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar // Inject MatSnackBar
+    private snackBar: MatSnackBar
   ) {
     this.userId = this.authService.getUserId();
   }
@@ -51,8 +51,6 @@ export class EnrollDialogComponent {
           if (error.status == 200) {
             this.openSnackBar('لقد اشتركت في الكورس بنجاح');
             this.reloadCurrentRoute();
-          } else {
-            this.openSnackBar('لا يوجد رصيد كافي في محفظتك');
           }
           console.error(`Failed to enroll:`, error);
         }
@@ -74,8 +72,8 @@ export class EnrollDialogComponent {
 
     this.snackBar.open(message, 'Close', {
       duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
       panelClass: panelClass
     });
   }

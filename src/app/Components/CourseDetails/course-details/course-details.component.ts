@@ -29,7 +29,6 @@ export class CourseDetailsComponent implements OnInit {
   userId: string;
   isEnrolled!: boolean;
 
-
   options = [
     { label: 'محتوي الكورس', selected: true },
     { label: 'عن المعلم', selected: false },
