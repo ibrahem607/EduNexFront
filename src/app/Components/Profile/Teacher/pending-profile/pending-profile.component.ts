@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { TeacherService } from 'src/app/Services/Auth/teacher.service';
 
@@ -11,47 +12,62 @@ import { TeacherService } from 'src/app/Services/Auth/teacher.service';
 })
 export class PendingProfileComponent {
   editText: boolean = true;
-  errorReq:boolean=false;
-  errorReq2:boolean=false;
+  errorReq: boolean = false;
+  errorReq2: boolean = false;
   selectedImage: string | ArrayBuffer | null = 'https://bootdey.com/img/Content/avatar/avatar7.png';
+  role: string = '';
 
   @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
 
   teacher: any;
   teacherHint: any = '';
   teacherData: any = '';
-  constructor(private route: ActivatedRoute, private authService: AuthService, private teacherService: TeacherService) { }
+  constructor(
+    private authService: AuthService,
+    private teacherService: TeacherService,
+    private snackBar: MatSnackBar,
+    private router: Router,
+  ) {
+    this.role = this.authService.getUserRole();
+  }
 
   ngOnInit(): void {
     // console.log('Teacher id:', this.authService.teacherId);
     // this.teacherHint = this.teacherService.getTeacherAbout()
 
     this.getTeacherById()
-
-
   }
 
-  getTeacherById():any
-  {
-    this.teacherData=this.teacherService.getTeacherById(this.authService.getUserId()).subscribe({
-      next:(data:any)=>{
-        this.teacherData=data;
-        // console.log(`teacher data ${this.teacherData.firstName}`);
+  getTeacherById(): any {
+    this.teacherData = this.teacherService.getTeacherById(this.authService.getUserId()).subscribe(
+      teacher => {
+        this.teacherData = teacher;
+        if (teacher.status === 'Approved') {
+          this.closePage();
+        }
       },
-      error:(err)=>{
-        // console.log(`error yaman${err.error}`)
-      }
-    })
+      (error) => {
+        if (error.status === 404 || error.status === 403) {
+          this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً');
+
+          setTimeout(() => {
+            window.history.back();
+            window.history.replaceState(null, '', this.router.url);
+          }, 2000);
+        } else {
+          console.error('Error fetching teacher data:', error);
+        }
+      });
   }
 
   saveupdate(updateData: string | null) {
     if (updateData) {
       const id = this.authService.getUserId();
-     this.errorReq2=false;
-      const aboutTeacher ={
-         aboutMe: updateData.toString(),
+      this.errorReq2 = false;
+      const aboutTeacher = {
+        aboutMe: updateData.toString(),
         //  accountNote: " "
-      } 
+      }
 
       this.teacherService.saveTeacherAbout(id, aboutTeacher).subscribe(
         (response) => {
@@ -62,7 +78,7 @@ export class PendingProfileComponent {
         }
       );
     } else {
-      this.errorReq2=true;
+      this.errorReq2 = true;
       this.editText = !this.editText;
       console.error('Update data is null.');
     }
@@ -70,27 +86,25 @@ export class PendingProfileComponent {
 
   updateData(id: string, address: any, subject: any, number: any) {
     if (address && subject && number) {
-        console.log(`${address} and ${subject} and ${number}`);
+      console.log(`${address} and ${subject} and ${number}`);
 
-        const updatedTeachData = {
-            phoneNumber: number,
-            address: address,
-            subject: subject
-        };
+      const updatedTeachData = {
+        phoneNumber: number,
+        address: address,
+        subject: subject
+      };
 
-        this.teacherService.updateTeacherProfile(id, updatedTeachData).subscribe({
-            next: (data) => {
-                console.log(data);
-            }
-        });
-        this.errorReq = false;
+      this.teacherService.updateTeacherProfile(id, updatedTeachData).subscribe({
+        next: (data) => {
+          console.log(data);
+        }
+      });
+      this.errorReq = false;
     } else {
-        this.errorReq = true;
-        this.editText = !this.editText;
+      this.errorReq = true;
+      this.editText = !this.editText;
     }
-}
-
-
+  }
 
   toggleEdit() {
     this.editText = !this.editText;
@@ -110,5 +124,24 @@ export class PendingProfileComponent {
   openFileInput() {
     this.uploadInput.nativeElement.click();
     console.log()
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
+  }
+
+  closePage() {
+    this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً');
+
+    this.goBackAndRemoveCurrentRoute();
+  }
+
+  goBackAndRemoveCurrentRoute(): void {
+    window.history.back();
+    window.history.replaceState(null, '', this.router.url);
   }
 }

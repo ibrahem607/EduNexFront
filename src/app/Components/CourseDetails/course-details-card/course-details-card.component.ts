@@ -24,10 +24,10 @@ export class CourseDetailsCardComponent implements OnInit {
     private router: Router
   ) {
     this.userId = this.authService.getUserId();
+    this.role = this.authService.getUserRole();
   }
 
   ngOnInit(): void {
-    this.role = this.authService.getUserRole();
     this.checkEnrollment();
   }
 

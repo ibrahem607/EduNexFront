@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParentsService } from 'src/app/Services/Parents/parents.service';
@@ -15,14 +14,13 @@ export class ParentsComponent implements OnInit {
   studentName!: string;
 
   options = [
-    { label: 'الكورس', selected: true },
+    { label: 'الكورسات', selected: true },
     { label: 'الامتحانات', selected: false },
   ];
 
   constructor(
     private formBuilder: FormBuilder,
     private parentsData: ParentsService,
-    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {

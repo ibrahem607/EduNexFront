@@ -18,12 +18,15 @@
       <app-student-settings></app-student-settings>
     </div>
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 1">
+      <h3 class="text-center">الكورسات</h3>
       <app-student-course></app-student-course>
     </div>
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 2">
+      <h3 class="text-center">تفاصيل الميزانية</h3>
       <app-profile-budget></app-profile-budget>
     </div>
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 3">
+      <h3 class="text-center">اكواد الشحن</h3>
       <app-student-shipping-codes></app-student-shipping-codes>
     </div>
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 4">
@@ -32,7 +35,6 @@
     <!-- <div [@fadeInOut] *ngIf="selectedOptionIndex === 5">
       <app-student-settings></app-student-settings>
     </div> -->
-
   </div>
 </section>
 

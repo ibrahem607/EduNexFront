@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AnswerChoices, IExamResult } from 'src/app/Model/iexam-result';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
-import { ExamService } from 'src/app/Services/Exam/exam.service';
+
 
 @Component({
   selector: 'app-exam-result',
@@ -11,27 +10,14 @@ import { ExamService } from 'src/app/Services/Exam/exam.service';
 })
 export class ExamResultComponent implements OnInit {
   result!: IExamResult;
-  examId!: number;
 
-  constructor(
-    private examData: ExamService,
-    private route: ActivatedRoute,
-    private studentData: AuthService,
-    private router: Router,
-    private cdRef: ChangeDetectorRef
-  ) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.examId = params['examId'];
-      this.getExamResult(this.examId);
-    });
-  }
-
-  getExamResult(examId: number) {
-    this.examData.getSubmissionExam(examId, this.studentData.getUserId()).subscribe(result => {
-      this.result = result;
-      this.cdRef.detectChanges();
+      if (params['result']) {
+        this.result = JSON.parse(params['result']);
+      }
     });
   }
 

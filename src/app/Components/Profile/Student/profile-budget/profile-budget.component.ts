@@ -1,4 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { ITransaction } from "src/app/Model/itransaction";
+import { AuthService } from "src/app/Services/Auth/auth.service";
+import { PaymentService } from "src/app/Services/Payment/payment.service";
 
 @Component({
   selector: 'app-profile-budget',
@@ -6,23 +9,25 @@ import { Component } from "@angular/core";
   styleUrls: ['./profile-budget.component.css']
 })
 
-export class ProfileBudgetComponent {
-  displayedColumns: string[] = ['MaterialName', 'Price', 'PurchaseDate', 'PriceBefore', 'PriceAfter', 'AddedBy'];
-  dataSource = ELEMENT_DATA;
-}
+export class ProfileBudgetComponent implements OnInit {
+  transactions: ITransaction[] = [];
 
-export interface PeriodicElement {
-  materialName: string;
-  price: number;
-  purchaseDate: string;
-  priceBefore: number;
-  priceAfter: number;
-  addedBy: string;
-}
+  displayedColumns: string[] = ['TransactionType', 'Amount', 'TransactionDate'];
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { materialName: 'الرياضيات', price: 100, purchaseDate: '2024-04-15 06:47:10', priceBefore: 120, priceAfter: 100, addedBy: 'محمد' },
-  { materialName: 'الفيزياء', price: 120, purchaseDate: '2024-04-15 06:47:10', priceBefore: 150, priceAfter: 120, addedBy: 'أحمد' },
-  { materialName: 'الكيمياء', price: 150, purchaseDate: '2024-04-15 06:47:10', priceBefore: 180, priceAfter: 150, addedBy: 'سارة' },
-  { materialName: 'علم الأحياء', price: 200, purchaseDate: '2024-04-15 06:47:10', priceBefore: 220, priceAfter: 200, addedBy: 'أمير' }
-];
+  constructor(private authService: AuthService, private paymentService: PaymentService) { }
+
+  ngOnInit() {
+    this.getStudentTransactions();
+  }
+
+  getStudentTransactions() {
+    const userId = this.authService.getUserId();
+    this.paymentService.getStudentTransactions(userId)
+      .subscribe(transaction => {
+        this.transactions = [transaction].flat();
+        // console.log(this.transactions)
+      });
+  }
+
+
+}

@@ -64,6 +64,13 @@
   stroke: var(--wave2);
 }
 
+h3 {
+  font-weight: 700;
+  color: var(--wave2);
+  margin-bottom: calc(50px - 33.6px + 0.5rem);
+  margin-top: calc(50px + 0.5rem);
+}
+
 @media (min-width: 992px) {
   .header-section,
   .navigation-section {
@@ -77,7 +84,12 @@
   .navigation-container {
     width: 100%;
   }
+
   .header-section {
     align-items: center;
+  }
+
+  h3 {
+    display: none;
   }
 }

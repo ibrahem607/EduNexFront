@@ -90,8 +90,10 @@
           </button>
 
           <div *ngIf="userData && userExist()" class="nav-item dropdown" matDropdown>
-            <button mat-button class="nav-link dropdown-toggle rounded-5 py-4" [matMenuTriggerFor]="menu">
-              <img src="https://via.placeholder.com/40" alt="profile" class="rounded-5 profile" width="40" height="40"
+            <button mat-button
+              class="nav-link dropdown-toggle rounded-5 {{ role === 'Student' ? 'py-3 px-3' : 'py-4' }}"
+              [matMenuTriggerFor]="menu">
+              <img [src]="userData.profilePhoto" alt="profile" class="rounded-5 profile" width="40" height="40"
                 *ngIf="role === 'Teacher'">
               <span class="mx-1"> {{userData.firstName}} {{userData.lastName}}</span>
             </button>

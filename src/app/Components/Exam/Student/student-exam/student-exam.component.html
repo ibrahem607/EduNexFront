@@ -11,7 +11,8 @@
       </section>
       <!-- Timer Section -->
       <section class="section-timer p-3 d-flex flex-column">
-        <app-timer [duration]="duration" [type]="exam.type" [examId]="exam.id" (submitExam)="submitExam(exam.id)"></app-timer>
+        <app-timer [duration]="duration" [type]="exam.type" [examId]="exam.id"
+          (submitExam)="submitExam(exam.id)"></app-timer>
       </section>
     </div>
     <!-- Questions Navigation Section -->
@@ -90,8 +91,15 @@
         <!-- Next Button -->
         <button mat-button class="custom-button" type="button" dir="ltr" (click)="navigateForward()"
           [disabled]="selectedQuestionIndex >= exam.questions.length">
-          {{ selectedQuestionIndex === exam.questions.length - 1 ? 'تسليم الاختبار' : 'التالي' }} &nbsp;
-          <mat-icon>{{ selectedQuestionIndex === exam.questions.length - 1 ? 'done' : 'keyboard_backspace' }}</mat-icon>
+          <span *ngIf="!loading" class="flex justify-content-center gap-2">
+            <mat-icon>
+              {{ selectedQuestionIndex === exam.questions.length - 1 ? 'done' : 'keyboard_backspace'}}
+            </mat-icon>
+            <span>
+              {{ selectedQuestionIndex === exam.questions.length - 1 ? 'تسليم الاختبار' : 'التالي' }}
+            </span>
+          </span>
+          <span *ngIf="loading"><mat-spinner diameter="20"></mat-spinner></span>
         </button>
       </div>
     </div>

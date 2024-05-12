@@ -197,20 +197,12 @@ mat-sidenav button.custom-button {
 }
 
 .profile {
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--wave2);
   padding: 1px;
-  box-shadow: var(--wave2) 0px 0px 0px 3px inset;
+  box-shadow: var(--bg) 0px 0px 0px 3px inset;
   transition: 0.3s;
 }
 
-.profile:hover {
-  box-shadow: var(--wave1) 0px 0px 0px 3px inset;
-}
-
-/* .dropdown-toggle::after {
-  display: none;
-  margin-right: 0.5rem;
-} */
 .dropdown-toggle {
   background-color: var(--active);
   border: 1px solid var(--border);

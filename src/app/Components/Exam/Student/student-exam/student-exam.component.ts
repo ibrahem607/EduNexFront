@@ -30,6 +30,7 @@ export class StudentExamComponent implements OnInit {
   duration!: number;
   startData!: any;
   userId: string;
+  loading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -251,31 +252,40 @@ export class StudentExamComponent implements OnInit {
 
   submitExam(examId: number) {
     const formattedExam = this.formattedExam();
+    this.loading = true;
 
-    // console.log(formattedExam);
     this.examData.submitExam(examId, formattedExam).subscribe(
       (response) => {
         console.log('Exam submitted successfully:', response);
+        this.getExamResult(this.examId);
       },
       (error) => {
         if (error.status !== 200) {
           console.error('Error occurred while submitting exam:', error);
+        } else {
+          this.getExamResult(this.examId);
         }
       }
     );
+  }
 
-    const navigationExtras: NavigationExtras = {
-      queryParams: { examId: examId },
-      replaceUrl: true
-    };
-    this.router.navigate(['/course', this.courseId, 'lesson', this.lectureId, 'result'], navigationExtras);
+  getExamResult(examId: number) {
+    this.examData.getSubmissionExam(examId, this.studentData.getUserId()).subscribe(result => {
+      this.loading = false;
+
+      const navigationExtras: NavigationExtras = {
+        queryParams: { result: JSON.stringify(result) },
+        replaceUrl: true
+      };
+      this.router.navigate(['/course', this.courseId, 'lesson', this.lectureId, 'result'], navigationExtras);
+    });
   }
 
   openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {
       duration: 2000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
     });
   }
 

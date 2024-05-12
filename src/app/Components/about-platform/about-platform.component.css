@@ -1,17 +1,17 @@
-.container {
+/* .container {
   box-shadow: var(--border) 0px 0px 0px 1px;
   border-radius: 10px;
   background-color: var(--bg);
-}
+} */
 
 h4,
 h1 {
-  color: orange;
+  color: var(--wave2);
   font-weight: 700;
 }
 
 h5 {
-  color: orange;
+  color: var(--wave2);
 }
 
 p:not(:last-of-type) {

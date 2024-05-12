@@ -84,7 +84,7 @@ th {
 
 @media (min-width: 992px) {
   .overflow-x {
-    margin-top: calc(100px + 1rem);
+    /* margin-top: calc(100px + 1rem); */
     width: calc(61vw - 230px - 3rem);
   }
 }

@@ -25,6 +25,7 @@ export class TeachersComponent implements OnInit {
     this.teacherData.getAllTeachers().subscribe(teachers => {
       this.teachers = teachers;
       this.filterTeachers();
+      // console.log(teachers)
     });
   }
 
