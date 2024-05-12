@@ -79,7 +79,7 @@
           <mat-option value="Christianity">المسيحية</mat-option>
         </mat-select>
         <mat-icon matSuffix class="fa-solid fa-star-and-crescent"></mat-icon>
-        <mat-error *ngIf="religion?.touched && religion?.invalid">الديانة مطلوبة</mat-error>
+        <mat-error *ngIf="religion?.touched && religion?.invalid" class="text-danger">الديانة مطلوبة</mat-error>
       </mat-form-field>
     </div>
 
@@ -90,7 +90,7 @@
           aria-label="تاريخ الميلاد" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="signupForm.get('birthday')?.touched && signupForm.get('birthday')?.errors?.['required']">تاريخ
+        <mat-error *ngIf="signupForm.get('birthday')?.touched && signupForm.get('birthday')?.errors?.['required']" class="text-danger">تاريخ
           الميلاد مطلوب</mat-error>
       </mat-form-field>
     </div>
@@ -105,7 +105,7 @@
         <mat-option value="Female">أنثى</mat-option>
       </mat-select>
       <mat-icon matSuffix class="fa-solid fa-mars-and-venus"></mat-icon>
-      <mat-error *ngIf="sex?.touched && sex?.invalid"> يجب تحديد الجنس</mat-error>
+      <mat-error *ngIf="sex?.touched && sex?.invalid" class="text-danger"> يجب تحديد الجنس</mat-error>
     </mat-form-field>
   </div>
 
@@ -141,7 +141,7 @@
       <mat-option value="south_sinai">جنوب سيناء</mat-option>
     </mat-select>
     <mat-icon matSuffix class="fa-solid fa-location-dot"></mat-icon>
-    <mat-error *ngIf="governorate?.touched && governorate?.invalid">يجب تحديد المحافظة</mat-error>
+    <mat-error *ngIf="governorate?.touched && governorate?.invalid" class="text-danger">يجب تحديد المحافظة</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" style="width: 100%;">
@@ -154,7 +154,7 @@
       <mat-option value="3">الصف الثالث الثانوي</mat-option>
     </mat-select>
     <mat-icon matSuffix class="fa-solid fa-user-graduate"></mat-icon>
-    <mat-error *ngIf="education?.touched && education?.invalid">يجب تحديد المرحلة التعليمية</mat-error>
+    <mat-error *ngIf="education?.touched && education?.invalid" class="text-danger">يجب تحديد المرحلة التعليمية</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" style="width: 100%;">
@@ -162,7 +162,7 @@
     <input matInput name="address" formControlName="address" placeholder="العنوان التفصيلي"
       aria-label="العنوان التفصيلي" required>
     <mat-icon matSuffix class="fa-solid fa-map-location"></mat-icon>
-    <mat-error *ngIf="address?.touched && address?.errors?.['required']">العنوان مطلوب</mat-error>
+    <mat-error *ngIf="address?.touched && address?.errors?.['required']" class="text-danger">العنوان مطلوب</mat-error>
   </mat-form-field>
 
   <div class="row">

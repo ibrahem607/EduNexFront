@@ -22,33 +22,31 @@ export class PendingProfileComponent {
   teacher: any;
   teacherHint: any = '';
   teacherData: any = '';
-  constructor(
-    private authService: AuthService,
-    private teacherService: TeacherService,
-    private snackBar: MatSnackBar,
-    private router: Router,
-  ) {
+  constructor(private authService: AuthService,private teacherService: TeacherService,private snackBar: MatSnackBar,private router: Router) {
     this.role = this.authService.getUserRole();
+
   }
 
   ngOnInit(): void {
     // console.log('Teacher id:', this.authService.teacherId);
     // this.teacherHint = this.teacherService.getTeacherAbout()
-
-    this.getTeacherById()
+  //  console.log(`hello ${this.teacherData}`)
+   this.getTeacherById()
   }
 
   getTeacherById(): any {
-    this.teacherData = this.teacherService.getTeacherById(this.authService.getUserId()).subscribe(
+     this.teacherService.getTeacherById(this.authService.getUserId()).subscribe(
       teacher => {
-        this.teacherData = teacher;
+        this.teacherData=teacher;
         if (teacher.status === 'Approved') {
           this.closePage();
         }
       },
       (error) => {
+        console.log(`err=> ${error}`)
+
         if (error.status === 404 || error.status === 403) {
-          this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً');
+          this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً','');
 
           setTimeout(() => {
             window.history.back();
@@ -84,25 +82,35 @@ export class PendingProfileComponent {
     }
   }
 
-  updateData(id: string, address: any, subject: any, number: any) {
-    if (address && subject && number) {
-      console.log(`${address} and ${subject} and ${number}`);
-
+  updateData(id: string, address: any, subject: any, number: any,about:any,experience:any,uploadInput:any) {
+    console.log(`${address} and ${subject} and ${number} and ${about} and ${experience} and ${uploadInput}`);
+    
+    if (address && subject && number&&about&&experience) {
       const updatedTeachData = {
         phoneNumber: number,
         address: address,
-        subject: subject
+        subject: subject,
+        experience:experience,
+        aboutMe:about
       };
 
       this.teacherService.updateTeacherProfile(id, updatedTeachData).subscribe({
         next: (data) => {
           console.log(data);
-        }
+
+        },
+        error:(err=>{
+          this.openSnackBar(' تم تحديث البيانات ', 'حسنا','snackbar-success');
+         this.reloadCurrentRoute()
+          
+        })
       });
+      
       this.errorReq = false;
     } else {
       this.errorReq = true;
       this.editText = !this.editText;
+      this.openSnackBar(' جميع الحقول مطلوبة', 'خطأ',"");
     }
   }
 
@@ -110,15 +118,29 @@ export class PendingProfileComponent {
     this.editText = !this.editText;
   }
 
-  previewImage(event: any) {
+  previewImage(event: any,id:any) {
     const file = event.target.files[0];
     const reader = new FileReader();
-
     reader.onload = () => {
       this.selectedImage = reader.result;
     };
 
     reader.readAsDataURL(file);
+    console.log(`www=>${file}`)
+  this.teacherService.uploadTeacherImage(id,file).subscribe({
+    next:(data=>{
+      console.log(data);
+      this.reloadCurrentRoute()
+    }),
+    error:(err=>{
+      console.log(err);
+      if(err.status==200){
+      this.reloadCurrentRoute()
+      }
+    })
+  })
+
+
   }
 
   openFileInput() {
@@ -126,16 +148,17 @@ export class PendingProfileComponent {
     console.log()
   }
 
-  openSnackBar(message: string, action: string): void {
-    this.snackBar.open(message, action, {
+  openSnackBar(message: string, action: string,panelClass:string): void {
+    this.snackBar.open(message, action,{
       duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
+      panelClass:panelClass
     });
   }
 
   closePage() {
-    this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً');
+    this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً',"");
 
     this.goBackAndRemoveCurrentRoute();
   }
@@ -143,5 +166,12 @@ export class PendingProfileComponent {
   goBackAndRemoveCurrentRoute(): void {
     window.history.back();
     window.history.replaceState(null, '', this.router.url);
+  }
+
+  reloadCurrentRoute(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

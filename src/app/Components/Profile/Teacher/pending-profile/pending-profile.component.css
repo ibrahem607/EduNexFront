@@ -9,6 +9,10 @@ section {
   max-width: fit-content;
   /* pa */
 }
+.green-snackbar {
+  background-color: green;
+  color: white; /* Assuming you want white text on the green background */
+}
 
 .section-title {
   font-weight: 600;

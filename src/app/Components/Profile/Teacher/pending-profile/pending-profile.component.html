@@ -1,59 +1,58 @@
 <section class="container flex flex-column justify-content-between p-5">
   <div class="d-flex flex-md-row flex-column-reverse gap-4">
     <div dir="rtl">
+      <label>الايميل:</label>
+      <p 
+        class="display-28"  style="max-width: 350px;max-height: 150px;overflow: hidden;">
+        {{teacherData.email}}</p>
+   
       <label>الوظيفة: </label>
-      <p [attr.contenteditable]="editText?'false':'true' "
-        [style.background-color]="editText ? 'transparent':'var(--active)'" class="display-28"> مدرس
-        فيزياء</p>
-
-      <label>الخبرة:</label>
-      <p [attr.contenteditable]="editText?'false':'true' "
-        [style.background-color]="editText ? 'transparent':'var(--active)'" class="display-28"> 5
-        سنوات تعليم حكومي</p>
+      <p 
+        class="display-28"  style="max-width: 350px;max-height: 150px;overflow: hidden;"> مدرس
+        {{teacherData.subject}}</p>
 
       <label>المادة التعليمية:</label>
       <p [attr.contenteditable]="editText?'false':'true' "
-        [style.background-color]="editText ? 'transparent':'var(--active)'" class="display-28">
-        فيزياء </p>
-
-      <label>الايميل:</label>
-      <p [attr.contenteditable]="editText?'false':'true' "
-        [style.background-color]="editText ? 'transparent':'var(--active)'" class="display-28">
-        www.example.com</p>
+        [style.background-color]="editText ? 'transparent':'var(--active)'" #subject class="display-28"  style="max-width: 350px;max-height: 150px;overflow: hidden;">
+        {{teacherData.subject}}  </p>
 
       <label>رقم الهاتف:</label>
       <p [attr.contenteditable]="editText?'false':'true' "
-        [style.background-color]="editText ? 'transparent':'var(--active)'" class="display-28"> 507
-        - 541 - 4567</p>
+        [style.background-color]="editText ? 'transparent':'var(--active)'"  #phoneNumber class="display-28" style="max-width: 350px;max-height: 150px;overflow: hidden;">
+        {{teacherData.phoneNumber}}</p>
 
-      <label>نبذة عن المعلم </label>
-      <p [attr.contenteditable]="editText ? 'false' : 'true'"
-        [style.background-color]="editText ? 'transparent':'var(--active)'" class="display-28" #teacherHintValue
-        [textContent]="teacherHint==='' ? 'اضف نبذة عن حياتك المهنية':''">{{teacherHint}}</p>
+        <label>العنوان:</label>
+      <p [attr.contenteditable]="editText?'false':'true' "
+        [style.background-color]="editText ? 'transparent':'var(--active)'"  #address class="display-28" style="max-width: 350px;max-height: 150px;overflow: hidden;"> 
+          {{teacherData.address}}</p>
+
+          <label>نبذة عن المعلم </label>
+          <p [attr.contenteditable]="editText ? 'false' : 'true'"
+            [style.background-color]="editText ? 'transparent':'var(--active)'" class="display-28" #aboutMe
+            [textContent]="teacherData?.aboutMe ? teacherData.aboutMe : 'اضف نبذة عن حياتك المهنية'"></p>
 
       <label for="experienceField">الخبرة العملية</label>
       <mat-form-field appearance="outline" style="min-width: 100%;">
         <mat-icon matPrefix>question_answer</mat-icon>
-        <textarea matInput id="experienceField" [attr.contenteditable]="editText?'false':'true'"></textarea>
+        <textarea matInput id="experienceField" [attr.contenteditable]="editText?'false':'true'"#experience value="{{teacherData.experience}}"></textarea>
       </mat-form-field>
     </div>
 
     <div class="flex flex-column gap-5">
-      <h3 class="loading ms-auto">جاري مراجعة بياناتك</h3>
+      <h3 class="loading ms-auto"  style="min-width: 260px;">جاري مراجعة بياناتك</h3>
 
       <div class="teacher-name">
-        <h4>أ. رمضان مبروك ابو العلميين</h4>
+        <h4 style="max-width: 350px;max-height: 60px; overflow: hidden;" dir="ltr">{{teacherData.firstName}}</h4>
       </div>
 
       <div class="flex flex-column gap-3">
-        <img [src]="selectedImage" alt="..." id="avatarImage"
+        <img [src]="teacherData.profilePhoto ? teacherData.profilePhoto:selectedImage" alt="..." id="avatarImage"
           style="max-width: 200px; max-height: 250px; border-radius: 10px;">
-        <input type="file" #uploadInput style="display: none;" accept="image/*" (change)="previewImage($event)">
+        <input type="file" #uploadInput style="display: none;" accept="image/*" (change)="previewImage($event,teacherData.id)">
         <button type="button" (click)="openFileInput()">Upload Photo</button>
-      </div>
-
+        </div>
       <button mat-button (click)="toggleEdit()" *ngIf="editText" class="green-button"> تعديل البيانات</button>
-      <button mat-button (click)="toggleEdit()" *ngIf="!editText" class="custom-button">حفظ البيانات</button>
+      <button mat-button (click)="toggleEdit()" (click)="updateData(teacherData.id,address.textContent,subject.textContent,phoneNumber.textContent,aboutMe.textContent,experience.value,uploadInput.value)" *ngIf="!editText" class="custom-button">حفظ البيانات</button>
     </div>
 
   </div>

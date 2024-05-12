@@ -145,6 +145,11 @@ export class TeacherSignUpFormComponent {
           }
         }
       );
+    }else {
+
+      Object.keys(this.signupForm.controls).forEach(controlName => {
+        this.signupForm.get(controlName)?.markAsTouched();
+      });
     }
   }
 }

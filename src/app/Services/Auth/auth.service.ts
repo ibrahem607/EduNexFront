@@ -26,7 +26,7 @@ export class AuthService {
   IsUser!: boolean;
 
   constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
-    if (localStorage.getItem(this.tokenKey) !== null) {
+    if (localStorage.getItem(this.tokenKey) !== null || localStorage.getItem(this.tokenKey) !== "") {
       this.saveCurrentUserId()
     }
   }
@@ -70,9 +70,11 @@ export class AuthService {
 
           if (localStorage.getItem(this.currentUserRole) == "Teacher") {
             if (response.message == "pending" || response.message == ("Rejected")) {
-              this.router.navigate(['/teacherprofile']);
+
+              this.router.navigate([`/teacher/pending/${this.getUserId()}`]);
+
             } else {
-              this.router.navigate(['/teachers']);
+              this.router.navigate([`/teacher/profile/${this.getUserId()}`]);
             }
           }
           else if (localStorage.getItem(this.currentUserRole) == "Student") {
