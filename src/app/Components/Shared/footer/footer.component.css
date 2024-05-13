@@ -207,3 +207,7 @@ ul {
 ::ng-deep .mat-mdc-card {
   border-radius: 10px !important;
 }
+
+::ng-deep .mat-datepicker-toggle {
+  color: var(--bgHeader) !important;
+}
