@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { TeacherService } from 'src/app/Services/Auth/teacher.service';
@@ -22,7 +22,7 @@ export class PendingProfileComponent {
   teacher: any;
   teacherHint: any = '';
   teacherData: any = '';
-  constructor(private authService: AuthService,private teacherService: TeacherService,private snackBar: MatSnackBar,private router: Router) {
+  constructor(private authService: AuthService, private teacherService: TeacherService, private snackBar: MatSnackBar, private router: Router) {
     this.role = this.authService.getUserRole();
 
   }
@@ -30,23 +30,24 @@ export class PendingProfileComponent {
   ngOnInit(): void {
     // console.log('Teacher id:', this.authService.teacherId);
     // this.teacherHint = this.teacherService.getTeacherAbout()
-  //  console.log(`hello ${this.teacherData}`)
-   this.getTeacherById()
+    //  console.log(`hello ${this.teacherData}`)
+    this.getTeacherById()
   }
 
   getTeacherById(): any {
-     this.teacherService.getTeacherById(this.authService.getUserId()).subscribe(
+    this.teacherService.getTeacherById(this.authService.getUserId()).subscribe(
       teacher => {
-        this.teacherData=teacher;
+        this.teacherData = teacher;
         if (teacher.status === 'Approved') {
           this.closePage();
+          this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً', '');
         }
       },
       (error) => {
         console.log(`err=> ${error}`)
 
         if (error.status === 404 || error.status === 403) {
-          this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً','');
+          this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً', '');
 
           setTimeout(() => {
             window.history.back();
@@ -58,7 +59,7 @@ export class PendingProfileComponent {
       });
   }
 
-  saveupdate(updateData: string | null) {
+  saveUpdate(updateData: string | null) {
     if (updateData) {
       const id = this.authService.getUserId();
       this.errorReq2 = false;
@@ -82,16 +83,16 @@ export class PendingProfileComponent {
     }
   }
 
-  updateData(id: string, address: any, subject: any, number: any,about:any,experience:any,uploadInput:any) {
+  updateData(id: string, address: any, subject: any, number: any, about: any, experience: any, uploadInput: any) {
     console.log(`${address} and ${subject} and ${number} and ${about} and ${experience} and ${uploadInput}`);
-    
-    if (address && subject && number&&about&&experience) {
+
+    if (address && subject && number && about && experience) {
       const updatedTeachData = {
         phoneNumber: number,
         address: address,
         subject: subject,
-        experience:experience,
-        aboutMe:about
+        experience: experience,
+        aboutMe: about
       };
 
       this.teacherService.updateTeacherProfile(id, updatedTeachData).subscribe({
@@ -99,18 +100,18 @@ export class PendingProfileComponent {
           console.log(data);
 
         },
-        error:(err=>{
-          this.openSnackBar(' تم تحديث البيانات ', 'حسنا','snackbar-success');
-         this.reloadCurrentRoute()
-          
+        error: (err => {
+          this.openSnackBar(' تم تحديث البيانات ', 'حسنا', 'snackbar-success');
+          this.reloadCurrentRoute()
+
         })
       });
-      
+
       this.errorReq = false;
     } else {
       this.errorReq = true;
       this.editText = !this.editText;
-      this.openSnackBar(' جميع الحقول مطلوبة', 'خطأ',"");
+      this.openSnackBar(' جميع الحقول مطلوبة', 'خطأ', "");
     }
   }
 
@@ -118,7 +119,7 @@ export class PendingProfileComponent {
     this.editText = !this.editText;
   }
 
-  previewImage(event: any,id:any) {
+  previewImage(event: any, id: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = () => {
@@ -127,20 +128,18 @@ export class PendingProfileComponent {
 
     reader.readAsDataURL(file);
     console.log(`www=>${file}`)
-  this.teacherService.uploadTeacherImage(id,file).subscribe({
-    next:(data=>{
-      console.log(data);
-      this.reloadCurrentRoute()
-    }),
-    error:(err=>{
-      console.log(err);
-      if(err.status==200){
-      this.reloadCurrentRoute()
-      }
+    this.teacherService.uploadTeacherImage(id, file).subscribe({
+      next: (data => {
+        console.log(data);
+        this.reloadCurrentRoute()
+      }),
+      error: (err => {
+        console.log(err);
+        if (err.status == 200) {
+          this.reloadCurrentRoute()
+        }
+      })
     })
-  })
-
-
   }
 
   openFileInput() {
@@ -148,17 +147,24 @@ export class PendingProfileComponent {
     console.log()
   }
 
-  openSnackBar(message: string, action: string,panelClass:string): void {
-    this.snackBar.open(message, action,{
+  openSnackBar(message: string, action: string, panelClass: string): void {
+    let verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+    let horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+    if (message === 'غير متاح او لا يمكن الوصول') {
+      verticalPosition = 'top';
+      horizontalPosition = 'center';
+    }
+
+    this.snackBar.open(message, action, {
       duration: 2000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'right',
-      panelClass:panelClass
+      verticalPosition: verticalPosition,
+      horizontalPosition: horizontalPosition,
+      panelClass: panelClass
     });
   }
 
   closePage() {
-    this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً',"");
+    this.openSnackBar('غير متاح او لا يمكن الوصول', 'حسناً', "");
 
     this.goBackAndRemoveCurrentRoute();
   }
