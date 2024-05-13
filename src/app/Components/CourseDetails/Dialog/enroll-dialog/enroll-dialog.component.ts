@@ -85,7 +85,14 @@ export class EnrollDialogComponent {
           this.reloadCurrentRoute();
         },
         (error) => {
-          console.error(`Failed to enroll:`, error);
+          if (error.status === 200) {
+            console.log(`Enrolled successfully`);
+            this.openSnackBar('لقد اشتركت في الكورس بنجاح');
+            this.reloadCurrentRoute();
+          } else {
+            this.openSnackBar('لا يوجد رصيد كافي في محفظتك');
+            console.error(`Failed to enroll:`, error);
+          }
         }
       );
   }
@@ -100,7 +107,7 @@ export class EnrollDialogComponent {
   openSnackBar(message: string) {
     const panelClass = message === 'لقد اشتركت في الكورس بنجاح' ? ['snackbar-success'] : [];
 
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, 'حسناَ', {
       duration: 2000,
       verticalPosition: 'bottom',
       horizontalPosition: 'right',

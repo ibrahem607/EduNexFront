@@ -159,7 +159,8 @@ ul {
 
 ::ng-deep .mat-mdc-dialog-surface,
 ::ng-deep .mat-mdc-menu-panel,
-::ng-deep .mat-mdc-select-panel.ng-trigger {
+::ng-deep .mat-mdc-select-panel.ng-trigger,
+::ng-deep .mat-datepicker-content {
   background-color: var(--bg) !important;
   box-shadow: var(--border) 0px 0px 0px 1px !important;
   border-radius: 10px !important;

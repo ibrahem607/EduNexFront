@@ -26,7 +26,31 @@ export class RecentCoursesComponent implements OnInit {
   currentIndex = 0;
   cardsToShow = 18;
 
+  translations = {
+    'Literature': 'أدبي',
+    'General': 'عام',
+    'Scientific': 'علمي'
+  };
+
   constructor(private courseData: CoursesService) { }
+
+  ngOnInit(): void {
+    this.getAll();
+
+    this.courseData.getAllCourses().subscribe(courses => {
+      this.courseType = [...new Set(courses.map(course => course.courseType))];
+      this.options = this.courseType.map((subject, index) => ({ courseType: subject, selected: index === 0 }));
+
+      this.toggleOption(0);
+    });
+  }
+
+  getAll() {
+    this.courseData.getAllCourses().subscribe(courses => {
+      this.courses = courses;
+      this.filterCourses();
+    });
+  }
 
   toggleOption(index: number) {
     this.options.forEach((option, i) => {
@@ -45,21 +69,7 @@ export class RecentCoursesComponent implements OnInit {
     }
   }
 
-  getAll() {
-    this.courseData.getAllCourses().subscribe(courses => {
-      this.courses = courses;
-      this.filterCourses();
-    });
-  }
-
-  ngOnInit(): void {
-    this.getAll();
-
-    this.courseData.getAllCourses().subscribe(courses => {
-      this.courseType = [...new Set(courses.map(course => course.courseType))];
-      this.options = this.courseType.map((subject, index) => ({ courseType: subject, selected: index === 0 }));
-
-      this.toggleOption(0);
-    });
+  translateType(type: string): string {
+    return (this.translations[type as keyof typeof this.translations] || type) as string;
   }
 }
