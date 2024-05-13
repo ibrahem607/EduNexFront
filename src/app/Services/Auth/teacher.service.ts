@@ -44,7 +44,8 @@ export class TeacherService {
   }
 
   getTeacherById(id: any): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}/teacher/${id}`).pipe(map(response => {
+    return this.httpClient.get(`${this.baseUrl}/teacher/${id}`)
+    .pipe(map(response => {
       console.log(response);
       return response
     }))
@@ -55,10 +56,17 @@ export class TeacherService {
   }
 
   updateTeacherProfile(id: string, data: any): Observable<any> {
-    return this.httpClient.put(`${this.baseUrl}/api/Teacher/${id}`, data);
+    return this.httpClient.put(`${this.baseUrl}/api/Teacher/UpdatePendingTeacher/${id}`, data);
   }
 
   editTeacher(id: string, data: any): Observable<any> {
     return this.httpClient.put(`${this.baseUrl}/api/Teacher/AllTeacherData/${id}`, data);
+  }
+
+  uploadTeacherImage(id: string, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('ProfilePicture', file);
+  
+    return this.httpClient.post<any>(`${this.baseUrl}/api/Teacher/AddedTeacherImage?id=${id}`, formData);
   }
 }

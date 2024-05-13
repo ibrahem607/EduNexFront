@@ -68,7 +68,7 @@
       aria-label="تاريخ الميلاد" required>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-error *ngIf="signupForm.get('birthday')?.touched && signupForm.get('birthday')?.errors?.['required']">
+    <mat-error *ngIf="signupForm.get('birthday')?.touched && signupForm.get('birthday')?.errors?.['required']" class="text-danger">
       تاريخ الميلاد مطلوب
     </mat-error>
   </mat-form-field>
@@ -81,7 +81,7 @@
       <mat-option value="Female">أنثى</mat-option>
     </mat-select>
     <mat-icon matSuffix class="fa-solid fa-mars-and-venus"></mat-icon>
-    <mat-error *ngIf="sex?.touched && sex?.invalid"> يجب تحديد الجنس</mat-error>
+    <mat-error *ngIf="sex?.touched && sex?.invalid" class="text-danger"> يجب تحديد الجنس</mat-error>
   </mat-form-field>
 
 
@@ -117,7 +117,7 @@
       <mat-option value="south_sinai">جنوب سيناء</mat-option>
     </mat-select>
     <mat-icon matSuffix class="fa-solid fa-location-dot"></mat-icon>
-    <mat-error *ngIf="governorate?.touched && governorate?.invalid">يجب تحديد المحافظة</mat-error>
+    <mat-error *ngIf="governorate?.touched && governorate?.invalid" class="text-danger">يجب تحديد المحافظة</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" style="width: 100%;">
@@ -125,7 +125,7 @@
     <input matInput name="address" formControlName="address" placeholder="العنوان التفصيلي"
       aria-label="العنوان التفصيلي" required>
     <mat-icon matSuffix class="fa-solid fa-map-location"></mat-icon>
-    <mat-error *ngIf="address?.touched && address?.errors?.['required']">العنوان مطلوب</mat-error>
+    <mat-error *ngIf="address?.touched && address?.errors?.['required']" class="text-danger">العنوان مطلوب</mat-error>
   </mat-form-field>
 
   <div class="row">
@@ -136,10 +136,10 @@
           aria-label="كلمة السر" required>
         <mat-icon matSuffix class="fa-solid fa-lock"></mat-icon>
         <mat-error *ngIf="isPasswordInvalid()">
-          <span *ngIf="password?.errors?.['required']" class="text-danger">كلمة المرور مطلوبة</span>
-          <span *ngIf="password?.errors?.['minlength']" class="text-danger">كلمة المرور يجب أن تكون أكثر من 8
+          <span *ngIf="password?.errors?.['required']" class="text-danger"class="text-danger">كلمة المرور مطلوبة</span>
+          <span *ngIf="password?.errors?.['minlength']" class="text-danger"class="text-danger">كلمة المرور يجب أن تكون أكثر من 8
             أحرف</span>
-          <span *ngIf="password?.errors?.['weakPassword']" class="text-danger">كلمة المرور ضعيفة. يجب أن تحتوي على
+          <span *ngIf="password?.errors?.['weakPassword']" class="text-danger"class="text-danger">كلمة المرور ضعيفة. يجب أن تحتوي على
             حرف كبير وحرف صغير ورقم ورمز خاص.</span>
         </mat-error>
       </mat-form-field>
