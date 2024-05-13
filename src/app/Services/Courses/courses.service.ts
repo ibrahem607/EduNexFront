@@ -49,8 +49,14 @@ export class CoursesService {
     );
   }
 
-  courseEnroll(studentCourse: any): Observable<ICourse> {
-    return this.httpClient.post<ICourse>(`${this.URL}/api/Courses/enroll`, studentCourse);
+  courseEnroll(studentId: string, courseId: number, couponCode: string): Observable<ICourse> {
+    const params = new HttpParams().set('couponcodes', couponCode);
+
+    return this.httpClient.post<ICourse>(
+      `${this.URL}/api/Courses/enroll`,
+      { studentId, courseId },
+      { params }
+    );
   }
 
   getCountStudents(courseId: number): Observable<number> {

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPaymentData, ITransaction } from 'src/app/Model/itransaction';
+import { ITransaction } from 'src/app/Model/itransaction';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +34,9 @@ export class PaymentService {
 
   consumeCoupon(CouponData: any): Observable<any> {
     return this.httpClient.post<any>(`${this.URL}/api/Coupon/consume`, null, { params: CouponData });
+  }
+
+  purchaseCourse(purchaseData: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.URL}/PurchaseCourse`, null, { params: purchaseData });
   }
 }

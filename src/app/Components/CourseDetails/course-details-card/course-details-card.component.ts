@@ -36,15 +36,15 @@ export class CourseDetailsCardComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       const dialogRef = this.dialog.open(EnrollDialogComponent, {
-        height: '200px',
         width: '400px',
         panelClass: 'dialog-container',
         autoFocus: false,
         data: {
           title: 'هل أنت متأكد؟',
-          message: 'سيتم الاشتراك الآن',
+          message: 'هل لديك كود خصم ؟',
           buttonText: 'اشترك الآن',
           courseId: this.course?.id,
+          price: this.course?.price,
         },
       });
 

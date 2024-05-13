@@ -33,6 +33,13 @@ mat-icon {
   margin-left: auto;
   margin-right: 1rem;
 }
+
+.card-container div,
+.card-container {
+  width: 100%;
+  min-height: calc(405px + 405px + 1rem);
+}
+
 @media (max-width: 920px) {
   .parent {
     flex-direction: column;

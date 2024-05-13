@@ -95,20 +95,25 @@ svg:last-of-type {
 }
 
 @media (max-width: 460px) {
-  .custom-checkbox-container {
-    justify-content: center;
-  }
   h3,
   h6 {
     padding-right: 1rem;
   }
 }
+
 @media (min-width: 460px) {
   section {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
   }
 }
+
+@media (max-width: 769px) {
+  .custom-checkbox-container {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 920px) {
   .imgs-containter {
     display: none;

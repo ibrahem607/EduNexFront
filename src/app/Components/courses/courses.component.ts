@@ -30,6 +30,12 @@ export class CoursesComponent implements OnInit {
   maxPrice: number = 0;
   middlePrice: number = 0;
 
+  translations = {
+    'Literature': 'أدبي',
+    'General': 'عام',
+    'Scientific': 'علمي'
+  };
+
   constructor(private courseData: CoursesService) { }
 
   getAllCourses() {
@@ -123,5 +129,9 @@ export class CoursesComponent implements OnInit {
   onPageChange(pageNumber: number) {
     this.page = pageNumber;
     this.updateFilteredPaginatedCourses();
+  }
+
+  translateType(type: string): string {
+    return (this.translations[type as keyof typeof this.translations] || type) as string;
   }
 }

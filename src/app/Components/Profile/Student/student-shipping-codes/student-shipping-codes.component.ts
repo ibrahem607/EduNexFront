@@ -32,9 +32,9 @@ export class StudentShippingCodesComponent implements OnInit {
         ownerId: this.studentData.getUserId(),
         ownerType: 1
       };
-console.log(couponData)
+
       this.paymentData.consumeCoupon(couponData).subscribe(
-        (response) => {
+        () => {
           this.openSnackBar('تم استخدام الكوبون بنجاح', 'snackbar-success');
           this.shippingForm.reset();
         },

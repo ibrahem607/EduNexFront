@@ -30,7 +30,7 @@
           (change)="filterByCourseType()">
           <mat-radio-button value="all" color="accent">الكل</mat-radio-button>
           <mat-radio-button *ngFor="let type of courseType" [value]="type" color="accent">
-            {{ type }}
+            {{ translateType(type) }}
           </mat-radio-button>
         </mat-radio-group>
       </mat-expansion-panel>
@@ -95,8 +95,8 @@
     </mat-accordion>
   </div>
 
-  <div>
-    <div class="flex flex-wrap gap-3">
+  <div class="card-container">
+    <div class="d-flex flex-wrap gap-3">
       <ng-container *ngFor="let course of filteredPaginatedCourses">
         <app-course-card [course]="course"></app-course-card>
       </ng-container>

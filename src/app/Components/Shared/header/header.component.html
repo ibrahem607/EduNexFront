@@ -19,7 +19,7 @@
       <button mat-button routerLink="/parents" routerLinkActive="active">ولي الأمر</button>
     </div>
     <hr>
-    <div *ngIf="userData" class="flex gap-2">
+    <div *ngIf="!(userData && userExist())" class="flex gap-2">
       <button mat-button routerLink="/login" style="border-radius: 20rem;">
         <div class="flex">
           <i class="fa-regular fa-circle-user"></i>
