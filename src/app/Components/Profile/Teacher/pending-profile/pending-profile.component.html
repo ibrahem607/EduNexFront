@@ -12,9 +12,18 @@
         {{teacherData.subject}}</p>
 
       <label>المادة التعليمية:</label>
-      <p [attr.contenteditable]="editText?'false':'true' "
+      <!-- <p [attr.contenteditable]="editText?'false':'true' "
         [style.background-color]="editText ? 'transparent':'var(--active)'" #subject class="display-28"  style="max-width: 350px;max-height: 150px;overflow: hidden;">
-        {{teacherData.subject}}  </p>
+        {{teacherData.subject}}  </p> -->
+
+         <div>
+          <select [attr.contenteditable]="editText ? 'false' : 'true'"
+          [style.background-color]="editText ? 'transparent' : 'var(--active)'" 
+          #subject class="display-28" style="max-width: 350px; max-height: 150px; overflow: hidden;" [value]="teacherData.subject">
+          <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
+         </select>
+         </div>
+       
 
       <label>رقم الهاتف:</label>
       <p [attr.contenteditable]="editText?'false':'true' "
@@ -52,7 +61,7 @@
         <button type="button" (click)="openFileInput()">Upload Photo</button>
         </div>
       <button mat-button (click)="toggleEdit()" *ngIf="editText" class="green-button"> تعديل البيانات</button>
-      <button mat-button (click)="toggleEdit()" (click)="updateData(teacherData.id,address.textContent,subject.textContent,phoneNumber.textContent,aboutMe.textContent,experience.value,uploadInput.value)" *ngIf="!editText" class="custom-button">حفظ البيانات</button>
+      <button mat-button (click)="toggleEdit()" (click)="updateData(teacherData.id,address.textContent,subject.value,phoneNumber.textContent,aboutMe.textContent,experience.value,uploadInput.value)" *ngIf="!editText" class="custom-button">حفظ البيانات</button>
     </div>
 
   </div>

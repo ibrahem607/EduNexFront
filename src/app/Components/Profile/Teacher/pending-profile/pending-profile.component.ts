@@ -33,6 +33,24 @@ export class PendingProfileComponent {
   //  console.log(`hello ${this.teacherData}`)
    this.getTeacherById()
   }
+  
+  subjects: string[] = [
+    'الرياضيات',
+    'الفيزياء',
+    'الكيمياء',
+    'الأحياء',
+    'اللغة الإنجليزية',
+    'التاريخ',
+    'الجغرافيا',
+    'علوم الحاسوب',
+    'اللغة العربية',
+    'اللغة الفرنسية',
+    'اللغة الإسبانية',
+    'الفن',
+    'الموسيقى',
+    'التربية البدنية',
+    'الدراسات الدينية'
+];
 
   getTeacherById(): any {
      this.teacherService.getTeacherById(this.authService.getUserId()).subscribe(
