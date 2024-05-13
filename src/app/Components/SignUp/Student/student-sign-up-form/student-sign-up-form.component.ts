@@ -35,9 +35,11 @@ export class StudentSignUpFormComponent implements OnInit {
       confirmPassword: ['',],
       studentEmail: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
       rebot: [false, Validators.required],
-      rebot2: [false, Validators.required]
+      rebot2: [false, Validators.required],
+      nationalId: ['', [Validators.required, Validators.pattern(/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/)]]
     }, { validators: passwordMatched });
   }
+
 
   get password() {
     return this.signupForm.get('password')
@@ -98,6 +100,11 @@ export class StudentSignUpFormComponent implements OnInit {
     return this.signupForm.get('rebot2')
   }
 
+  get nationalId() {
+    return this.signupForm.get('nationalId')
+  }
+
+
   isPasswordInvalid() {
     return this.password?.invalid && (this.password?.dirty || this.password?.touched);
   }
@@ -136,6 +143,7 @@ export class StudentSignUpFormComponent implements OnInit {
         PhoneNumber: this.signupForm.value.studentPhoneNumber,
         religion: this.signupForm.value.religion,
         levelId: this.signupForm.value.education,
+        nationalId: this.signupForm.value.nationalId,
       };
 
       // Save data in DB
@@ -147,7 +155,7 @@ export class StudentSignUpFormComponent implements OnInit {
               this.authService.signUp(this.signupForm.value);
               //go to login
               this.router.navigate(['/login'])
-              this._snackBar.open('تم انشاء الحساب بنجاح', 'Close', {
+              this._snackBar.open('تم انشاء الحساب بنجاح', 'حسناَ', {
                 duration: 2000,
                 verticalPosition: 'bottom',
                 horizontalPosition: 'right',

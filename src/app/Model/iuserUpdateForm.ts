@@ -1,9 +1,9 @@
 
 export interface IUserUpdateFormData {
-  address:string;
+  address: string;
   City: string;
   confirmPassword: string;
-  dateOfBirth:string;
+  dateOfBirth: string;
   Email: string;
   FirstName: string;
   gender: string;
@@ -13,4 +13,5 @@ export interface IUserUpdateFormData {
   PhoneNumber: string;
   religion: string;
   levelId: number;
+  nationalId: number;
 }

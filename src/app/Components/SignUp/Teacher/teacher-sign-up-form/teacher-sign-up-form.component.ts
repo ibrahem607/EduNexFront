@@ -126,7 +126,7 @@ export class TeacherSignUpFormComponent {
           if (data.token) {
             // Go to login
             this.router.navigate(['/login']);
-            this._snackBar.open('تم انشاء الحساب بنجاح', 'Close', {
+            this._snackBar.open('تم انشاء الحساب بنجاح', 'حسناَ', {
               duration: 2000,
               verticalPosition: 'bottom',
               horizontalPosition: 'right',
@@ -145,6 +145,10 @@ export class TeacherSignUpFormComponent {
           }
         }
       );
+    } else {
+      Object.keys(this.signupForm.controls).forEach(controlName => {
+        this.signupForm.get(controlName)?.markAsTouched();
+      });
     }
   }
 }

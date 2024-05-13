@@ -16,7 +16,7 @@
           <mat-label>الرقم القومي للطالب</mat-label>
           <input matInput type="number" name="studentNationalId" formControlName="studentNationalId"
             id="studentNationalId" placeholder="الرقم القومي" aria-label="الرقم القومي للطالب">
-          <mat-icon matSuffix class="fa-solid fa-mobile-screen-button"></mat-icon>
+          <mat-icon matSuffix class="fa-solid fa-id-card"></mat-icon>
           <mat-error *ngIf="studentNationalId?.touched && studentNationalId?.invalid">
             <span *ngIf="studentNationalId?.errors?.['required']" class="text-danger">الرقم القومي مطلوب</span>
             <span *ngIf="studentNationalId?.errors?.['pattern']" class="text-danger">الرقم القومي غير صحيح</span>
