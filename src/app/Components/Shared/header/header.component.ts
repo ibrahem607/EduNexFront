@@ -57,7 +57,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.isShowing = !this.isShowing;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.authService.IsLogin.subscribe({
       next: () => {
         if (this.authService.IsLogin.getValue() !== null) {
@@ -80,16 +80,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       }
     })
 
-    // console.log(this.userData)
-
     const savedTheme = localStorage.getItem('themePreference');
     const currentTheme = savedTheme === 'dark';
+
+    this.theme.setValue(currentTheme);
 
     this.applyTheme(currentTheme);
 
     this.theme.valueChanges.subscribe((currentTheme) => {
       this.applyTheme(currentTheme);
     });
+
 
     if (this.overlay && this.sidenav) {
       this.renderer.listen('document', 'click', (event) => {
@@ -177,7 +178,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  userExist(){
+
+  userExist() {
     return localStorage.getItem('UserId');
+  }
+
+  isDark() {
+    return localStorage.getItem('themePreference') == 'dark';
   }
 }

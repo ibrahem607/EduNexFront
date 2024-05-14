@@ -35,7 +35,7 @@ export class RecentCoursesComponent implements OnInit {
   constructor(private courseData: CoursesService) { }
 
   ngOnInit(): void {
-    this.getAll();
+    this.getCoursesOrderedByCreateionDateDescending();
 
     this.courseData.getAllCourses().subscribe(courses => {
       this.courseType = [...new Set(courses.map(course => course.courseType))];
@@ -45,8 +45,8 @@ export class RecentCoursesComponent implements OnInit {
     });
   }
 
-  getAll() {
-    this.courseData.getAllCourses().subscribe(courses => {
+  getCoursesOrderedByCreateionDateDescending() {
+    this.courseData.getCoursesOrderedByCreateionDateDescending().subscribe(courses => {
       this.courses = courses;
       this.filterCourses();
     });

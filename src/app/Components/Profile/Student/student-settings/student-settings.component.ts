@@ -8,30 +8,15 @@ import { PaymentService } from 'src/app/Services/Payment/payment.service';
   templateUrl: './student-settings.component.html',
   styleUrls: ['./student-settings.component.css']
 })
-export class StudentSettingsComponent implements OnInit {
+export class StudentSettingsComponent {
   isInputFocused: boolean = false;
   signupForm!: FormGroup;
-  balance!: number;
-
-  constructor(private studentData: AuthService, private paymentData: PaymentService) { }
-
-  ngOnInit(): void {
-    this.getWalletBalance();
-  }
-
-  getWalletBalance() {
-    this.paymentData.getWalletBalance(this.studentData.getUserId())
-      .subscribe(balance => {
-        this.balance = balance;
-      });
-  }
 
   onSubmit() {
     if (this.signupForm.valid) {
       console.log(this.signupForm.value);
     } else {
       this.signupForm.markAllAsTouched();
-
     }
   }
 }

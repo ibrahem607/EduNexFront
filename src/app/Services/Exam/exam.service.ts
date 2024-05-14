@@ -52,4 +52,8 @@ export class ExamService {
   getSubmissionExam(examId: number, student: any): Observable<IExamResult> {
     return this.httpClient.get<IExamResult>(`${this.URL}/api/Exams/${examId}/submission/${student}`);
   }
+
+  GetStudentsOrderedByScore(): Observable<any> {
+    return this.httpClient.get<any>(`${this.URL}/api/Exams/GetStudentsOrderedByScore`);
+  }
 }

@@ -1,5 +1,6 @@
 .form-floating{
-  max-width: 744px;
+  /* max-width: 744px; */
+  width: 100%;
 }
 
 label {

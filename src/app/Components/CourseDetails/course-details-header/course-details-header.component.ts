@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ICourse } from 'src/app/Model/icourse';
-import { CoursesService } from 'src/app/Services/Courses/courses.service';
+import { CountsService } from 'src/app/Services/Counts/counts.service';
 
 @Component({
   selector: 'app-course-details-header',
@@ -12,7 +12,7 @@ export class CourseDetailsHeaderComponent implements OnInit {
   lecturesCount!: number;
   studentsCount!: number;
 
-  constructor(private courseData: CoursesService) { }
+  constructor(private countsData: CountsService) { }
 
   ngOnInit(): void {
     this.getCounts();
@@ -20,11 +20,11 @@ export class CourseDetailsHeaderComponent implements OnInit {
 
   getCounts() {
     if (this.course) {
-      this.courseData.getCountLectures(this.course.id).subscribe(count => {
+      this.countsData.getCountLectures(this.course.id).subscribe(count => {
         this.lecturesCount = count;
       });
 
-      this.courseData.getCountStudents(this.course.id).subscribe(count => {
+      this.countsData.getCountStudentsPerCourse(this.course.id).subscribe(count => {
         this.studentsCount = count;
       });
     }

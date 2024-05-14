@@ -1,4 +1,4 @@
-<section class="container flex gap-5 flex-lg-row flex-column align-items-start" *ngIf="student">
+<section class="container d-flex gap-5 flex-lg-row flex-column align-items-start" *ngIf="student">
   <div class="flex flex-column gap-3 navigation-container">
     <div class="d-flex flex-column justify-content-center header-section p-3">
       <h5>{{ student.firstName }} {{ student.lastName }}</h5>
@@ -13,7 +13,7 @@
       </button>
     </div>
   </div>
-  <div>
+  <div class="container p-0 m-0 col-lg-8">
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 0">
       <app-student-settings></app-student-settings>
     </div>
@@ -22,11 +22,9 @@
       <app-student-course></app-student-course>
     </div>
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 2">
-      <h3 class="text-center">تفاصيل الميزانية</h3>
       <app-profile-budget></app-profile-budget>
     </div>
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 3">
-      <h3 class="text-center">اكواد الشحن</h3>
       <app-student-shipping-codes></app-student-shipping-codes>
     </div>
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 4">

@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ICourse } from 'src/app/Model/icourse';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
 import { Observable, forkJoin } from 'rxjs';
+import { CountsService } from 'src/app/Services/Counts/counts.service';
 
 @Component({
   selector: 'app-teacher-course',
@@ -19,7 +20,12 @@ export class TeacherCourseComponent implements OnInit {
   displayedColumns: string[] = ['CourseName', 'Price', 'PurchaseTimes', 'Actions'];
   dataSource: PeriodicElement[] = [];
 
-  constructor(public dialog: MatDialog, private authData: AuthService, private courseData: CoursesService) {
+  constructor(
+    public dialog: MatDialog,
+    private authData: AuthService,
+    private courseData: CoursesService,
+    private countData: CountsService
+  ) {
     this.teacherID = this.authData.getUserId();
   }
 
@@ -34,7 +40,7 @@ export class TeacherCourseComponent implements OnInit {
         // Fetch purchase times for each course
         const courseRequests: Observable<number>[] = [];
         this.courses.forEach(course => {
-          courseRequests.push(this.courseData.getCountStudents(course.id));
+          courseRequests.push(this.countData.getCountStudentsPerCourse(course.id));
         });
 
         forkJoin(courseRequests).subscribe(purchaseTimes => {
@@ -44,7 +50,7 @@ export class TeacherCourseComponent implements OnInit {
             price: course.price,
             purchaseTimes: purchaseTimes[index],
             thumbnail: course.thumbnail,
-            subjectId:course.subjectId
+            subjectId: course.subjectId
           }));
         });
       },

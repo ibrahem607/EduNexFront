@@ -1,4 +1,4 @@
-<section class="container flex gap-5 flex-lg-row flex-column align-items-start" *ngIf="teacher">
+<section class="container d-flex gap-5 flex-lg-row flex-column align-items-start" *ngIf="teacher">
   <div class="flex flex-column gap-3 navigation-container">
     <div class="d-flex flex-column justify-content-center header-section p-3">
       <h5>أ. {{ teacher.firstName }} {{ teacher.lastName }}</h5>
@@ -13,7 +13,7 @@
       </button>
     </div>
   </div>
-  <div>
+  <div class="container p-0 m-0 col-lg-8">
     <div [@fadeInOut] *ngIf="selectedOptionIndex === 0">
       <app-teacher-settings></app-teacher-settings>
     </div>

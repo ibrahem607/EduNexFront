@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="overflow-x">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" dir="rtl">
+
+      <!-- Rank Column -->
+      <ng-container matColumnDef="rank">
+        <th mat-header-cell *matHeaderCellDef> الرتبة </th>
+        <td mat-cell *matCellDef="let exam"> {{ exam.rank }} </td>
+      </ng-container>
+
+      <!-- Student Name Column -->
+      <ng-container matColumnDef="studentName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> اسم الطالب </th>
+        <td mat-cell *matCellDef="let exam"> {{ exam.studentName }} </td>
+      </ng-container>
+
+      <!-- Score Column -->
+      <ng-container matColumnDef="score">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> الاسكور </th>
+        <td mat-cell *matCellDef="let exam"> {{ exam.score }} </td>
+      </ng-container>
+
+      <!-- Define Header and Row -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons dir="rtl" class="my-5 paginator"></mat-paginator>
+</div>

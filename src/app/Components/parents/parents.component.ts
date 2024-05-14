@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParentsService } from 'src/app/Services/Parents/parents.service';
@@ -21,6 +22,7 @@ export class ParentsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private parentsData: ParentsService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -35,8 +37,14 @@ export class ParentsComponent implements OnInit {
     this.parentsData.getParents(nationalId).subscribe(
       data => {
         this.studentData = data;
+        console.log(data)
+        // Format datetime fields in studentData
+        this.studentData.studentExams.forEach((exam: any) => {
+          exam.startTime = this.formatDateTime(exam.startTime);
+          exam.endTime = this.formatDateTime(exam.endTime);
+        });
         this.loading = false;
-        console.log(this.studentData)
+
       },
       (error) => {
         console.error(error);
@@ -53,5 +61,10 @@ export class ParentsComponent implements OnInit {
     this.options.forEach((option, i) => {
       option.selected = i === index;
     });
+  }
+
+  formatDateTime(datetime: string): string {
+    const formattedDate = this.datePipe.transform(datetime, 'short');
+    return formattedDate || ''; // Return formatted date or an empty string if formatting fails
   }
 }

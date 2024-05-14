@@ -41,7 +41,7 @@ export class AboutAcademyComponent implements OnInit {
   ngOnInit(): void {
     forkJoin([
       this.teacherData.getAllTeachers(),
-      this.courseData.getAllCourses()
+      this.courseData.getCoursesOrderedByEnrollment()
     ]).subscribe(([teachers, courses]) => {
       this.teachers = teachers;
       this.courses = courses;

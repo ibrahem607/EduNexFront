@@ -66,7 +66,7 @@ export class TeacherService {
   uploadTeacherImage(id: string, file: File): Observable<any> {
     const formData = new FormData();
     formData.append('ProfilePicture', file);
-  
+
     return this.httpClient.post<any>(`${this.baseUrl}/api/Teacher/AddedTeacherImage?id=${id}`, formData);
   }
 }

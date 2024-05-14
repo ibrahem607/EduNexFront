@@ -58,7 +58,7 @@ mat-table,
   box-shadow: var(--border) 0px 0px 0px 1px;
   border-radius: 10px;
   background-color: var(--bg);
-  /* max-width: 644px; */
+  width: 100%;
 }
 
 .overflow-x {

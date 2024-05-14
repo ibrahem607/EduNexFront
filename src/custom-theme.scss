@@ -73,3 +73,7 @@ $EduNexProject-theme: mat.define-light-theme((color: (primary: $EduNexProject-pr
 
 
 @include mat.all-component-themes($EduNexProject-theme);
+
+mat-error {
+  color: red !important;
+}

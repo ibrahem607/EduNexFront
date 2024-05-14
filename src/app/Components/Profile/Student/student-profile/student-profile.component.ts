@@ -27,15 +27,19 @@ export class StudentProfileComponent implements OnInit {
     { label: 'الرئيسية', icon: 'home', selected: true },
     { label: 'الكورسات', icon: 'book', selected: false },
     { label: 'تفاصيل الميزانية', icon: 'wallet', selected: false },
-    { label: 'اكواد الشحن الخاصة بك', icon: 'code', selected: false },
+    { label: 'الشحن', icon: 'credit-card', selected: false },
     { label: 'تغيير كلمة السر', icon: 'key', selected: false },
-    // { label: 'الأعدادات', icon: 'cog', selected: false },
     { label: 'تسجيل الخروج', icon: 'sign-out-alt', selected: false }
   ];
 
   constructor(private dialog: MatDialog, private authService: AuthService) { }
 
   ngOnInit() {
+    const storedIndex = localStorage.getItem('studentSelectedOptionIndex');
+    if (storedIndex !== null) {
+      this.selectedOptionIndex = parseInt(storedIndex, 10);
+    }
+
     this.getStudentData(this.authService.getUserId());
   }
 
@@ -56,6 +60,8 @@ export class StudentProfileComponent implements OnInit {
       });
       this.activeSection = this.options[index].label;
       this.selectedOptionIndex = index;
+
+      localStorage.setItem('studentSelectedOptionIndex', String(index));
     }
   }
 

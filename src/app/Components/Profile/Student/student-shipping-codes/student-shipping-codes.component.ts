@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { PaymentService } from 'src/app/Services/Payment/payment.service';
 
@@ -10,48 +8,45 @@ import { PaymentService } from 'src/app/Services/Payment/payment.service';
   styleUrls: ['./student-shipping-codes.component.css']
 })
 export class StudentShippingCodesComponent implements OnInit {
-  shippingForm!: FormGroup;
+  balance!: number;
+  selectedOptionIndex: number = 0;
+  paymentType!: string;
+
+  options = [
+    { label: 'كرت شحن', selected: true },
+    { label: 'محفظه الكترونية', selected: false },
+    { label: 'كشك', selected: false },
+    { label: 'بطاقة بنكية', selected: false },
+  ];
 
   constructor(
-    private fb: FormBuilder,
     private paymentData: PaymentService,
     private studentData: AuthService,
-    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
-    this.shippingForm = this.fb.group({
-      code: ['', Validators.required]
-    });
+    this.getWalletBalance();
   }
 
-  submitForm() {
-    if (this.shippingForm.valid) {
-      const couponData = {
-        couponCode: this.shippingForm.value.code,
-        ownerId: this.studentData.getUserId(),
-        ownerType: 1
-      };
+  getWalletBalance() {
+    this.paymentData.getWalletBalance(this.studentData.getUserId())
+      .subscribe(balance => {
+        this.balance = balance;
+      });
+  }
 
-      this.paymentData.consumeCoupon(couponData).subscribe(
-        () => {
-          this.openSnackBar('تم استخدام الكوبون بنجاح', 'snackbar-success');
-          this.shippingForm.reset();
-        },
-        (error) => {
-          console.error('Error:', error);
-          this.openSnackBar('الكوبون غير صالح', 'snackbar-error');
-        }
-      );
+  setActiveSection(index: number): void {
+    if (index == 2) {
+      this.paymentType = 'kiosk';
+    } else if (index == 3) {
+      this.paymentType = 'credit';
+    } else {
+      this.paymentType = '';
     }
-  }
 
-  openSnackBar(message: string, panelClass: string) {
-    this.snackBar.open(message, 'حسناَ', {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-      panelClass: panelClass
+    this.options.forEach((option, i) => {
+      option.selected = i === index;
     });
+    this.selectedOptionIndex = index;
   }
 }

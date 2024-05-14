@@ -59,13 +59,6 @@ export class CoursesService {
     );
   }
 
-  getCountStudents(courseId: number): Observable<number> {
-    return this.httpClient.get<number>(`${this.URL}/api/Courses/CountStudents?courseId=${courseId}`);
-  }
-
-  getCountLectures(courseId: number): Observable<number> {
-    return this.httpClient.get<number>(`${this.URL}/api/Courses/CountLectures?courseId=${courseId}`);
-  }
 
   getAllTeacherCourses(teacherId: string): Observable<ICourse[]> {
     return this.httpClient.get<ICourse[]>(`${this.URL}/api/Courses/GetTeacherCourses?teacherId=${teacherId}`);
@@ -73,5 +66,13 @@ export class CoursesService {
 
   getAllSubjects(): Observable<ISubject[]> {
     return this.httpClient.get<ISubject[]>(`${this.URL}/api/Courses/get-All-Subject`);
+  }
+
+  getCoursesOrderedByCreateionDateDescending(): Observable<ICourse[]> {
+    return this.httpClient.get<ICourse[]>(`${this.URL}/api/Courses/GetCoursesOrderedByCreateionDateDescending`);
+  }
+
+  getCoursesOrderedByEnrollment(): Observable<ICourse[]> {
+    return this.httpClient.get<ICourse[]>(`${this.URL}/api/Courses/GetCoursesOrderedByEnrollment`);
   }
 }

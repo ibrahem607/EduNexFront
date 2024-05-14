@@ -34,8 +34,8 @@ export class StudentSignUpFormComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8), this.passwordStrengthValidator]],
       confirmPassword: ['',],
       studentEmail: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
-      rebot: [false, Validators.required],
-      rebot2: [false, Validators.required],
+      // rebot: [false, Validators.required],
+      // rebot2: [false, Validators.required],
       nationalId: ['', [Validators.required, Validators.pattern(/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/)]]
     }, { validators: passwordMatched });
   }
@@ -92,13 +92,13 @@ export class StudentSignUpFormComponent implements OnInit {
     return this.signupForm.get('confirmPassword')
   }
 
-  get rebot() {
-    return this.signupForm.get('rebot')
-  }
+  // get rebot() {
+  //   return this.signupForm.get('rebot')
+  // }
 
-  get rebot2() {
-    return this.signupForm.get('rebot2')
-  }
+  // get rebot2() {
+  //   return this.signupForm.get('rebot2')
+  // }
 
   get nationalId() {
     return this.signupForm.get('nationalId')
@@ -153,7 +153,6 @@ export class StudentSignUpFormComponent implements OnInit {
             console.log(data)
             if (data.token) {
               this.authService.signUp(this.signupForm.value);
-              //go to login
               this.router.navigate(['/login'])
               this._snackBar.open('تم انشاء الحساب بنجاح', 'حسناَ', {
                 duration: 2000,
@@ -169,7 +168,6 @@ export class StudentSignUpFormComponent implements OnInit {
           }
         })
     } else {
-
       Object.keys(this.signupForm.controls).forEach(controlName => {
         this.signupForm.get(controlName)?.markAsTouched();
       });

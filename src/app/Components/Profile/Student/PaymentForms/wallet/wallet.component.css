@@ -1,0 +1,22 @@
+form {
+  box-shadow: var(--border) 0px 0px 0px 1px;
+  border-radius: 10px;
+  background-color: var(--bg);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+form {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.custom-button {
+  border-radius: 20rem;
+  width: 150px;
+}
+
+h3 {
+  font-weight: 700;
+  color: orange;
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SignOutComponent } from '../../../sign-out/sign-out.component';
 import { trigger, style, transition, animate } from '@angular/animations';
@@ -19,7 +19,7 @@ import { TeachersService } from 'src/app/Services/Teachers/teachers.service';
     ])
   ]
 })
-export class TeacherProfileComponent {
+export class TeacherProfileComponent implements OnInit{
   activeSection: string = '';
   selectedOptionIndex: number = 0;
   leavingAnimationInProgress: boolean = false;
@@ -39,6 +39,15 @@ export class TeacherProfileComponent {
     private authService: AuthService,
     private teacherService: TeachersService,
   ) {
+    this.getTeacherData(this.authService.getUserId());
+  }
+
+  ngOnInit() {
+    const storedIndex = localStorage.getItem('teacherSelectedOptionIndex');
+    if (storedIndex !== null) {
+      this.selectedOptionIndex = parseInt(storedIndex, 10);
+    }
+
     this.getTeacherData(this.authService.getUserId());
   }
 
@@ -73,6 +82,8 @@ export class TeacherProfileComponent {
       });
       this.activeSection = this.options[index].label;
       this.selectedOptionIndex = index;
+
+      localStorage.setItem('teacherSelectedOptionIndex', String(index));
     }
   }
 

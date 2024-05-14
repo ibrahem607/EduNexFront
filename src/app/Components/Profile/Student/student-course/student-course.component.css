@@ -3,13 +3,13 @@ table,
   box-shadow: var(--border) 0px 0px 0px 1px;
   border-radius: 10px;
   background-color: var(--bg);
-  max-width: 644px;
+  width: 100%;
 }
 
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  /* width: 100%; */
+  width: 100%;
 }
 
 .overflow-x {
@@ -80,23 +80,4 @@ th {
 
 .spinner ::ng-deep circle {
   stroke: var(--wave2);
-}
-
-@media (min-width: 992px) {
-  .overflow-x {
-    /* margin-top: calc(100px + 1rem); */
-    width: calc(61vw - 230px - 3rem);
-  }
-}
-
-@media (max-width: 992px) {
-  .overflow-x {
-    width: calc(85vw - 24px);
-  }
-}
-
-@media (max-width: 576px) {
-  .overflow-x {
-    width: calc(98vw - 24px);
-  }
 }

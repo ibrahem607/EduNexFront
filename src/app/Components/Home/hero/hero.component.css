@@ -96,15 +96,16 @@ button span svg {
   width: 100%;
 }
 
-.shape2 {
+/* .shape2 {
   position: relative;
   width: 150px;
-}
+} */
 
 .shape2 svg {
   position: absolute;
-  top: 0;
-  left: 70px;
+  top: 65%;
+  right: 0;
+  width: 75px;
   transform: translate(-50%, 20%);
   opacity: 0.5;
 }
@@ -120,5 +121,9 @@ button span svg {
 @media (max-width: 990px) {
   .flex {
     flex-direction: column;
+  }
+
+ .shape2{
+   opacity: 0;
   }
 }

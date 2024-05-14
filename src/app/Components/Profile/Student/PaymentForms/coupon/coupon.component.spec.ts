@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminDashComponent } from './admin-dash.component';
+import { CouponComponent } from './coupon.component';
 
-describe('AdminDashComponent', () => {
-  let component: AdminDashComponent;
-  let fixture: ComponentFixture<AdminDashComponent>;
+describe('CouponComponent', () => {
+  let component: CouponComponent;
+  let fixture: ComponentFixture<CouponComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AdminDashComponent]
+      declarations: [CouponComponent]
     });
-    fixture = TestBed.createComponent(AdminDashComponent);
+    fixture = TestBed.createComponent(CouponComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

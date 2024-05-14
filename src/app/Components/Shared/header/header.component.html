@@ -14,7 +14,7 @@
       <button mat-button routerLink="/courses" routerLinkActive="active">الكورسات</button>
       <!-- <button mat-button routerLink="/offers">العروض</button> -->
       <button mat-button routerLink="/teachers" routerLinkActive="active">المدرسين</button>
-      <button mat-button routerLink="/about" routerLinkActive="active">عن المنصة</button>
+      <!-- <button mat-button routerLink="/about" routerLinkActive="active">عن المنصة</button> -->
       <!-- <button mat-button routerLink="/exams">امتحانات عامة</button> -->
       <button mat-button routerLink="/parents" routerLinkActive="active">ولي الأمر</button>
     </div>
@@ -29,13 +29,31 @@
       </button>
       <button mat-button routerLink="/signup" class="custom-button btn-gradient">اشترك الأن</button>
     </div>
+
+    <div class="flex justify-content-center mb-3 theme-mobile">
+      <p class="m-0 ps-2">الوضع</p>
+      <label>
+        <input #toggleCheckbox class='toggle-checkbox' type='checkbox' [formControl]="theme" [checked]="theme.value" />
+        <div class='toggle-slot'>
+          <div class='sun-icon-wrapper'>
+            <i class="fa fa-sun sun-icon"></i>
+          </div>
+          <div class='toggle-button'></div>
+          <div class='moon-icon-wrapper'>
+            <i class="fa fa-moon moon-icon"></i>
+          </div>
+        </div>
+      </label>
+    </div>
   </mat-sidenav>
 
   <!-- Header -->
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <header class="container-fluid flex justify-content-between">
-        <div>Logo</div>
+        <!-- <div>Logo</div> -->
+        <img *ngIf="isDark()" src="/assets/image/edunex-dark.png" alt="eduNex-dark" class="logo">
+        <img *ngIf="!isDark()" src="/assets/image/edunex-light.png" alt="eduNex-light" class="logo">
         <div></div>
 
         <div class="nav-items flex gap-1">
@@ -46,9 +64,8 @@
           <!-- <button  routerLink="/offers">العروض</button> -->
           <button #button3 class="unset-button" routerLink="/teachers" routerLinkActive="active"
             (click)="moveMarker(button3)">المدرسين</button>
-          <button #button4 routerLink="/about" class="unset-button" routerLinkActive="active"
-            (click)="moveMarker(button4)">عن
-            المنصة</button>
+          <!-- <button #button4 routerLink="/about" class="unset-button" routerLinkActive="active"
+            (click)="moveMarker(button4)">عن المنصة</button> -->
           <!-- <button  routerLink="/exams">امتحانات عامة</button> -->
           <button #button5 routerLink="/parents" class="unset-button" routerLinkActive="active"
             (click)="moveMarker(button5)">ولي
@@ -57,7 +74,7 @@
         </div>
 
         <div class="flex" style="gap: 5px;">
-          <label>
+          <label class="theme-desktop">
             <input #toggleCheckbox class='toggle-checkbox' type='checkbox' [formControl]="theme"
               [checked]="theme.value" />
             <div class='toggle-slot'>
@@ -97,13 +114,14 @@
                 *ngIf="role === 'Teacher'">
               <span class="mx-1"> {{userData.firstName}} {{userData.lastName}}</span>
             </button>
-            <mat-menu #menu="matMenu">
+            <mat-menu #menu="matMenu" class="py-3 py-sm-0">
               <button mat-menu-item
                 [routerLink]="role === 'Student' ? ['/student/profile', userData.id] : userData.status === 'Approved' ? ['/teacher/profile', userData.id] : ['/teacher/pending', userData.id]"
                 style="direction: rtl;">
                 <i class="fa-regular fa-circle-user px-2"></i>
                 الملف الشخصي
               </button>
+
               <button mat-menu-item class="text-danger" style="direction: rtl;" (click)="openSignOutDialog()">
                 <i class="fa fa-sign-out-alt px-2"></i>
                 تسجيل الخروج

@@ -1,58 +1,123 @@
 <section class="container flex flex-column justify-content-between p-5">
-  <div class="d-flex flex-md-row flex-column-reverse gap-4">
-    <div dir="rtl">
-      <label>الايميل:</label>
-      <p 
-        class="display-28"  style="max-width: 350px;max-height: 150px;overflow: hidden;">
-        {{teacherData.email}}</p>
-   
-      <label>الوظيفة: </label>
-      <p 
-        class="display-28"  style="max-width: 350px;max-height: 150px;overflow: hidden;"> مدرس
-        {{teacherData.subject}}</p>
-
-      <label>المادة التعليمية:</label>
-      <p [attr.contenteditable]="editText?'false':'true' "
-        [style.background-color]="editText ? 'transparent':'var(--active)'" #subject class="display-28"  style="max-width: 350px;max-height: 150px;overflow: hidden;">
-        {{teacherData.subject}}  </p>
-
-      <label>رقم الهاتف:</label>
-      <p [attr.contenteditable]="editText?'false':'true' "
-        [style.background-color]="editText ? 'transparent':'var(--active)'"  #phoneNumber class="display-28" style="max-width: 350px;max-height: 150px;overflow: hidden;">
-        {{teacherData.phoneNumber}}</p>
-
-        <label>العنوان:</label>
-      <p [attr.contenteditable]="editText?'false':'true' "
-        [style.background-color]="editText ? 'transparent':'var(--active)'"  #address class="display-28" style="max-width: 350px;max-height: 150px;overflow: hidden;"> 
-          {{teacherData.address}}</p>
-
-          <label>نبذة عن المعلم </label>
-          <p [attr.contenteditable]="editText ? 'false' : 'true'"
-            [style.background-color]="editText ? 'transparent':'var(--active)'" class="display-28" #aboutMe
-            [textContent]="teacherData?.aboutMe ? teacherData.aboutMe : 'اضف نبذة عن حياتك المهنية'"></p>
-
-      <label for="experienceField">الخبرة العملية</label>
-      <mat-form-field appearance="outline" style="min-width: 100%;">
-        <mat-icon matPrefix>question_answer</mat-icon>
-        <textarea matInput id="experienceField" [attr.contenteditable]="editText?'false':'true'"#experience value="{{teacherData.experience}}"></textarea>
+  <div class="d-flex flex-md-row flex-column-reverse gap-3">
+    <form [formGroup]="pendingForm" dir="rtl" class="flex flex-column">
+      <!-- Email -->
+      <mat-form-field appearance="outline">
+        <mat-label>الايميل:</mat-label>
+        <input matInput type="email" formControlName="email" [value]="teacherData.email" [readonly]="editText">
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error
+          *ngIf="pendingForm.get('email')?.errors?.['required'] && (pendingForm.get('email')?.dirty || pendingForm.get('email')?.touched)">
+          البريد الإلكتروني مطلوب
+        </mat-error>
+        <mat-error
+          *ngIf="pendingForm.get('email')?.errors?.['pattern'] && (pendingForm.get('email')?.dirty || pendingForm.get('email')?.touched)">
+          البريد الإلكتروني غير صالح
+        </mat-error>
       </mat-form-field>
-    </div>
 
-    <div class="flex flex-column gap-5">
-      <h3 class="loading ms-auto"  style="min-width: 260px;">جاري مراجعة بياناتك</h3>
+      <!-- Job -->
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>الوظيفة:</mat-label>
+        <input matInput formControlName="job" [value]="teacherData.subject" [readonly]="editText">
+        <mat-icon matSuffix>work</mat-icon>
+        <mat-error
+          *ngIf="pendingForm.get('job')?.invalid && (pendingForm.get('job')?.dirty || pendingForm.get('job')?.touched)">
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field> -->
 
-      <div class="teacher-name">
-        <h4 style="max-width: 350px;max-height: 60px; overflow: hidden;" dir="ltr">{{teacherData.firstName}}</h4>
+      <!-- Subject -->
+      <mat-form-field appearance="outline">
+        <mat-label>المادة التعليمية:</mat-label>
+        <mat-select formControlName="subject" placeholder="اسم المادة" required [disabled]="editText">
+          <mat-option *ngFor="let subject of subjects" [value]="subject.subjectName">{{ subject.subjectName
+            }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="pendingForm.get('subject')?.invalid && (pendingForm.get('subject')?.dirty || pendingForm.get('subject')?.touched)">
+          يجب اختيار مادة تعليمية
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Phone Number -->
+      <mat-form-field appearance="outline">
+        <mat-label>رقم الهاتف:</mat-label>
+        <input matInput type="tel" formControlName="phoneNumber" [value]="teacherData.phoneNumber"
+          [readonly]="editText">
+        <mat-icon matSuffix>phone</mat-icon>
+        <mat-error
+          *ngIf="pendingForm.get('phoneNumber')?.errors?.['required'] && (pendingForm.get('phoneNumber')?.dirty || pendingForm.get('phoneNumber')?.touched)">
+          رقم الهاتف مطلوب
+        </mat-error>
+        <mat-error
+          *ngIf="pendingForm.get('phoneNumber')?.errors?.['pattern'] && (pendingForm.get('phoneNumber')?.dirty || pendingForm.get('phoneNumber')?.touched)">
+          رقم الهاتف غير صالح
+        </mat-error>
+      </mat-form-field>
+      <!-- Address -->
+      <mat-form-field appearance="outline">
+        <mat-label>العنوان:</mat-label>
+        <input matInput formControlName="address" [value]="teacherData.address" [readonly]="editText">
+        <mat-icon matSuffix>location_on</mat-icon>
+        <mat-error
+          *ngIf="pendingForm.get('address')?.invalid && (pendingForm.get('address')?.dirty || pendingForm.get('address')?.touched)">
+          العنوان مطلوب
+        </mat-error>
+      </mat-form-field>
+
+      <!-- About Me -->
+      <mat-form-field appearance="outline">
+        <mat-label>نبذة عن المعلم:</mat-label>
+        <textarea matInput formControlName="aboutMe" [value]="teacherData.aboutMe" [readonly]="editText"></textarea>
+        <mat-icon matSuffix>info</mat-icon>
+        <mat-error
+          *ngIf="pendingForm.get('aboutMe')?.invalid && (pendingForm.get('aboutMe')?.dirty || pendingForm.get('aboutMe')?.touched)">
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Experience -->
+      <mat-form-field appearance="outline">
+        <mat-label>الخبرة العملية</mat-label>
+        <textarea matInput formControlName="experience" [value]="teacherData.experience"
+          [readonly]="editText"></textarea>
+        <mat-icon matSuffix>work_outline</mat-icon>
+        <mat-error
+          *ngIf="pendingForm.get('experience')?.invalid && (pendingForm.get('experience')?.dirty || pendingForm.get('experience')?.touched)">
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+    </form>
+
+    <div class="flex flex-column gap-2">
+      <h3 class="loading ms-auto" style="min-width: 260px;">جاري مراجعة بياناتك</h3>
+
+      <div class="alert alert-warning d-flex align-items-center flex gap-2" role="alert"
+        *ngIf="teacherData.accountNote">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <div>
+          {{teacherData.accountNote}}
+        </div>
       </div>
 
+      <div class="teacher-name">
+        <h4 style="max-width: 350px; max-height: 60px; overflow: hidden;" dir="ltr">{{ teacherData.firstName }}</h4>
+      </div>
+
+      <!-- Profile Photo -->
       <div class="flex flex-column gap-3">
-        <img [src]="teacherData.profilePhoto ? teacherData.profilePhoto:selectedImage" alt="..." id="avatarImage"
+        <img [src]="teacherData.profilePhoto ? teacherData.profilePhoto : selectedImage" alt="..." id="avatarImage"
           style="max-width: 200px; max-height: 250px; border-radius: 10px;">
-        <input type="file" #uploadInput style="display: none;" accept="image/*" (change)="previewImage($event,teacherData.id)">
+        <input type="file" #uploadInput style="display: none;" accept="image/*"
+          (change)="previewImage($event, teacherData.id)">
         <button type="button" (click)="openFileInput()">Upload Photo</button>
-        </div>
+      </div>
+
+      <!-- Edit/Save Buttons -->
       <button mat-button (click)="toggleEdit()" *ngIf="editText" class="green-button"> تعديل البيانات</button>
-      <button mat-button (click)="toggleEdit()" (click)="updateData(teacherData.id,address.textContent,subject.textContent,phoneNumber.textContent,aboutMe.textContent,experience.value,uploadInput.value)" *ngIf="!editText" class="custom-button">حفظ البيانات</button>
+      <button mat-button (click)="updateData(teacherData.id)" *ngIf="!editText" class="custom-button">حفظ
+        البيانات</button>
     </div>
 
   </div>

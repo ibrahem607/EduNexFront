@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { CountsService } from 'src/app/Services/Counts/counts.service';
 
 @Component({
   selector: 'app-target-counter',
@@ -11,15 +12,17 @@ export class TargetCounterComponent implements OnInit {
   @ViewChild('studyHourCounter', { static: true }) studyHourCounter!: ElementRef;
   @ViewChild('studentCounter', { static: true }) studentCounter!: ElementRef;
 
-  teacherFinalNumber = 50;
+  teacherFinalNumber!: number;
   courseFinalNumber = 70;
   studyHourFinalNumber = 90;
-  studentFinalNumber = 120;
+  studentFinalNumber!: number;
 
-  constructor() { }
+  constructor(private countData: CountsService) { }
 
   ngOnInit(): void {
     this.observeCounters();
+    this.getCountAllTeachers();
+    this.getCountAllStudents();
   }
 
   observeCounters() {
@@ -27,6 +30,20 @@ export class TargetCounterComponent implements OnInit {
     this.observeCounter(this.courseCounter.nativeElement, this.courseFinalNumber);
     this.observeCounter(this.studyHourCounter.nativeElement, this.studyHourFinalNumber);
     this.observeCounter(this.studentCounter.nativeElement, this.studentFinalNumber);
+  }
+
+  getCountAllTeachers() {
+    this.countData.getCountAllTeachers().subscribe(teacherFinalNumber => {
+      this.teacherFinalNumber = teacherFinalNumber['count'];
+      this.observeCounters();
+    });
+  }
+
+  getCountAllStudents() {
+    this.countData.getCountAllStudents().subscribe(studentFinalNumber => {
+      this.studentFinalNumber = studentFinalNumber['count'];
+      this.observeCounters();
+    });
   }
 
   observeCounter(element: HTMLElement, finalNumber: number) {

@@ -3,6 +3,7 @@ table,
   box-shadow: var(--border) 0px 0px 0px 1px;
   border-radius: 10px;
   background-color: var(--bg);
+  width: 100%;
 }
 
 table {
@@ -20,6 +21,7 @@ table {
 
 .table-container {
   flex-grow: 1;
+  width: 100%;
 }
 
 tr td:first-of-type,
@@ -74,9 +76,8 @@ tr td:first-child {
   stroke: var(--wave2);
 }
 
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
   .overflow-x {
-    /* margin-top: calc(100px + 1rem); */
     width: calc(70vw - 230px - 3rem);
   }
 }
@@ -97,4 +98,4 @@ tr td:first-child {
   .overflow-x {
     width: calc(98vw - 24px);
   }
-}
+} */

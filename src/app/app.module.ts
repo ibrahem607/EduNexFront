@@ -89,7 +89,6 @@ import { TeacherCourseComponent } from './Components/Profile/Teacher/teacher-cou
 import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-course/add-edit-course.component';
 import { TeacherSettingsComponent } from './Components/Profile/Teacher/teacher-settings/teacher-settings.component';
 import { LectureComponent } from './Components/lecture/lecture.component';
-import { AdminDashComponent } from './Components/admin-dash/admin-dash.component';
 import { ImageUploaderComponent } from './Components/Shared/image-uploader/image-uploader.component';
 import { PendingProfileComponent } from './Components/Profile/Teacher/pending-profile/pending-profile.component';
 import { StudentSignUpFormComponent } from './Components/SignUp/Student/student-sign-up-form/student-sign-up-form.component';
@@ -105,6 +104,10 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ParentsComponent } from './Components/parents/parents.component';
 import { AboutPlatformComponent } from './Components/about-platform/about-platform.component';
+import { CouponComponent } from './Components/Profile/Student/PaymentForms/coupon/coupon.component';
+import { WalletComponent } from './Components/Profile/Student/PaymentForms/wallet/wallet.component';
+import { CreditCardComponent } from './Components/Profile/Student/PaymentForms/credit-card/credit-card.component';
+import { StudentExamRankComponent } from './Components/student-exam-rank/student-exam-rank.component';
 
 @NgModule({
   declarations: [
@@ -156,7 +159,6 @@ import { AboutPlatformComponent } from './Components/about-platform/about-platfo
     TeacherDetailsComponent,
     TeacherProfileComponent,
     CustomCloudNavbarComponent,
-    AdminDashComponent,
     NotFoundComponent,
     StudentSignUpPageComponent,
     LoadingCardsComponent,
@@ -171,7 +173,11 @@ import { AboutPlatformComponent } from './Components/about-platform/about-platfo
     StudentSettingsFormComponent,
     TeacherSettingsFormComponent,
     ParentsComponent,
-    AboutPlatformComponent
+    AboutPlatformComponent,
+    CouponComponent,
+    WalletComponent,
+    CreditCardComponent,
+    StudentExamRankComponent
   ],
   imports: [
     BrowserModule,

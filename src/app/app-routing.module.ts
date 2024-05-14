@@ -10,9 +10,6 @@ import { StudentExamComponent } from './Components/Exam/Student/student-exam/stu
 import { ExamResultComponent } from './Components/Exam/Student/exam-result/exam-result.component';
 import { StudentProfileComponent } from './Components/Profile/Student/student-profile/student-profile.component';
 import { TeacherDetailsComponent } from './Components/teacher-details/teacher-details.component';
-// import { SignupTeacherComponent } from './Components/signup-teacher/signup-teacher.component';
-// import { TeacherProfileComponent } from './Components/teacher-profile/teacher-profile.component';
-import { AdminDashComponent } from './Components/admin-dash/admin-dash.component';
 import { TeacherProfileComponent } from './Components/Profile/Teacher/teacher-profile/teacher-profile.component';
 import { NotFoundComponent } from './Components/not-found/not-found.component';
 import { StudentSignUpPageComponent } from './Components/SignUp/Student/student-sign-up-page/student-sign-up-page.component';
@@ -23,6 +20,7 @@ import { AddEditCourseComponent } from './Components/Profile/Teacher/add-edit-co
 import { LectureComponent } from './Components/lecture/lecture.component';
 import { ParentsComponent } from './Components/parents/parents.component';
 import { AboutPlatformComponent } from './Components/about-platform/about-platform.component';
+import { StudentExamRankComponent } from './Components/student-exam-rank/student-exam-rank.component';
 
 const routes: Routes = [
   { path: "home", component: MainComponent },
@@ -41,11 +39,11 @@ const routes: Routes = [
   { path: "teachers", component: TeachersComponent },
   { path: "teacher/:id", component: TeacherDetailsComponent },
   { path: "lesson/:id", component: LectureComponent },
-  { path: "adminDash", component: AdminDashComponent },
   { path: "parents", component: ParentsComponent },
   { path: "about", component: AboutPlatformComponent },
   { path: "error", component: MainComponent },
   { path: "lesson/:id", component: LectureComponent },
+  { path: "rank", component: StudentExamRankComponent },
   { path: "login", component: LoginComponent },
   { path: "notfound", component: NotFoundComponent },
   { path: "**", redirectTo: "notfound" },

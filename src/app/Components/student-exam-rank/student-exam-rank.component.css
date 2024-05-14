@@ -1,0 +1,51 @@
+table,
+.overflow-x,
+.paginator {
+  box-shadow: var(--border) 0px 0px 0px 1px;
+  border-radius: 10px;
+  background-color: var(--bg);
+  width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.overflow-x {
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.table-container {
+  width: 100%;
+}
+
+tr th:first-child {
+  text-align: start;
+}
+
+tr td:first-of-type,
+tr th:first-of-type {
+  padding-right: 1rem;
+}
+
+th,
+td {
+  padding: 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+th {
+  font-weight: 700;
+}
+
+/* ::ng-deep .mat-mdc-paginator-page-size-label{
+  content: "عنصر لكل صفحة:" !important;
+} */

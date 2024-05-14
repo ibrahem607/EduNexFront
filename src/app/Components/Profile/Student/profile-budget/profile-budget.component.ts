@@ -11,7 +11,6 @@ import { PaymentService } from "src/app/Services/Payment/payment.service";
 
 export class ProfileBudgetComponent implements OnInit {
   transactions: ITransaction[] = [];
-
   displayedColumns: string[] = ['TransactionType', 'Amount', 'TransactionDate'];
 
   constructor(private authService: AuthService, private paymentService: PaymentService) { }
@@ -28,6 +27,4 @@ export class ProfileBudgetComponent implements OnInit {
         // console.log(this.transactions)
       });
   }
-
-
 }

@@ -7,7 +7,6 @@ section {
   box-shadow: var(--border) 0px 0px 0px 1px;
   border-radius: 10px;
   max-width: fit-content;
-  /* pa */
 }
 .green-snackbar {
   background-color: green;
@@ -55,6 +54,18 @@ button {
   content: "\2026";
   width: 0px;
   color: var(--wave2);
+}
+
+.alert-warning i {
+  font-size: 1.25rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+form {
+  width: 450px;
 }
 
 @keyframes ellipsis {

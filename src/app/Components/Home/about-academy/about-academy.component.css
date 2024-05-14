@@ -36,6 +36,7 @@ svg:last-of-type {
 .carousel {
   width: 100%;
 }
+
 .scroll-about-section {
   overflow-x: auto !important;
   scrollbar-width: none;
@@ -46,6 +47,7 @@ svg:last-of-type {
 .scroll-about-section::-webkit-scrollbar {
   display: none;
 }
+
 .scroll-btn {
   color: white;
 }
@@ -61,37 +63,9 @@ svg:last-of-type {
   opacity: 1;
   transition: 0.3s;
 }
+
 .custom-button:hover {
   opacity: 0.75;
-}
-.imgs-containter {
-  position: relative;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-.imgs-containter img:not(:first-child) {
-  position: absolute;
-  width: 20%;
-}
-.imgs-containter img:nth-of-type(2) {
-  top: -3rem;
-  left: 3rem;
-}
-.imgs-containter img:nth-of-type(3) {
-  top: 3rem;
-  right: 3rem;
-}
-.imgs-containter img:nth-of-type(4) {
-  top: 14rem;
-  right: -1rem;
-}
-.imgs-containter img:nth-of-type(5) {
-  bottom: 0;
-  right: 14rem;
-}
-.imgs-containter img:nth-of-type(6) {
-  bottom: 8rem;
-  left: 1rem;
 }
 
 @media (max-width: 460px) {

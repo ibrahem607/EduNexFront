@@ -203,6 +203,10 @@ mat-sidenav button.custom-button {
   transition: 0.3s;
 }
 
+.logo {
+  width: 150px;
+}
+
 .dropdown-toggle {
   background-color: var(--active);
   border: 1px solid var(--border);
@@ -261,6 +265,21 @@ hr {
 
 @media (min-width: 920px) {
   .menu-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .theme-desktop {
+    display: none;
+  }
+  .logo {
+    width: 125px;
+  }
+}
+
+@media (min-width: 520px) {
+  .theme-mobile {
     display: none;
   }
 }
