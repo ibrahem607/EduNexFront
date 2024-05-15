@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ILecture, IVideo, IAttachment } from 'src/app/Model/icourse';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
@@ -33,11 +34,15 @@ export class LectureComponent implements OnInit {
     private courseData: CoursesService,
     private snackBar: MatSnackBar,
     private router: Router,
+    private titleService: Title
   ) {
     this.userId = this.userData.getUserId();
   }
 
   ngOnInit(): void {
+    const pageTitle = this.activatedRoute.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     this.activatedRoute.queryParams.subscribe(params => {
       this.courseId = params['courseId'];
       //  = params['lectureId'];

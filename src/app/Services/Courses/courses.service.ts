@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environment';
 import { Observable } from 'rxjs';
 import { ICourse, ISubject } from 'src/app/Model/icourse';
 
@@ -8,7 +9,7 @@ import { ICourse, ISubject } from 'src/app/Model/icourse';
 })
 export class CoursesService {
 
-  URL = 'http://localhost:5293'
+  URL = environment.API_KEY;
 
   constructor(private httpClient: HttpClient) { }
 

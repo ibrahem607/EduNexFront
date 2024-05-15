@@ -26,7 +26,7 @@ export class StudentCourseComponent implements OnInit {
           image: course.courseThumbnail
         };
       });
-      // console.log(this.course);
+      console.log(this.course);
     });
   }
 }

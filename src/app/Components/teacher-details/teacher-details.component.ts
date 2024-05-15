@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ICourse } from 'src/app/Model/icourse';
 import { ITeacher } from 'src/app/Model/iteacher';
@@ -18,10 +19,14 @@ export class TeacherDetailsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private teacherData: TeachersService,
-    private courseData: CoursesService
+    private courseData: CoursesService,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
+    const pageTitle = this.activatedRoute.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     this.activatedRoute.params.subscribe(params => {
       this.teacherID = params['id'];
       this.getTeacherById(this.teacherID);

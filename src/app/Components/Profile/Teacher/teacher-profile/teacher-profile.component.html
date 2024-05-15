@@ -2,7 +2,7 @@
   <div class="flex flex-column gap-3 navigation-container">
     <div class="d-flex flex-column justify-content-center header-section p-3">
       <h5>أ. {{ teacher.firstName }} {{ teacher.lastName }}</h5>
-      <h6>الفيزياء</h6>
+      <h6>{{teacher.subject}}</h6>
     </div>
     <div class="navigation-section">
       <button mat-button *ngFor="let option of options; let i = index" class="form-button-1"

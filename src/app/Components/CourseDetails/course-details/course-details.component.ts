@@ -10,6 +10,7 @@ import { CoursesService } from 'src/app/Services/Courses/courses.service';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ExamService } from 'src/app/Services/Exam/exam.service';
 import { durationCalculation } from '../../Exam/Student/student-exam/student-exam.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-course-details',
@@ -38,13 +39,17 @@ export class CourseDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private courseData: CoursesService,
     private authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private titleService: Title
   ) {
     this.courseID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.userId = this.authService.getUserId();
   }
 
   ngOnInit(): void {
+    const pageTitle = this.activatedRoute.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     this.getCourseById();
     this.role = this.authService.getUserRole();
 

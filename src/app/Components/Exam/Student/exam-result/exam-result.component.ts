@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerChoices, IExamResult } from 'src/app/Model/iexam-result';
 
@@ -11,9 +12,15 @@ import { AnswerChoices, IExamResult } from 'src/app/Model/iexam-result';
 export class ExamResultComponent implements OnInit {
   result!: IExamResult;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private titleService: Title
+  ) { }
 
   ngOnInit(): void {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     this.route.queryParams.subscribe(params => {
       if (params['result']) {
         this.result = JSON.parse(params['result']);

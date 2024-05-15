@@ -3,9 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { SignOutComponent } from '../../../sign-out/sign-out.component';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { TeachersService } from 'src/app/Services/Teachers/teachers.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-teacher-profile',
   templateUrl: './teacher-profile.component.html',
@@ -19,7 +20,7 @@ import { TeachersService } from 'src/app/Services/Teachers/teachers.service';
     ])
   ]
 })
-export class TeacherProfileComponent implements OnInit{
+export class TeacherProfileComponent implements OnInit {
   activeSection: string = '';
   selectedOptionIndex: number = 0;
   leavingAnimationInProgress: boolean = false;
@@ -38,11 +39,16 @@ export class TeacherProfileComponent implements OnInit{
     private router: Router,
     private authService: AuthService,
     private teacherService: TeachersService,
+    private route: ActivatedRoute,
+    private titleService: Title
   ) {
     this.getTeacherData(this.authService.getUserId());
   }
 
   ngOnInit() {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     const storedIndex = localStorage.getItem('teacherSelectedOptionIndex');
     if (storedIndex !== null) {
       this.selectedOptionIndex = parseInt(storedIndex, 10);
@@ -87,19 +93,19 @@ export class TeacherProfileComponent implements OnInit{
     }
   }
 
-    openSignOutDialog(): void {
-      const dialogRef = this.dialog.open(SignOutComponent, {
-        data: {
-          message: 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
-          confirmButtonText: 'تسجيل الخروج'
-        }
-      });
+  openSignOutDialog(): void {
+    const dialogRef = this.dialog.open(SignOutComponent, {
+      data: {
+        message: 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
+        confirmButtonText: 'تسجيل الخروج'
+      }
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === 'logout') {
-        }
-      });
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'logout') {
+      }
+    });
+  }
 
   openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {

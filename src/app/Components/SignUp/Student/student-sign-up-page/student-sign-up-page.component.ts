@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-student-sign-up-page',
@@ -9,9 +10,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./student-sign-up-page.component.css']
 })
 export class StudentSignUpPageComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private titleService: Title
+  ) { }
 
   ngOnInit() {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     setTimeout(() => {
       if (this.authService.getUserId()) {
         this.router.navigate(['/']);

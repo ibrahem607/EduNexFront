@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ILecture } from 'src/app/Model/icourse';
 import { IExam, IQuestion } from 'src/app/Model/iexam';
@@ -41,12 +42,16 @@ export class StudentExamComponent implements OnInit {
     private router: Router,
     private userData: AuthService,
     private snackBar: MatSnackBar,
+    private titleService: Title
   ) {
     this.form = this.fb.group({});
     this.userId = this.userData.getUserId();
   }
 
   ngOnInit(): void {
+    const pageTitle = this.activatedRoute.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     this.studentId = this.studentData.getUserId();
 
     this.activatedRoute.queryParamMap.subscribe(queryParams => {

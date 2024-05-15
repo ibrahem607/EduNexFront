@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ISubject } from 'src/app/Model/icourse';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { TeacherService } from 'src/app/Services/Auth/teacher.service';
@@ -32,6 +33,8 @@ export class PendingProfileComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private titleService: Title
   ) {
     this.role = this.authService.getUserRole();
 
@@ -47,6 +50,9 @@ export class PendingProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     this.getTeacherById();
     this.getAllSubjects();
     this.pendingForm.disable();

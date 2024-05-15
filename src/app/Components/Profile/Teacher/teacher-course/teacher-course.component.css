@@ -43,6 +43,15 @@ th {
   font-weight: 700;
 }
 
+.courseID {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.courseID:hover {
+  color: var(--border);
+}
+
 .custom-icon-button {
   background-color: var(--active);
   border-radius: 50% !important;

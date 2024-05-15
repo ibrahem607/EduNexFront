@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { ICourse } from 'src/app/Model/icourse';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
 
@@ -36,7 +38,18 @@ export class CoursesComponent implements OnInit {
     'Scientific': 'علمي'
   };
 
-  constructor(private courseData: CoursesService) { }
+  constructor(
+    private courseData: CoursesService,
+    private route: ActivatedRoute,
+    private titleService: Title
+  ) { }
+
+  ngOnInit(): void {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
+    this.getAllCourses();
+  }
 
   getAllCourses() {
     this.courseData.getAllCourses().subscribe(courses => {
@@ -120,10 +133,6 @@ export class CoursesComponent implements OnInit {
       this.filteredPaginatedCourses = this.filteredCourses;
     }
     this.page = 1;
-  }
-
-  ngOnInit(): void {
-    this.getAllCourses();
   }
 
   onPageChange(pageNumber: number) {

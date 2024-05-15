@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environment';
 import { Observable } from 'rxjs';
 import { ITransaction } from 'src/app/Model/itransaction';
 
@@ -8,7 +9,7 @@ import { ITransaction } from 'src/app/Model/itransaction';
 })
 export class PaymentService {
 
-  URL = 'http://localhost:5293'
+  URL = environment.API_KEY;
 
   constructor(private httpClient: HttpClient) { }
 

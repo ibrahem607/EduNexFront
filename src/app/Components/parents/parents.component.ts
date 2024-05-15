@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { ParentsService } from 'src/app/Services/Parents/parents.service';
 
 @Component({
@@ -22,10 +24,15 @@ export class ParentsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private parentsData: ParentsService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private route: ActivatedRoute,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     this.changePasswordForm = this.formBuilder.group({
       studentNationalId: ['', [Validators.required, Validators.pattern(/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/)]]
     });

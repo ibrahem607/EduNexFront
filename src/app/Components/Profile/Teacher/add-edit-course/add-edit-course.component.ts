@@ -2,7 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar
-import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ICourse, ISubject } from 'src/app/Model/icourse';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { CoursesService } from 'src/app/Services/Courses/courses.service';
@@ -25,7 +26,9 @@ export class AddEditCourseComponent implements OnInit {
     private router: Router,
     private courseData: CoursesService,
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private titleService: Title
   ) {
     this.userId = this.authService.getUserId();
     this.courseForm = this.fb.group({
@@ -37,6 +40,9 @@ export class AddEditCourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     this.courseId = this.data.course?.courseID;
 
     this.getAllSubjects();

@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { SignOutComponent } from '../../../sign-out/sign-out.component';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-student-profile',
@@ -32,9 +34,17 @@ export class StudentProfileComponent implements OnInit {
     { label: 'تسجيل الخروج', icon: 'sign-out-alt', selected: false }
   ];
 
-  constructor(private dialog: MatDialog, private authService: AuthService) { }
+  constructor(
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private titleService: Title
+  ) { }
 
   ngOnInit() {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     const storedIndex = localStorage.getItem('studentSelectedOptionIndex');
     if (storedIndex !== null) {
       this.selectedOptionIndex = parseInt(storedIndex, 10);
@@ -46,7 +56,7 @@ export class StudentProfileComponent implements OnInit {
   getStudentData(studentId: string) {
     this.authService.getStudentData(studentId).subscribe(student => {
       this.student = student;
-      console.log(student);
+      // console.log(student);
     });
   }
 

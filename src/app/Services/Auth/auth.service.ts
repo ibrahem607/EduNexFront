@@ -10,14 +10,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomJwtPayload } from 'src/app/Model/CustomJwtPayload ';
 import { ITeacherAuth } from 'src/app/Model/iteacherAuth';
 import { IUserUpdateFormData } from 'src/app/Model/iuserUpdateForm';
-import { Token } from '@angular/compiler';
+import { environment } from 'environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl: string = 'http://localhost:5293';
+  baseUrl: string = environment.API_KEY;;
   tokenKey: string = 'auth_token';
   teacherId: any = '';
   currentUserId: string = 'UserId';
@@ -61,7 +61,7 @@ export class AuthService {
           localStorage.setItem(this.tokenKey, response.token);
           this.saveCurrentUserId()
 
-          this.snackBar.open('  تم تسجيل الدخول بنجاح ', 'Close', {
+          this.snackBar.open('تم تسجيل الدخول بنجاح ', 'Close', {
             duration: 2000,
             verticalPosition: 'bottom',
             horizontalPosition: 'right',

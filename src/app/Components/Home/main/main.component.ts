@@ -1,4 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -8,4 +10,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 })
 export class MainComponent {
+
+  constructor(
+    private route: ActivatedRoute,
+    private titleService: Title
+  ) { }
+
+  ngOnInit(): void {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+  }
 }

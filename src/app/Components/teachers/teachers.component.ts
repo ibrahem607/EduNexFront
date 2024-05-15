@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { ITeacher } from 'src/app/Model/iteacher';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { TeachersService } from 'src/app/Services/Teachers/teachers.service';
 
 @Component({
@@ -19,7 +20,18 @@ export class TeachersComponent implements OnInit {
   subjects: string[] = [];
   subject!: string;
 
-  constructor(private teacherData: TeachersService, private authService: AuthService) { }
+  constructor(
+    private teacherData: TeachersService,
+    private route: ActivatedRoute,
+    private titleService: Title
+  ) { }
+
+  ngOnInit(): void {
+    const pageTitle = this.route.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
+    this.getAll();
+  }
 
   getAll() {
     this.teacherData.getAllTeachers().subscribe(teachers => {
@@ -79,21 +91,5 @@ export class TeachersComponent implements OnInit {
       }
     }
     return uniqueSubjects;
-  }
-
-  ngOnInit(): void {
-    this.getAll();
-
-    // console.log(this.authService.getToken());
-    // console.log(this.authService.saveCurrentUserId());
-
-    // this.authService.getUserData(this.authService.saveCurrentUserId()).subscribe({
-    //   next: (data) => {
-    //     console.log(data);
-    //   },
-    //   error: (err) => {
-    //     console.log(err);
-    //   }
-    // });
   }
 }

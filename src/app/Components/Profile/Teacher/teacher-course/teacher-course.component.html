@@ -5,7 +5,7 @@
         <!-- Course Column -->
         <ng-container matColumnDef="CourseName">
           <th mat-header-cell *matHeaderCellDef>اسم الكورس</th>
-          <td mat-cell *matCellDef="let element">
+          <td [routerLink]="['/course', element.courseID]" mat-cell *matCellDef="let element" class="courseID">
             <div class="course-details-container flex gap-2">
               <img [src]="element.thumbnail" alt="Course Thumbnail" class="course-thumbnail" width="100" height="100">
               <span>{{element.courseName}}</span>

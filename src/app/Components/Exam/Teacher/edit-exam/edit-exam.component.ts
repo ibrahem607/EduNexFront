@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { convertDateFormat, convertTimeFormat } from 'src/app/Components/Exam/DateTimeFormat';
 import { ILecture } from 'src/app/Model/icourse';
@@ -38,11 +39,15 @@ export class EditExamComponent implements OnInit {
     private snackBar: MatSnackBar,
     private userData: AuthService,
     private router: Router,
+    private titleService: Title
   ) {
     this.userId = this.userData.getUserId();
   }
 
   ngOnInit(): void {
+    const pageTitle = this.activatedRoute.snapshot.data['title'];
+    this.titleService.setTitle(pageTitle);
+
     this.initForm();
 
     this.examForm.get('questionIndex')?.valueChanges.subscribe((index: number) => {

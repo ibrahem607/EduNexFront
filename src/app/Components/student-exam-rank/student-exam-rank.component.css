@@ -7,6 +7,18 @@ table,
   width: 100%;
 }
 
+table,
+.overflow-x {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.paginator {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 1px solid var(--border);
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;

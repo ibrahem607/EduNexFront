@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environment';
 import { Observable } from 'rxjs';
 import { IExam } from 'src/app/Model/iexam';
 import { IExamResult } from 'src/app/Model/iexam-result';
@@ -8,11 +9,10 @@ import { IExamResult } from 'src/app/Model/iexam-result';
   providedIn: 'root'
 })
 export class ExamService {
-  URL = 'http://localhost:5293'
+  URL = environment.API_KEY;
 
   constructor(private httpClient: HttpClient) { }
 
-  // exam
   getAllExams(): Observable<IExam[]> {
     return this.httpClient.get<IExam[]>(`${this.URL}/api/Exams`);
   }
@@ -45,15 +45,11 @@ export class ExamService {
     return this.httpClient.post<IExam>(`${this.URL}/api/Exams/${examId}/submit`, submittedExam);
   }
 
-  // examResult
-  // getExamResult(examId: number, student: any): Observable<IExamResult> {
-  //   return this.httpClient.get<IExamResult>(`${this.URL}/api/Exams/${examId}/result/${student}`);
-  // }
   getSubmissionExam(examId: number, student: any): Observable<IExamResult> {
     return this.httpClient.get<IExamResult>(`${this.URL}/api/Exams/${examId}/submission/${student}`);
   }
 
-  GetStudentsOrderedByScore(): Observable<any> {
-    return this.httpClient.get<any>(`${this.URL}/api/Exams/GetStudentsOrderedByScore`);
+  getStudentsOrderedByScore(): Observable<any> {
+    return this.httpClient.get<any>(`${this.URL}/api/Home/GetStudentsOrderedByScore`);
   }
 }
