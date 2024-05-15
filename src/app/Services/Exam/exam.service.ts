@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { IExam } from 'src/app/Model/iexam';
 import { IExamResult } from 'src/app/Model/iexam-result';
@@ -9,8 +9,8 @@ import { IExamResult } from 'src/app/Model/iexam-result';
   providedIn: 'root'
 })
 export class ExamService {
-  // URL = environment.API_KEY;
-  URL = process.env['API_KEY'];
+  URL = environment.API_KEY;
+  // URL = process.env['API_KEY'];
 
   constructor(private httpClient: HttpClient) { }
 

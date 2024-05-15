@@ -10,15 +10,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomJwtPayload } from 'src/app/Model/CustomJwtPayload ';
 import { ITeacherAuth } from 'src/app/Model/iteacherAuth';
 import { IUserUpdateFormData } from 'src/app/Model/iuserUpdateForm';
-// import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl: string = process.env['API_KEY'];
-  // baseUrl: string = environment.API_KEY;
+  // baseUrl: string = process.env['API_KEY'];
+  baseUrl: string = environment.API_KEY;
+
   tokenKey: string = 'auth_token';
   teacherId: any = '';
   currentUserId: string = 'UserId';

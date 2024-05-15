@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IVideo } from '../../Model/icourse';
-// import { environment } from 'src/environment/environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VideosService {
-  URL = process.env['API_KEY'];
+  // URL = process.env['API_KEY'];
+  URL = environment.API_KEY;
 
   constructor(private httpClient: HttpClient) { }
 

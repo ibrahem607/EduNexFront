@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { Observable, map} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherService {
-  baseUrl: string = process.env['API_KEY'];
-  // baseUrl: string = environment.API_KEY;
+  // baseUrl: string = process.env['API_KEY'];
+  baseUrl: string = environment.API_KEY;
+
   TeacherAbout: string = '';
 
   constructor(private httpClient: HttpClient) { }
