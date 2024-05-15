@@ -8,7 +8,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
   // animations: [fadeInOut]
 })
 export class AppComponent implements OnInit {
-  loading: boolean = true;
+  loading: boolean = true
 
   constructor(private router: Router) { }
 
